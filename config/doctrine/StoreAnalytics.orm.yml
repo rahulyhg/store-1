@@ -1,0 +1,29 @@
+App\Entity\StoreAnalytics:
+    type: entity
+    table: store_analytics
+    id:
+        analyticsId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: analytics_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        analyticsName:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: analytics_name
+        analyticsCode:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: analytics_code
+    lifecycleCallbacks: {  }

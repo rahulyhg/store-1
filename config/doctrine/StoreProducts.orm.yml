@@ -1,0 +1,56 @@
+App\Entity\StoreProducts:
+    type: entity
+    table: store_products
+    id:
+        productId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: product_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        productName:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: product_name
+        productDescription:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: product_description
+        productPrice:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            column: product_price
+        productMetatitle:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: product_metatitle
+        productMetadescription:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: product_metadescription
+        productMetakeywords:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: product_metakeywords
+    lifecycleCallbacks: {  }

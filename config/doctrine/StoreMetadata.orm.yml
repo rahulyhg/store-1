@@ -1,0 +1,29 @@
+App\Entity\StoreMetadata:
+    type: entity
+    table: store_metadata
+    id:
+        metaId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: meta_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        metaName:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: meta_name
+        metaContent:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: meta_content
+    lifecycleCallbacks: {  }

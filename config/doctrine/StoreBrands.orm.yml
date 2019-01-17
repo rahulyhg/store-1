@@ -1,0 +1,43 @@
+App\Entity\StoreBrands:
+    type: entity
+    table: store_brands
+    id:
+        brandId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: brand_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        brandName:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: brand_name
+        brandDescription:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: brand_description
+        brandImage:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: brand_image
+        brandLink:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: brand_link
+    lifecycleCallbacks: {  }

@@ -1,0 +1,22 @@
+App\Entity\StoreCategory:
+    type: entity
+    table: store_category
+    id:
+        categoryId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: category_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        categoryName:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: category_name
+    lifecycleCallbacks: {  }

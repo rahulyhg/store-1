@@ -1,0 +1,33 @@
+App\Entity\StoreProductCategory:
+    type: entity
+    table: store_product_category
+    id:
+        productCategoryId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: product_category_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        productId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: product_id
+        categoryId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: category_id
+        subcategoryId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: subcategory_id
+    lifecycleCallbacks: {  }

@@ -1,0 +1,29 @@
+App\Entity\CommonLogs:
+    type: entity
+    table: common_logs
+    id:
+        logId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: log_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        logData:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: log_data
+        logDatetime:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: log_datetime
+    lifecycleCallbacks: {  }

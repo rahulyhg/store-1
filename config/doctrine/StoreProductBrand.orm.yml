@@ -1,0 +1,27 @@
+App\Entity\StoreProductBrand:
+    type: entity
+    table: store_product_brand
+    id:
+        productBrandId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: product_brand_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        productId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: product_id
+        brandId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: brand_id
+    lifecycleCallbacks: {  }

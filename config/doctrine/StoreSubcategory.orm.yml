@@ -1,0 +1,28 @@
+App\Entity\StoreSubcategory:
+    type: entity
+    table: store_subcategory
+    id:
+        subcategoryId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: subcategory_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        categoryId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: category_id
+        subcategoryName:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: subcategory_name
+    lifecycleCallbacks: {  }

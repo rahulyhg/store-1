@@ -17,3 +17,14 @@
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+
+###> Images cache ###
+/public/images/products/*
+!/public/images/products/.gitignore
+
+/public/images/brands/*
+!/public/images/brands/.gitignore
+
+/public/images/users/*
+!/public/images/users/.gitignore
+###< Images cache ###
