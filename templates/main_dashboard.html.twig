@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html debug="true">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Seandle Dashboard</title>
+		<meta name="robots" content="none" />
+
+		<!--<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>-->
+		<!--<script type="text/javascript" src="{{ asset('javascript/library/firebug-lite.js') }}">
+			{
+				overrideConsole: true,
+				startInNewWindow: true,
+				startOpened: true,
+				enableTrace: true
+			}
+		</script>-->
+
+		{% set path_authors_images = asset('images/authors/') %}
+		{% set path_upload_images = asset('images/upload/') %}
+		{% set path_defaults_images = asset('images/defaults/') %}
+
+		<script type="text/javascript">
+			var write_log_action_url = "{{ path('write_log_action') }}";
+			var path_authors_images = "{{ asset('images/authors/') }}";
+			var path_upload_images = "{{ asset('images/upload/') }}";
+			var path_defaults_images = "{{ asset('images/defaults/') }}"
+			{% block init %}{% endblock %}
+		</script>
+
+		<link rel="stylesheet" href="{{ asset('stylesheet/library/materialize.min.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('stylesheet/common/main_dashboard.css') }}"/>
+		<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+		<link href="{{ asset('fonts/material-icons/material-icons.css') }}" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+		<!--<link href="{{ asset('fonts/ubuntu/ubuntu.css') }}" rel="stylesheet">-->
+		<script src="{{ asset('javascript/library/jquery-3.3.1.min.js') }}"></script>
+		<script src="{{ asset('javascript/library/jquery.cookie.js') }}"></script>
+		<script src="{{ asset('javascript/library/materialize.min.js') }}"></script>
+		<script src="{{ asset('javascript/common/main_dashboard.js') }}"></script>
+		{% block include %}{% endblock %}
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}"/>
+	</head>
+	<body>
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper light-blue accent-4">
+					{% if app.request.cookies.get('author_id') %}
+						<ul class="show-on-large show-on-medium-and-down left">
+							<li><a data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a></li>
+						</ul>
+					{% endif %}
+						<ul class="left hide-on-med-and-down">
+							<li><a href="{{ path('dashboard_dashboard') }}">{{ translation.main.link_dashboard }}</a></li>
+						</ul>
+					{% if app.request.cookies.get('author_id') %}
+						<ul class="right">
+							<li><a class="clickable" href="{{ path('dashboard_inbox') }}"><i class="material-icons">email</i></a></li>
+							<li><a class="clickable" id="clear_alerts"><i class="material-icons">clear_all</i></a></li>
+							<li><a class="clickable" id="button_logout_author"><i class="material-icons">exit_to_app</i></a></li>
+						</ul>
+					{% endif %}
+					<div class="progress red" id="preloader"><div class="indeterminate green"></div></div>
+				</div>
+
+			</nav>
+		</div>
+	{% if app.request.cookies.get('author_id') %}
+	<ul id="slide-out" class="sidenav">
+		<li>
+			<div class="user-view">
+				<div class="background teal"></div>
+				<a class="sidenav-close white-text clickable"><i class="material-icons right">close</i></a>
+				<a><img class="circle responsive-img" src="{{ profile.image }}"></a>
+				<a><span class="white-text name">{{ profile.name }}</span></a>
+				<a><span class="white-text email">{{ profile.email }}</span></a>
+			</div>
+		</li>
+		<li><a href="{{ path ('dashboard_dashboard') }}">{{ translation.main.link_dashboard }}</a></li>
+		<li class="divider"></li>
+		<li><a href="{{ path('dashboard_profile') }}">{{ translation.main.link_profile }}</a></li>
+		<li class="divider"></li>
+		<li><a href="{{ path('dashboard_public') }}">{{ translation.main.link_public }}</a></li>
+		<li><a href="{{ path ('dashboard_portfolio') }}">{{ translation.main.link_portfolio }}</a></li>
+		<li><a href="{{ path ('dashboard_blog') }}">{{ translation.main.link_blog }}</a></li>
+		<li class="divider"></li>
+		<li><a href="{{ path ('dashboard_authors') }}">{{ translation.main.link_authors }}</a></li>
+		<li class="divider"></li>
+		<li><a href="{{ path ('dashboard_payments') }}">{{ translation.main.link_payments }}</a></li>
+		<li><a href="{{ path ('dashboard_seo') }}">{{ translation.main.link_seo }}</a></li>
+		<li class="divider"></li>
+
+	</ul>
+	{% endif %}
+
+		<header class="container">
+			<div class="row">
+				{% block header %}{% endblock %}
+			</div>
+		</header>
+
+		<main class="container">
+			<div class="row">
+				{% block main %}{% endblock %}
+			</div>
+		</main>
+
+		{% if app.request.cookies.get('author_id') %}
+			<div class="fixed-action-btn toolbar">
+				<a class="btn-floating btn-large red"><i class="large material-icons">apps</i></a>
+				<ul>
+					{% block buttonopenform %}{% endblock %}
+					<li class="waves-effect waves-light"><a class="tooltipped" href="{{ path('dashboard_logs') }}" data-position="top" data-delay="50" data-tooltip="{{ translation.main.link_logs }}"><i class="material-icons">list</i></a></li>
+					<li class="waves-effect waves-light"><a class="clickable" id="button_modal_settings"><i class="material-icons">settings</i></a></li>
+					<li class="waves-effect waves-light"><a href="{{ path('public_public') }}" target="_blank"><i class="material-icons">link</i></a></li>
+				</ul>
+			</div>
+
+			<div id="modal_settings" class="modal modal-fixed-footer">
+				<div class="modal-content">
+					<h5>{{ translation.main.title_modal_settings }}</h5>
+					<p>
+
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a class="modal-action modal-close waves-effect waves-red btn-flat clickable">{{ translation.main.button_modal_close }}</a>
+				</div>
+			</div>
+		{% endif %}
+
+		<div id="input_form" class="modal modal-fixed-footer">
+			{% block inputform %}{% endblock %}
+		</div>
+
+		{% block extras %}{% endblock %}
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#preloader').hide();
+				$('#clear_alerts').on('click', function() {
+					M.Toast.dismissAll();
+					//$('#clear_alerts').trigger('blur');
+				});
+				{% block javascript %}{% endblock %}
+			});
+
+			{% if app.request.cookies.get('author_id') %}
+				$('#button_modal_settings').on('click', function()  {
+					$('#modal_settings').modal('open');
+				});
+
+				$('#button_logout_author').on('click', function() {
+					$.ajax({
+						url: '{{ path ('dashboard_logout_author_action') }}',
+						type: "POST",
+						cache: true,
+						async: true,
+						data: {
+							"logout_author_action": true
+						},
+						dataType: "json",
+						beforeSend: function () {
+							$('#preloader').show();
+						},
+						success: function (response) {
+							if (response.result == true) {
+								location.reload(false);
+							}
+						},
+						complete: function () {
+							$('#preloader').hide();
+						},
+						error: function (xhr) {
+							console.log(xhr);
+						}
+					});
+				});
+			{% endif %}
+		</script>
+	</body>
+</html>

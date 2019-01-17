@@ -1,0 +1,9 @@
+#crop {
+	display: none;
+}
+#cropresult {
+	border: 2px solid #ddd;
+}
+.mini {
+	margin: 5px;
+}
