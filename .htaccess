@@ -1,0 +1,25 @@
+DirectoryIndex public_html
+
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+ <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} ^(www.)?seandle.net$
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /public/$1
+    RewriteCond %{HTTP_HOST} ^(www.)?seandle.net$
+    RewriteRule ^(/)?$ public/index.php [L]
+   
+</IfModule>
+<IfModule !mod_rewrite.c>
+    <IfModule mod_alias.c>
+        # When mod_rewrite is not available, we instruct a temporary redirect of
+        # the start page to the front controller explicitly so that the website
+        # and the generated links can still be used.
+        RedirectMatch 307 ^/$ /public/index.php/
+        # RedirectTemp cannot be used instead
+    </IfModule>
+</IfModule>
