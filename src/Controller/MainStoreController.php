@@ -129,4 +129,12 @@ class MainStoreController extends MainController
 
         return $content;
     }
+    
+    /* ##################################################################################### */
+    //
+    /* ##################################################################################### */
+    public function sendMessageAction(Request $request) {
+    	
+       return new JsonResponse();
+    }
 }
