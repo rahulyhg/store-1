@@ -1,11 +1,11 @@
 public:
   path: /
   controller: App\Controller\StorePublicController::renderPublicTemplateAction
-  
-write_log_action:
-  path: /write_log_action
-  controller: App\Controller\MainController::writeLogAction
-  
-send_message_action:
-  path: /seand_message_action
-  controller: App\Controller\MainStoreController::sendMessageAction
+
+#write_log_action:
+#  path: /write_log_action
+#  controller: App\Controller\MainController::writeLogAction
+
+#send_message_action:
+#  path: /seand_message_action
+#  controller: App\Controller\MainStoreController::sendMessageAction

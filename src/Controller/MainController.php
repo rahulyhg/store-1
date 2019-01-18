@@ -3,8 +3,16 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/* ============= Запросы и ответы =============== */
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
+/* =============== Локализация ====================== */
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Symfony\Component\Yaml\Yaml;
+
 
 /* ==================== Include entities ================== */
 use App\Entity\CommonLogs;
@@ -12,12 +20,34 @@ use App\Entity\CommonLogs;
 class MainController extends Controller
 {
     /* ##################################################################################### */
-    // Get  realpath to the app dir like "/var/www/html/store/"
+    // Получение рабочей директории "/var/www/html/store/"
     /* ##################################################################################### */
-    public function getAppDir()
+    protected function getAppDir()
     {
         $app_dir = realpath($this->getParameter('kernel.root_dir').'/..') . DIRECTORY_SEPARATOR;
         return $app_dir;
+    }
+
+    /* ##################################################################################### */
+    // Получение локализации для всего приложения
+    /* ##################################################################################### */
+    //protected function getTranslation(TranslatorInterface $translator)
+    protected function getTranslation()
+    {
+      // установить по дефолту английский язык чтоб если при получении языков из БД не было совпадений
+      // управление языками в панели управления
+      // получить из БД все языки и сравнить с тем, который установлен в куки
+      // если в куки нет языка, то установить по умолчанию дефолтный
+      // но все эти идеи кажутся мне калечными и нужно что-то более гениальное придумать
+        $translator = new Translator('ru_UA');
+        $translator->addLoader('yaml', new YamlFileLoader());
+        $translator->addResource('yaml', 'translations/ru_UA.yaml', 'ru_UA');
+
+        $translation = $translator->trans('sometext');
+
+        //$translation = Yaml::parseFile($this->getAppDir() . 'translations/ru_UA.yaml');
+
+        return $translation;
     }
 
     /* ##################################################################################### */

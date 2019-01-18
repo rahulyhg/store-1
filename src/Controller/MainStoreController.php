@@ -3,19 +3,12 @@ namespace App\Controller;
 
 use App\Controller\MainController;
 
+/* ============= Запросы и ответы =============== */
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 class MainStoreController extends MainController
 {
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    protected function getTranslation($template_name)
-    {
-        include $this->getAppDir() . 'translations/public/main.php';
-        include $this->getAppDir() . 'translations/public/' . $template_name . '.php';
-
-        return $translation;
-    }
-
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
@@ -129,12 +122,12 @@ class MainStoreController extends MainController
 
         return $content;
     }
-    
+
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
     public function sendMessageAction(Request $request) {
-    	
+
        return new JsonResponse();
     }
 }
