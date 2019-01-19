@@ -1,5 +1,0 @@
-store:
-  main:
-    alert_send_message: 'Сообщение отправлено'
-    error_send_message: 'Ошибка отправки сообщения'
-sometext: 'Some text for translation'

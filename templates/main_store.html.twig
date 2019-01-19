@@ -1,243 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>{{ content.meta.title }}</title>
-		<meta name="robots" content="index, follow" />
-		<meta name="document-state" content="static" />
-		<meta name="revisit" content="14" />
-		<meta name="description" content="{{ content.meta.description }}" />
-		<meta name="keywords" content="{{ content.meta.keywords }}" />
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="index, follow"/>
+    <meta name="document-state" content="static"/>
+    <meta name="revisit" content="14"/>
 
-		{% set path_image_notfound = asset('images/defaults/image-not-found.jpg') %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}"/>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="{{ asset('fonts/material-icons/material-icons.css') }}" rel="stylesheet">
 
-		<script type="text/javascript">
-			var write_log_action_url = "{{ path('write_log_action') }}";
+    <link rel="stylesheet" href="{{ asset('library/stylesheet/materialize.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('include/stylesheet/main_store.css') }}"/>
 
-			var public_send_message = "{{ path('public_send_message') }}";
-			var alert_send_message = "{{ translation.main.alert_send_message }}";
-			var error_send_message = "{{ translation.main.error_send_message }}";
-
-			var path_authors_images = "{{ asset('images/authors/') }}";
-			var path_upload_images = "{{ asset('images/upload/') }}";
-			var path_defaults_images = "{{ asset('images/defaults/') }}"
-
-			var path_image_notfound = "{{ path_image_notfound }}";
-
-			{% block init %}{% endblock %}
-		</script>
-
-		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}"/>
-
-		<!-- Production -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-		<!--<link rel="stylesheet" href="{{ asset('stylesheet/library/materialize.min.css') }}" />-->
-
-		<!-- Production -->
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<!--<link href="{{ asset('fonts/material-icons/material-icons.css') }}" rel="stylesheet">-->
-
-		<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-		<link rel="stylesheet" href="{{ asset('stylesheet/common/main_public.css') }}"/>
-
-		<!-- Production -->
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-		<!--<script src="{{ asset('javascript/library/jquery-3.2.0.min.js') }}"></script>-->
-
-		<script src="{{ asset('javascript/library/jquery.cookie.js') }}"></script>
-
-		<!-- Production -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-		<!--<script src="{{ asset('javascript/library/materialize.min.js') }}"></script>-->
-
-		<script src="{{ asset('javascript/common/main_public.js') }}"></script>
-		<script src="{{ asset('javascript/library/form_verification.js') }}"></script>
-
-		<script src="//platform-api.sharethis.com/js/sharethis.js#property=5bcf7b711efc580011ca61cd&product=inline-share-buttons"></script>
-
-		{% block include %}{% endblock %}
-
-		{% if content.analytics_list != false and content.analytics_list | length > 0 %}
-			{% for analytics in content.analytics_list %}
-				{{ analytics | raw }}
-			{% endfor %}
-		{% endif %}
+    <script src="{{ asset('library/javascript/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('library/javascript/jquery.cookie.js') }}"></script>
+    <script src="{{ asset('library/javascript/materialize.min.js') }}"></script>
+    <script src="{{ asset('include/javascript/main_store.js') }}"></script>
+    <script src="{{ asset('library/javascript/form_verification.js') }}"></script>
   </head>
 
   <body>
-	<nav class="nav-extended cyan accent-4">
-		<div class="nav-wrapper container">
-			<ul class="left">
-				<li><a class="clickable" id="button_open_menu"><i class="material-icons notranslate" format="html">menu</i></a></li>
-				<li><a href="{{ path('public_public') }}">{{ translation.main.link_home_page }}</a></li>
-			</ul>
-			<ul class="right">
-				<li><a class="tooltipped clickable" id="button_contacts_form" data-position="left" data-delay="50" data-tooltip="{{ translation.main.button_contactus_form }}"><i class="material-icons notranslate" format="html">email</i></a></li>
-			</ul>
-			<ul class="sidenav" id="mobile-menu">
-				<li>
-					<div class="user-view">
-						<div class="background cyan accent-4"></div>
-						<a class="sidenav-close white-text clickable"><i class="material-icons notranslate right" format="html">close</i></a>
-						<a><img class="circle responsive-img" src="{{ asset('images/defaults/logo_white.png') }}"></a>
-						<a><span class="white-text name notranslate">{{ translation.main.user_view_name }}</span></a>
-						<a href="mailto:{{ translation.main.user_view_email }}"><span class="white-text email notranslate">{{ translation.main.user_view_email }}</span></a>
-					</div>
-				</li>
-				<li><a href="{{ path('public_public') }}">{{ translation.main.link_home_page }}</a></li>
-				<li><div class="divider"></div></li>
-				<li><a href="{{ path ('public_portfolio') }}"><i class="material-icons notranslate left" format="html">work</i>{{ translation.main.link_portfolio_page }}</a></li>
-				<li><a href="{{ path ('public_blog') }}"><i class="material-icons notranslate left" format="html">library_books</i>{{ translation.main.link_blog_page }}</a></li>
-			</ul>
-		</div>
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper purple white-text">
+          <a href="{{ path('store_public') }}" class="brand-logo">Logo</a>
+          <ul class="right hide-on-med-and-down">
+            <li>
+              <a href="sass.html">Sass</a>
+            </li>
+            <li>
+              <a href="badges.html">Components</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
 
-		<div class="nav-header container">
-			<div class="row">
-				<div class="col s12 m12 l12 center">
-					<a href="{{ path('public_public') }}">
-						<h1 class="center notranslate" id="header_text_logo">{{ translation.main.header_text_logo }}</h1>
-						<h5 class="center" id="header_text_tagline">{{ translation.main.header_text_tagline }}</h5>
-					</a>
-				</div>
-			</div>
-		</div>
+    <div class="height-15"></div>
 
-		<div class="height-5"></div>
-		<div class="progress orange accent-4" id="preloader"><div class="indeterminate green accent-4"></div></div>
-	</nav>
+    <header class="container">
+      <div class="row">
+        <!-- тут разместить строку поиска и меню категорий -->
+        <div class="col s12 m12 l12">
+          <nav>
+            <div class="nav-wrapper">
+              <form>
+                <div class="input-field">
+                  <input id="search" type="search" required="required">
+                  <label class="label-icon" for="search">
+                    <i class="material-icons">search</i>
+                  </label>
+                  <i class="material-icons">close</i>
+                </div>
+              </form>
+            </div>
+          </nav>
+        </div>
+        <div class="col s12 m12 l12">
+          <ul class="collapsible popout">
+            <li>
+              <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
 
-	<div class="height-15"></div>
+    <main class="container">
+      <div class="row">
+        {% block main %}{% endblock %}
+      </div>
+    </main>
 
-	<header class="container">
-		<div class="row">
-			{% block header %}{% endblock %}
-		</div>
-	</header>
+    <footer class="page-footer cyan accent-4">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 m6 s12">
+            <h5 class="white-text">About US</h5>
+            <p class="grey-text text-lighten-4 notranslate">Some text about Us</p>
+            <ul>
+              <li>
+                <a class="grey-text text-lighten-3 clickable" id="button_informations">
+                  <i class="material-icons notranslate left" format="html">label</i>Informations</a>
+              </li>
+            </ul>
+          </div>
 
-	<main class="container">
-		<div class="row">
-			{% block main %}{% endblock %}
-		</div>
-	</main>
 
-	{% if content.advertisements != false and content.advertisements | length > 0 %}
-		{% for advertisement in content.advertisements %}
-			<div class="container">
-				{{ advertisement | raw }}
-			</div>
-		{% endfor %}
-	{% endif %}
+            <div class="col l6 m6 s12">
+              <h5 class="white-text">Links</h5>
+              <ul>
 
-	<div class="modal modal-fixed-footer" id="modal_contacts_form">
-		<div class="modal-content row">
-			<h5>{{ translation.main.title_contactus_form }}</h5>
-			<p>{{ translation.main.info_contactus_form }}</p>
-			<div class="col s12 m12 l12 input-field">
-				<i class="material-icons notranslate prefix" format="html">person</i>
-				<input type="text" class="validate" id="input_contactus_name" />
-				<label for="input_contactus_name">{{ translation.main.input_contactus_name }}</label>
-			</div>
-			<div class="col s12 m12 l12 input-field">
-				<i class="material-icons notranslate prefix" format="html">email</i>
-				<input type="email" class="validate" id="input_contactus_email" />
-				<label for="input_contactus_email">{{ translation.main.input_contactus_email }}</label>
-			</div>
-			<div class="col s12 m12 l12 input-field">
-				<i class="material-icons notranslate prefix" format="html">mode_edit</i>
-				<textarea class="materialize-textarea" id="input_contactus_message"></textarea>
-				<label for="input_contactus_message">{{ translation.main.input_contactus_message }}</label>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<a class="modal-action waves-effect waves-green btn-flat clickable" id="button_contactus_send">{{ translation.main.button_contactus_send }}</a>
-			<a class="modal-action modal-close waves-effect waves-red btn-flat clickable">{{ translation.main.button_contactus_close }}</a>
-		</div>
-	</div>
+                  <li>
+                    <a class="grey-text text-lighten-3 tooltipped truncate" target="_blank" href="" data-position="top" data-delay="50" data-tooltip="sdfsdf">sdfsdf</a>
+                  </li>
 
-	<div class="modal modal-fixed-footer" id="modal_informations">
-		<div class="modal-content">
-			<p>{{ content.informations | raw }}</p>
-		</div>
-		<div class="modal-footer">
-			<a class="modal-action modal-close waves-effect waves-red btn-flat clickable">{{ translation.main.button_informations_close }}</a>
-		</div>
-	</div>
+              </ul>
+            </div>
 
-	{% block extra %}{% endblock %}
+        </div>
 
-	<footer class="page-footer cyan accent-4">
-		<div class="container">
-			<div class="row">
-				<div class="col l6 m6 s12">
-					<h5 class="white-text">{{ translation.main.footer_information_headline }}</h5>
-					<p class="grey-text text-lighten-4 notranslate">{{ translation.main.footer_information_aboutus }}</p>
-					<ul>
-						<li><a class="grey-text text-lighten-3 clickable" id="button_informations"><i class="material-icons notranslate left" format="html">label</i>{{ translation.main.footer_button_informations }}</a></li>
-					</ul>
-				</div>
+        <div class="footer-copyright">
+          <div class="container">
+            <a class="grey-text text-lighten-4 notranslate" href="">Seandle Team 2018</a>
+          </div>
+        </div>
+      </div>
+    </footer>
 
-				{% if content.module_links != false and content.module_links | length > 0 %}
-					<div class="col l6 m6 s12">
-						<h5 class="white-text">{{ translation.main.footer_links_headline }}</h5>
-						<ul>
-							{% for link in content.module_links %}
-								<li><a class="grey-text text-lighten-3 tooltipped truncate" target="_blank" href="{{ link.path }}" data-position="top" data-delay="50" data-tooltip="{{ link.description }}">{{ link.name }}</a></li>
-							{% endfor %}
-						</ul>
-					</div>
-				{% endif %}
-			</div>
-
-			<div class="footer-copyright">
-				<div class="container">
-					<a class="grey-text text-lighten-4 notranslate" href="{{ translation.main.footer_copyright_link }}">{{ translation.main.footer_copyright_text }}</a>
-				</div>
-			</div>
-		</div>
-	</footer>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#preloader').hide();
-
-			/*$('i').each(function() {
-				$(this).attr('format', 'html');
-			});*/
-
-      var sidenav_elem = $('.sidenav');
-      var instance = M.Sidenav.getInstance(sidenav_elem);
-      $('#button_open_menu').on('click', function() {
-          instance.open();
-      });
-
-			/* ======================= CONTACT US =========================== */
-			$('#button_contacts_form').on('click', function() {
-				$('#modal_contacts_form').modal('open');
-			});
-			$('#button_contactus_send').on('click', function() {
-				var form_data = {
-					'name': $('#input_contactus_name').val(),
-					'email': $('#input_contactus_email').val(),
-					'text': $('#input_contactus_message').val()
-				};
-
-				if(form_data.name.length >= 2 && checkEmail(form_data.email) == true && form_data.text.length >= 10) {
-					sendContactUsForm(form_data);
-				} else {
-					elegant_alert.warning("{{ translation.main.warning_contactus_form }}");
-				}
-				delete form_data;
-			});
-
-			/* ========== INFORMATION ========== */
-			$('#button_informations').on('click', function(){
-				$('#modal_informations').modal('open');
-			});
-
-			{% block javascript %}{% endblock %}
-		});
-	</script>
   </body>
 </html>

@@ -1,0 +1,32 @@
+html {
+  font-family: 'Ubuntu', sans-serif;
+ }
+.header-logo {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 700%;
+}
+
+.clickable {
+  cursor: pointer;
+}
+.display-none {
+	display: none;
+}
+.wrap-none {
+	white-space: nowrap;
+}
+.text-select-none {
+  cursor: default;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* ================ вертикальные отступы ================= */
+.height-5 {
+	height: 5px;
+}
+.height-15 {
+  height: 15px;
+}

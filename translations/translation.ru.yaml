@@ -1,0 +1,27 @@
+############################## STORE LOCALIZATION ##############################
+store:
+  main:
+    title_contactus_form: 'Связаться с нами'
+    info_contactus_form: 'Напишите нам сообщение со своими вопросами и предложениями и мы свяжемся с Вами в ближайшее время'
+    input_contactus_name: 'Ваше имя'
+    input_contactus_email: 'Ваша почта'
+    input_contactus_message: 'Сообщение'
+    button_contactus_send: 'Отправить'
+    button_contactus_close: 'Закрыть'
+    alert_send_message: 'Сообщение отправлено'
+    error_send_message: 'Ошибка отправки сообщения'
+    footer_information_title: 'О нас'
+    footer_button_informations: 'Дополнительная информация'
+    button_informations_close: 'Закрыть'
+    footer_links_title: 'Ссылки'
+    footer_manufacturer_info: '<a href="http://seandle.net">Seandle Team 2018</a>'
+
+############################# DASHBOARD LOCALIZATION ###########################
+dashboard:
+  main:
+    title: 'Панель управления'
+
+  registration:
+    title: 'Регистрация'
+    information: 'Регистация в панели управления. Внимание, после регистрации Ваш аккаунт должен подтвердить главный администратор чтоб Вы могли войти в панель управления.'
+    

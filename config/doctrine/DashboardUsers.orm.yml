@@ -40,4 +40,8 @@ App\Entity\DashboardUsers:
             options:
                 fixed: false
             column: user_image
+        userStatus:
+            type: boolean
+            nullable: false
+            column: user_status
     lifecycleCallbacks: {  }

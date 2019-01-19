@@ -49,6 +49,13 @@ class DashboardUsers
      */
     private $userImage;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="user_status", type="boolean", nullable=false)
+     */
+    private $userStatus;
+
     public function getUserId(): ?int
     {
         return $this->userId;
@@ -98,6 +105,18 @@ class DashboardUsers
     public function setUserImage(string $userImage): self
     {
         $this->userImage = $userImage;
+
+        return $this;
+    }
+
+    public function getUserStatus(): ?bool
+    {
+        return $this->userStatus;
+    }
+
+    public function setUserStatus(bool $userStatus): self
+    {
+        $this->userStatus = $userStatus;
 
         return $this;
     }

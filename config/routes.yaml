@@ -1,4 +1,4 @@
-public:
+store_public:
   path: /
   controller: App\Controller\StorePublicController::renderPublicTemplateAction
 
@@ -9,3 +9,12 @@ public:
 #send_message_action:
 #  path: /seand_message_action
 #  controller: App\Controller\MainStoreController::sendMessageAction
+
+############################ DASHBOARD #########################################
+dashboard_dashboard:
+  path: /dashboard
+  controller: App\Controller\DashboardDashboardController::renderDashboardDasboardAction
+
+dashboard_registration:
+  path: /dashboard/registration
+  controller: App\Controller\DashboardRegistrationController::renderDashboardRegistrationAction

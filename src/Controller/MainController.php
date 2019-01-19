@@ -39,13 +39,13 @@ class MainController extends Controller
       // получить из БД все языки и сравнить с тем, который установлен в куки
       // если в куки нет языка, то установить по умолчанию дефолтный
       // но все эти идеи кажутся мне калечными и нужно что-то более гениальное придумать
-        $translator = new Translator('ru_UA');
-        $translator->addLoader('yaml', new YamlFileLoader());
-        $translator->addResource('yaml', 'translations/ru_UA.yaml', 'ru_UA');
+        //$translator = new Translator('ru_UA');
+        //$translator->addLoader('yaml', new YamlFileLoader());
+        //$translator->addResource('yaml', 'translations/store.ru.yaml', 'ru_UA');
 
-        $translation = $translator->trans('sometext');
+        //$translation = $translator->trans('sometext');
 
-        //$translation = Yaml::parseFile($this->getAppDir() . 'translations/ru_UA.yaml');
+        $translation = Yaml::parseFile($this->getAppDir() . 'translations/translation.ru.yaml');
 
         return $translation;
     }

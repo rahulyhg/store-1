@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Янв 17 2019 г., 23:05
+-- Время создания: Янв 19 2019 г., 23:54
 -- Версия сервера: 10.1.37-MariaDB-0+deb9u1
 -- Версия PHP: 7.2.14-1+0~20190113100742.14+stretch~1.gbpd83c69
 
@@ -64,7 +64,8 @@ CREATE TABLE `dashboard_users` (
   `user_name` text NOT NULL,
   `user_email` text NOT NULL,
   `user_password` text NOT NULL,
-  `user_image` text NOT NULL
+  `user_image` text NOT NULL,
+  `user_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
