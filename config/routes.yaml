@@ -18,3 +18,6 @@ dashboard_dashboard:
 dashboard_registration:
   path: /dashboard/registration
   controller: App\Controller\DashboardRegistrationController::renderDashboardRegistrationAction
+dashboard_register_user_action:
+  path: /dashboard/registration/register_user_action
+  controller: App\Controller\DashboardRegistrationController::registerUserAction

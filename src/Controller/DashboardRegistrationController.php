@@ -24,7 +24,7 @@ class DashboardRegistrationController extends MainDashboardController
         $session->invalidate();
 
         return $this->render('dashboard_registration.html.twig', array(
-          'translation' => $this->getTranslation('registration'),
+          'translation' => $this->getTranslation(),
         ));
     }
 
@@ -69,12 +69,12 @@ class DashboardRegistrationController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function registerAuthorAction(Request $request)
+    public function registerUserAction(Request $request)
     {
         $session = new Session();
         $session->invalidate();
 
-        $path_authors_images = $this->getAppDir() . '/public/images/authors/';
+        $path_authors_images = $this->getAppDir() . '/public/images/users/';
 
         $image_token_name = $request->request->get('image_token_name');
 

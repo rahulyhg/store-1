@@ -1,0 +1,155 @@
+{# ======== DASHBOARD REGISTRATION TEMPLATE ======== #}
+{% extends 'main_dashboard.html.twig' %}
+
+{% block init %}
+	var register_author_action_url = "{{ path('dashboard_register_user_action') }}";
+
+	var cache_images_path = "{{ asset('images/cache/') }}";
+	var authors_images_path = "{{ asset('images/users/') }}";
+
+	var alert_register_author = "{{ translation.registration.alert_register_author }}";
+	var error_register_author = "{{ translation.registration.error_register_author }}";
+
+	var jcrop_api;
+	var origin_image_width;
+	var origin_image_height;
+{% endblock %}
+
+{% block include %}
+	<script type="text/javascript" src="{{ asset('library/javascript/jquery.Jcrop.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('library/javascript/random_token.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('library/javascript/form_verification.js') }}"></script>
+
+	<script type="text/javascript" src="{{ asset('include/javascript/dashboard_registration.js') }}"></script>
+
+	<link rel="stylesheet" href="{{ asset('library/stylesheet/jquery.Jcrop.css') }}" type="text/css" />
+	<link rel="stylesheet" href="{{ asset('library/stylesheet/crop.css') }}" type="text/css" />
+{% endblock %}
+
+{% block inputform %}
+	<div class="modal-content">
+		<h5>{{ translation.registration.form_image_upload }}</h5>
+		<p>
+			<div class="input-field center" id="origin_image_field"></div>
+		</p>
+	</div>
+	<div class="modal-footer">
+		<a class="modal-action modal-close waves-effect waves-green btn-flat clickable" id="button_crop_image">{{ translation.registration.button_crop_image }}</a>
+		<a class="modal-action waves-effect waves-orange btn-flat clickable" id="button_crop_disable">{{ translation.registration.button_crop_disable }}</a>
+	</div>
+{% endblock %}
+
+{% block main %}
+	<h5 class="center">{{ translation.registration.page_title }}</h5>
+
+	<div class="col s12 m12 l12">
+		<div class="card hoverable">
+			<div class="card-content">
+				<p>{{ translation.registration.form_info }}</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="col s12 m12 l12">
+		<div class="card hoverable">
+			<div class="card-content">
+				<span class="card-title">{{ translation.registration.form_about_title }}</span>
+				<form id="form_register_author" enctype="multipart/form-data" action="{{ path('dashboard_register_author_action') }}" method="post" accept="image/*">
+					<p>
+						<div class="input-field">
+							<input type="text" name="input_author_name" id="input_author_name" value="" />
+							<label for="input_author_name">{{ translation.registration.input_author_name }}</label>
+						</div>
+						<div class="input-field">
+							<input type="text" name="input_author_login" id="input_author_login" value="" />
+							<label for="input_author_login">{{ translation.registration.input_author_login }}</label>
+						</div>
+						<div class="input-field">
+							<input type="text" name="input_author_email" id="input_author_email" value="" />
+							<label for="input_author_email">{{ translation.registration.input_author_email }}</label>
+						</div>
+						<div class="file-field input-field tooltipped" data-position="top" data-delay="50" data-tooltip="{{ translation.registration.button_select_image }}">
+							<div class="btn btn-large purple white-text">
+								<span><i class="material-icons">file_upload</i></span>
+								<input type="file" name="input_author_image_file" id="input_author_image_file" />
+							</div>
+							<div class="file-path-wrapper">
+								<input type="text" class="file-path validate" name="input_author_image_filename" id="input_author_image_filename" value="" placeholder="{{ translation.registration.input_author_image }}" />
+							</div>
+						</div>
+					</p>
+
+					<p>
+
+						<div class="input-field">
+							<input type="text" name="input_author_password" id="input_author_password" />
+							<label for="input_author_password">{{ translation.registration.input_author_password }}</label>
+						</div>
+					</p>
+
+					<input type="hidden" name="image_token_name" id="image_token_name" value="0" />
+					<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+					<input type="hidden" name="image_x1" id="image_x1" value="" />
+					<input type="hidden" name="image_y1" id="image_y1" value="" />
+					<input type="hidden" name="image_x2" id="image_x2" value="" />
+					<input type="hidden" name="image_y2" id="image_y2" value="" />
+					<input type="hidden" name="image_w" id="image_w" value="" />
+					<input type="hidden" name="image_h" id="image_h" value="" />
+				</form>
+			</div>
+			<div class="card-action">
+				<a class="clickable" id="button_register_author">{{ translation.registration.button_register_author }}</a>
+				<a class="clickable" id="button_clear_form">{{ translation.registration.button_clear_form }}</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascript %}
+	$('#input_author_image_file').on('change', function() {
+		$('#input_form').modal('open');
+		previewImage(this);
+	});
+
+	$('#button_crop_image').on('click', function() {
+		$('#image_token_name').val(generateToken(32));
+
+		var image_x1 = Number($('#image_x1').val());
+		var image_y1 = Number($('#image_y1').val());
+		var image_w = Number($('#image_w').val());
+		var image_h = Number($('#image_h').val());
+
+		var image_scale = origin_image_width / Number($('#origin_image').width());
+
+		var image_real_x1 = Math.floor(image_x1 * image_scale);
+		$('#image_x1').val(image_real_x1);
+		var image_real_y1 = Math.floor(image_y1 * image_scale);
+		$('#image_y1').val(image_real_y1);
+		var image_real_width = Math.ceil(image_w * image_scale);
+		$('#image_w').val(image_real_width);
+		var image_real_height = Math.ceil(image_h * image_scale);
+		$('#image_h').val(image_real_height);
+	});
+
+	$('#button_crop_disable').click(function(e) {
+		releaseCrop();
+	});
+
+	$('#button_register_author').on('click', function () {
+		var form_data = serializeForm();
+		var image_x2 = Number($('#image_x2').val());
+		var image_y2 = Number($('#image_y2').val());
+		if(form_data.name.length >= 3 && form_data.about.length >= 7 && checkEmail(form_data.email) == true && form_data.login.length >= 6 && form_data.password.length >= 6 && form_data.token.length == 32 && image_x2 > 0 && image_y2 > 0) {
+			$('#form_register_author').trigger('submit');
+		} else {
+			elegant_alert.warning("{{ translation.registration.warning_input_form }}");
+		}
+		delete form_data;
+	});
+
+	$('#button_clear_form').on('click', function() {
+		clearForm();
+		elegant_alert.success("{{ translation.registration.alert_clear_form }}");
+	});
+
+{% endblock %}

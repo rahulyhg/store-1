@@ -12,21 +12,10 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
 /* ========== Подключение БД ========== */
-//use App\Entity\DashboardAuthors;
+use App\Entity\DashboardUsers;
 
 class MainDashboardController extends MainController
 {
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    /*protected function getTranslation($template_name)
-    {
-        include $this->getAppDir() . 'translations/dashboard/main.php';
-        include $this->getAppDir() . 'translations/dashboard/' . $template_name . '.php';
-
-        return $translation;
-    }*/
-
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
@@ -129,7 +118,7 @@ class MainDashboardController extends MainController
                 $response->headers->setCookie(new Cookie('author_name', $author->getAuthorName()));
                 $response->headers->setCookie(new Cookie('author_email', $author->getAuthorEmail()));
                 $response->headers->setCookie(new Cookie('author_image', $author->getAuthorImage()));
-                $response->headers->setCookie(new Cookie('author_login', $author->getAuthorLogin()));
+                //$response->headers->setCookie(new Cookie('author_login', $author->getAuthorLogin()));
                 $response->headers->setCookie(new Cookie('author_password', $author->getAuthorPassword()));
 
                 $response->send();

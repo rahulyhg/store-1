@@ -19,6 +19,13 @@ App\Entity\DashboardUsers:
             options:
                 fixed: false
             column: user_name
+        userPhone:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: user_phone
         userEmail:
             type: text
             nullable: false
