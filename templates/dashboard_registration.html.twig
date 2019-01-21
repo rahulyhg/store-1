@@ -2,13 +2,13 @@
 {% extends 'main_dashboard.html.twig' %}
 
 {% block init %}
-	var register_author_action_url = "{{ path('dashboard_register_user_action') }}";
+	var register_user_action_url = "{{ path('dashboard_register_user_action') }}";
 
 	var cache_images_path = "{{ asset('images/cache/') }}";
-	var authors_images_path = "{{ asset('images/users/') }}";
+	var users_images_path = "{{ asset('images/users/') }}";
 
-	var alert_register_author = "{{ translation.registration.alert_register_author }}";
-	var error_register_author = "{{ translation.registration.error_register_author }}";
+	var alert_register_user = "{{ translation.registration.alert_register_user }}";
+	var error_register_user = "{{ translation.registration.error_register_user }}";
 
 	var jcrop_api;
 	var origin_image_width;
@@ -54,27 +54,27 @@
 		<div class="card hoverable">
 			<div class="card-content">
 				<span class="card-title">{{ translation.registration.form_about_title }}</span>
-				<form id="form_register_author" enctype="multipart/form-data" action="{{ path('dashboard_register_author_action') }}" method="post" accept="image/*">
+				<form id="form_register_user" enctype="multipart/form-data" action="{{ path('dashboard_register_user_action') }}" method="post" accept="image/*">
 					<p>
 						<div class="input-field">
-							<input type="text" name="input_author_name" id="input_author_name" value="" />
-							<label for="input_author_name">{{ translation.registration.input_author_name }}</label>
+							<input type="text" name="input_user_name" id="input_user_name" value="" />
+							<label for="input_user_name">{{ translation.registration.input_user_name }}</label>
 						</div>
 						<div class="input-field">
-							<input type="text" name="input_author_login" id="input_author_login" value="" />
-							<label for="input_author_login">{{ translation.registration.input_author_login }}</label>
+							<input type="text" name="input_user_login" id="input_user_login" value="" />
+							<label for="input_user_login">{{ translation.registration.input_user_login }}</label>
 						</div>
 						<div class="input-field">
-							<input type="text" name="input_author_email" id="input_author_email" value="" />
-							<label for="input_author_email">{{ translation.registration.input_author_email }}</label>
+							<input type="text" name="input_user_email" id="input_user_email" value="" />
+							<label for="input_user_email">{{ translation.registration.input_user_email }}</label>
 						</div>
 						<div class="file-field input-field tooltipped" data-position="top" data-delay="50" data-tooltip="{{ translation.registration.button_select_image }}">
 							<div class="btn btn-large purple white-text">
 								<span><i class="material-icons">file_upload</i></span>
-								<input type="file" name="input_author_image_file" id="input_author_image_file" />
+								<input type="file" name="input_user_image_file" id="input_user_image_file" />
 							</div>
 							<div class="file-path-wrapper">
-								<input type="text" class="file-path validate" name="input_author_image_filename" id="input_author_image_filename" value="" placeholder="{{ translation.registration.input_author_image }}" />
+								<input type="text" class="file-path validate" name="input_user_image_filename" id="input_user_image_filename" value="" placeholder="{{ translation.registration.input_user_image }}" />
 							</div>
 						</div>
 					</p>
@@ -82,8 +82,8 @@
 					<p>
 
 						<div class="input-field">
-							<input type="text" name="input_author_password" id="input_author_password" />
-							<label for="input_author_password">{{ translation.registration.input_author_password }}</label>
+							<input type="text" name="input_user_password" id="input_user_password" />
+							<label for="input_user_password">{{ translation.registration.input_user_password }}</label>
 						</div>
 					</p>
 
@@ -98,7 +98,7 @@
 				</form>
 			</div>
 			<div class="card-action">
-				<a class="clickable" id="button_register_author">{{ translation.registration.button_register_author }}</a>
+				<a class="clickable" id="button_register_user">{{ translation.registration.button_register_user }}</a>
 				<a class="clickable" id="button_clear_form">{{ translation.registration.button_clear_form }}</a>
 			</div>
 		</div>
@@ -106,7 +106,7 @@
 {% endblock %}
 
 {% block javascript %}
-	$('#input_author_image_file').on('change', function() {
+	$('#input_user_image_file').on('change', function() {
 		$('#input_form').modal('open');
 		previewImage(this);
 	});
@@ -135,12 +135,12 @@
 		releaseCrop();
 	});
 
-	$('#button_register_author').on('click', function () {
+	$('#button_register_user').on('click', function () {
 		var form_data = serializeForm();
 		var image_x2 = Number($('#image_x2').val());
 		var image_y2 = Number($('#image_y2').val());
 		if(form_data.name.length >= 3 && form_data.about.length >= 7 && checkEmail(form_data.email) == true && form_data.login.length >= 6 && form_data.password.length >= 6 && form_data.token.length == 32 && image_x2 > 0 && image_y2 > 0) {
-			$('#form_register_author').trigger('submit');
+			$('#form_register_user').trigger('submit');
 		} else {
 			elegant_alert.warning("{{ translation.registration.warning_input_form }}");
 		}
