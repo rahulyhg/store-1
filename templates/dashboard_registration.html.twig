@@ -4,11 +4,10 @@
 {% block init %}
 	var register_user_action_url = "{{ path('dashboard_register_user_action') }}";
 
-	var cache_images_path = "{{ asset('images/cache/') }}";
 	var users_images_path = "{{ asset('images/users/') }}";
 
-	var alert_register_user = "{{ translation.registration.alert_register_user }}";
-	var error_register_user = "{{ translation.registration.error_register_user }}";
+	var alert_register_user = "{{ translation.dashboard.registration.alert_register_user }}";
+	var error_register_user = "{{ translation.dashboard.registration.error_register_user }}";
 
 	var jcrop_api;
 	var origin_image_width;
@@ -28,24 +27,24 @@
 
 {% block inputform %}
 	<div class="modal-content">
-		<h5>{{ translation.registration.form_image_upload }}</h5>
+		<h5>{{ translation.dashboard.registration.form_image_upload }}</h5>
 		<p>
 			<div class="input-field center" id="origin_image_field"></div>
 		</p>
 	</div>
 	<div class="modal-footer">
-		<a class="modal-action modal-close waves-effect waves-green btn-flat clickable" id="button_crop_image">{{ translation.registration.button_crop_image }}</a>
-		<a class="modal-action waves-effect waves-orange btn-flat clickable" id="button_crop_disable">{{ translation.registration.button_crop_disable }}</a>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat clickable" id="button_crop_image">{{ translation.dashboard.registration.button_crop_image }}</a>
+		<a class="modal-action waves-effect waves-orange btn-flat clickable" id="button_crop_disable">{{ translation.dashboard.registration.button_crop_disable }}</a>
 	</div>
 {% endblock %}
 
 {% block main %}
-	<h5 class="center">{{ translation.registration.page_title }}</h5>
+	<h5 class="center">{{ translation.dashboard.registration.page_title }}</h5>
 
 	<div class="col s12 m12 l12">
 		<div class="card hoverable">
 			<div class="card-content">
-				<p>{{ translation.registration.form_info }}</p>
+				<p>{{ translation.dashboard.registration.form_info }}</p>
 			</div>
 		</div>
 	</div>
@@ -53,37 +52,33 @@
 	<div class="col s12 m12 l12">
 		<div class="card hoverable">
 			<div class="card-content">
-				<span class="card-title">{{ translation.registration.form_about_title }}</span>
+				<span class="card-title">{{ translation.dashboard.registration.form_title }}</span>
 				<form id="form_register_user" enctype="multipart/form-data" action="{{ path('dashboard_register_user_action') }}" method="post" accept="image/*">
 					<p>
 						<div class="input-field">
 							<input type="text" name="input_user_name" id="input_user_name" value="" />
-							<label for="input_user_name">{{ translation.registration.input_user_name }}</label>
+							<label for="input_user_name">{{ translation.dashboard.registration.input_user_name }}</label>
 						</div>
 						<div class="input-field">
-							<input type="text" name="input_user_login" id="input_user_login" value="" />
-							<label for="input_user_login">{{ translation.registration.input_user_login }}</label>
+							<input type="text" name="input_user_phone" id="input_user_phone" value="" />
+							<label for="input_user_phone">{{ translation.dashboard.registration.input_user_phone }}</label>
 						</div>
 						<div class="input-field">
 							<input type="text" name="input_user_email" id="input_user_email" value="" />
-							<label for="input_user_email">{{ translation.registration.input_user_email }}</label>
+							<label for="input_user_email">{{ translation.dashboard.registration.input_user_email }}</label>
 						</div>
-						<div class="file-field input-field tooltipped" data-position="top" data-delay="50" data-tooltip="{{ translation.registration.button_select_image }}">
+						<div class="file-field input-field tooltipped" data-position="top" data-delay="50" data-tooltip="{{ translation.dashboard.registration.button_select_image }}">
 							<div class="btn btn-large purple white-text">
 								<span><i class="material-icons">file_upload</i></span>
 								<input type="file" name="input_user_image_file" id="input_user_image_file" />
 							</div>
 							<div class="file-path-wrapper">
-								<input type="text" class="file-path validate" name="input_user_image_filename" id="input_user_image_filename" value="" placeholder="{{ translation.registration.input_user_image }}" />
+								<input type="text" class="file-path validate" name="input_user_image_filename" id="input_user_image_filename" value="" placeholder="{{ translation.dashboard.registration.input_user_image }}" />
 							</div>
 						</div>
-					</p>
-
-					<p>
-
 						<div class="input-field">
 							<input type="text" name="input_user_password" id="input_user_password" />
-							<label for="input_user_password">{{ translation.registration.input_user_password }}</label>
+							<label for="input_user_password">{{ translation.dashboard.registration.input_user_password }}</label>
 						</div>
 					</p>
 
@@ -98,8 +93,8 @@
 				</form>
 			</div>
 			<div class="card-action">
-				<a class="clickable" id="button_register_user">{{ translation.registration.button_register_user }}</a>
-				<a class="clickable" id="button_clear_form">{{ translation.registration.button_clear_form }}</a>
+				<a class="clickable" id="button_register_user">{{ translation.dashboard.registration.button_register_user }}</a>
+				<a class="clickable" id="button_clear_form">{{ translation.dashboard.registration.button_clear_form }}</a>
 			</div>
 		</div>
 	</div>
@@ -142,14 +137,14 @@
 		if(form_data.name.length >= 3 && form_data.about.length >= 7 && checkEmail(form_data.email) == true && form_data.login.length >= 6 && form_data.password.length >= 6 && form_data.token.length == 32 && image_x2 > 0 && image_y2 > 0) {
 			$('#form_register_user').trigger('submit');
 		} else {
-			elegant_alert.warning("{{ translation.registration.warning_input_form }}");
+			elegant_alert.warning("{{ translation.dashboard.registration.warning_input_form }}");
 		}
 		delete form_data;
 	});
 
 	$('#button_clear_form').on('click', function() {
 		clearForm();
-		elegant_alert.success("{{ translation.registration.alert_clear_form }}");
+		elegant_alert.success("{{ translation.dashboard.registration.alert_clear_form }}");
 	});
 
 {% endblock %}

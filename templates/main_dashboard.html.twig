@@ -4,7 +4,7 @@
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Seandle Dashboard</title>
+		<title>{{ translation.dashboard.main.page_title}}</title>
 		<meta name="robots" content="none" />
 
 		<!--<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>-->
@@ -17,15 +17,19 @@
 			}
 		</script>-->
 
-		{% set path_authors_images = asset('images/authors/') %}
-		{% set path_upload_images = asset('images/upload/') %}
+		{% set path_users_images = asset('images/users/') %}
+		{% set path_products_images = asset('images/products/') %}
+		{% set path_brands_images = asset('images/brands/') %}
 		{% set path_defaults_images = asset('images/defaults/') %}
 
 		<script type="text/javascript">
 			var write_log_action_url = "{{ path('write_log_action') }}";
-			var path_authors_images = "{{ asset('images/authors/') }}";
-			var path_upload_images = "{{ asset('images/upload/') }}";
-			var path_defaults_images = "{{ asset('images/defaults/') }}"
+
+			var path_users_images = "{{ path_users_images }}";
+			var path_products_images = "{{ path_products_images }}";
+			var path_brands_images = "{{ path_brands_images }}";
+			var path_defaults_images = "{{ path_defaults_images }}"
+
 			{% block init %}{% endblock %}
 		</script>
 
@@ -39,20 +43,22 @@
 		<script src="{{ asset('javascript/library/jquery.cookie.js') }}"></script>
 		<script src="{{ asset('javascript/library/materialize.min.js') }}"></script>
 		<script src="{{ asset('javascript/common/main_dashboard.js') }}"></script>
+
 		{% block include %}{% endblock %}
+
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}"/>
 	</head>
 	<body>
 		<div class="navbar-fixed">
 			<nav>
 				<div class="nav-wrapper light-blue accent-4">
-					{% if app.request.cookies.get('author_id') %}
+					{% if app.request.cookies.get('user_id') %}
 						<ul class="show-on-large show-on-medium-and-down left">
 							<li><a data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a></li>
 						</ul>
 					{% endif %}
 						<ul class="left hide-on-med-and-down">
-							<li><a href="{{ path('dashboard_dashboard') }}">{{ translation.main.link_dashboard }}</a></li>
+							<li><a href="{{ path('dashboard_dashboard') }}">{{ translation.dashboard.main.link_dashboard }}</a></li>
 						</ul>
 					{% if app.request.cookies.get('author_id') %}
 						<ul class="right">
@@ -66,7 +72,7 @@
 
 			</nav>
 		</div>
-	{% if app.request.cookies.get('author_id') %}
+	{% if app.request.cookies.get('user_id') %}
 	<ul id="slide-out" class="sidenav">
 		<li>
 			<div class="user-view">
@@ -85,7 +91,7 @@
 		<li><a href="{{ path ('dashboard_portfolio') }}">{{ translation.main.link_portfolio }}</a></li>
 		<li><a href="{{ path ('dashboard_blog') }}">{{ translation.main.link_blog }}</a></li>
 		<li class="divider"></li>
-		<li><a href="{{ path ('dashboard_authors') }}">{{ translation.main.link_authors }}</a></li>
+		<li><a href="{{ path ('dashboard_users') }}">{{ translation.main.link_authors }}</a></li>
 		<li class="divider"></li>
 		<li><a href="{{ path ('dashboard_payments') }}">{{ translation.main.link_payments }}</a></li>
 		<li><a href="{{ path ('dashboard_seo') }}">{{ translation.main.link_seo }}</a></li>
