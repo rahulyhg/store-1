@@ -15,6 +15,10 @@ dashboard_dashboard:
   path: /dashboard
   controller: App\Controller\DashboardDashboardController::renderDashboardDasboardAction
 
+write_log_action:
+  path: /write_log_action
+  controller: App\Controller\MainController::writeLogAction
+
 dashboard_registration:
   path: /dashboard/registration
   controller: App\Controller\DashboardRegistrationController::renderDashboardRegistrationAction
