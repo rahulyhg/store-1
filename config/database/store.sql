@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Янв 19 2019 г., 23:54
+-- Время создания: Янв 24 2019 г., 23:05
 -- Версия сервера: 10.1.37-MariaDB-0+deb9u1
 -- Версия PHP: 7.2.14-1+0~20190113100742.14+stretch~1.gbpd83c69
 
@@ -62,9 +62,9 @@ INSERT INTO `common_settings` (`setting_id`, `setting_name`, `setting_data`) VAL
 CREATE TABLE `dashboard_users` (
   `user_id` int(11) NOT NULL,
   `user_name` text NOT NULL,
+  `user_phone` text NOT NULL,
   `user_email` text NOT NULL,
   `user_password` text NOT NULL,
-  `user_image` text NOT NULL,
   `user_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -134,7 +134,7 @@ INSERT INTO `store_metadata` (`meta_id`, `meta_name`, `meta_content`) VALUES
 --
 
 CREATE TABLE `store_products` (
-  `product_id` int(11) NOT NULL,
+  `product_id` bigint(20) NOT NULL,
   `product_name` text NOT NULL,
   `product_description` text NOT NULL,
   `product_price` float NOT NULL,
@@ -293,7 +293,7 @@ ALTER TABLE `store_metadata`
 -- AUTO_INCREMENT для таблицы `store_products`
 --
 ALTER TABLE `store_products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `store_product_brand`
 --

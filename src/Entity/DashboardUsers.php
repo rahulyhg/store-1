@@ -50,13 +50,6 @@ class DashboardUsers
     private $userPassword;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="user_image", type="text", length=65535, nullable=false)
-     */
-    private $userImage;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="user_status", type="boolean", nullable=false)
@@ -112,18 +105,6 @@ class DashboardUsers
     public function setUserPassword(string $userPassword): self
     {
         $this->userPassword = $userPassword;
-
-        return $this;
-    }
-
-    public function getUserImage(): ?string
-    {
-        return $this->userImage;
-    }
-
-    public function setUserImage(string $userImage): self
-    {
-        $this->userImage = $userImage;
 
         return $this;
     }

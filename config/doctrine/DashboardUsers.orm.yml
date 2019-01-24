@@ -40,13 +40,6 @@ App\Entity\DashboardUsers:
             options:
                 fixed: false
             column: user_password
-        userImage:
-            type: text
-            nullable: false
-            length: 65535
-            options:
-                fixed: false
-            column: user_image
         userStatus:
             type: boolean
             nullable: false
