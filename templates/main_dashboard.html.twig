@@ -4,7 +4,7 @@
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>{{ translation.dashboard.main.page_title}}</title>
+		<title>{{ translation.dashboard.main.page_title }}</title>
 		<meta name="robots" content="none" />
 
 		<!--<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>-->
@@ -17,7 +17,6 @@
 			}
 		</script>-->
 
-		{% set path_users_images = asset('images/users/') %}
 		{% set path_products_images = asset('images/products/') %}
 		{% set path_brands_images = asset('images/brands/') %}
 		{% set path_defaults_images = asset('images/defaults/') %}
@@ -25,7 +24,6 @@
 		<script type="text/javascript">
 			var write_log_action_url = "{{ path('write_log_action') }}";
 
-			var path_users_images = "{{ path_users_images }}";
 			var path_products_images = "{{ path_products_images }}";
 			var path_brands_images = "{{ path_brands_images }}";
 			var path_defaults_images = "{{ path_defaults_images }}"
@@ -35,10 +33,10 @@
 
 		<link rel="stylesheet" href="{{ asset('library/stylesheet/materialize.min.css') }}"/>
 		<link rel="stylesheet" href="{{ asset('include/stylesheet/main_dashboard.css') }}"/>
-		
+
 		<link href="{{ asset('fonts/material-icons/material-icons.css') }}" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-		
+
 		<script src="{{ asset('library/javascript/jquery-3.3.1.min.js') }}"></script>
 		<script src="{{ asset('library/javascript/jquery.cookie.js') }}"></script>
 		<script src="{{ asset('library/javascript/materialize.min.js') }}"></script>
@@ -92,7 +90,7 @@
 		<li class="divider"></li>
 		<li><a href="{{ path ('dashboard_users') }}">{{ translation.main.link_authors }}</a></li>
 		<li class="divider"></li>
-		
+
 		<li><a href="{{ path ('dashboard_analytics') }}">{{ translation.main.link_seo }}</a></li>
 		<li class="divider"></li>
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html debug="true">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{{ translation.dashboard.error.request_page_title }}</title>
+		<meta name="robots" content="none" />
+
+		<link rel="stylesheet" href="{{ asset('library/stylesheet/materialize.min.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('include/stylesheet/main_dashboard.css') }}"/>
+
+		<link href="{{ asset('fonts/material-icons/material-icons.css') }}" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+		<script src="{{ asset('library/javascript/jquery-3.3.1.min.js') }}"></script>
+		<script src="{{ asset('library/javascript/materialize.min.js') }}"></script>
+		<script src="{{ asset('include/javascript/main_dashboard.js') }}"></script>
+
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}"/>
+	</head>
+	<body>
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper red accent-4">
+						<ul class="left">
+							<li><a href="{{ path('dashboard_dashboard') }}">{{ translation.dashboard.main.link_dashboard }}</a></li>
+						</ul>
+				</div>
+
+			</nav>
+		</div>
+
+		<header class="container">
+			<div class="row">
+				<div class="col s12 m12 l12 center">
+          <h4>{{ translation.dashboard.error.request_page_title }}</h4>
+        </div>
+			</div>
+		</header>
+
+		<main class="container">
+			<div class="row">
+				<div class="col s12 m12 l12">
+          <b>{{ translation.dashboard.error.error_text }}</b>
+          <br />
+          {{ error }}
+        </div>
+			</div>
+		</main>
+
+	</body>
+</html>

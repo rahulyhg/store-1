@@ -1,0 +1,19 @@
+html {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.display-none {
+  display: none;
+}
+
+.text-select-none {
+  cursor: default;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
