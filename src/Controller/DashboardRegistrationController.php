@@ -39,7 +39,7 @@ class DashboardRegistrationController extends MainDashboardController
         $em = $this->getDoctrine()->getManager();
         $dashboard_users = new DashboardUsers();
 
-        if (strlen($request->request->get('input_user_name')) >= 3 || strlen($request->request->get('input_user_name')) < 50) {
+        if (strlen($request->request->get('input_user_name')) >= 3 && strlen($request->request->get('input_user_name')) < 50) {
         	return $this->render('error_request.html.twig', ['translation' => $this->getTranslation()]);
         } else {
             $dashboard_users->setUserName($request->request->get('input_user_name'));
@@ -57,7 +57,7 @@ class DashboardRegistrationController extends MainDashboardController
         	return $this->render('error_request.html.twig', ['translation' => $this->getTranslation()]);
         }
         
-        if (strlen($request->request->get('input_user_password')) >= 6 || strlen($request->request->get('input_user_password')) < 50) {
+        if (strlen($request->request->get('input_user_password')) >= 6 && strlen($request->request->get('input_user_password')) < 50) {
         	$dashboard_users->setUserPassword($this->getPasswordHash($request->request->get('input_user_password')));
         } else {
             return $this->render('error_request.html.twig', ['translation' => $this->getTranslation()]);
@@ -65,8 +65,8 @@ class DashboardRegistrationController extends MainDashboardController
         
         $dashboard_users->setUserStatus(0);
 
-        $em->persist($dashboard_users);
-        $em->flush();
+        //$em->persist($dashboard_users);
+        //$em->flush();
 
         return new RedirectResponse($this->generateUrl('dashboard_dashboard'));
     }
