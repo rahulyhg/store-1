@@ -36,14 +36,10 @@
 							<label for="input_user_name">{{ translation.dashboard.registration.input_user_name }}</label>
 						</div>
 						<div class="input-field">
-							<input type="text" name="input_user_phone" id="input_user_phone" value="" />
-							<label for="input_user_phone">{{ translation.dashboard.registration.input_user_phone }}</label>
-						</div>
-						<div class="input-field">
 							<input type="text" name="input_user_email" id="input_user_email" value="" />
 							<label for="input_user_email">{{ translation.dashboard.registration.input_user_email }}</label>
 						</div>
-						
+
 						<div class="input-field">
 							<input type="text" name="input_user_password" id="input_user_password" />
 							<label for="input_user_password">{{ translation.dashboard.registration.input_user_password }}</label>
@@ -60,10 +56,10 @@
 {% endblock %}
 
 {% block javascript %}
-     //  Сделать проверку введенных телефона и почты на наличие в БД
 	$('#button_register_user').on('click', function () {
 		var form_data = serializeForm();
-		if(form_data.name.length >= 3 && checkEmail(form_data.email) == true && checkPhone(form_data.phone) == true && form_data.password.length >= 6) {
+
+		if(form_data.name.length >= 3 && checkEmail(form_data.email) == true && form_data.password.length >= 6) {
 			$('#form_register_user').trigger('submit');
 		} else {
 			elegant_alert.warning("{{ translation.dashboard.registration.warning_input_form }}");

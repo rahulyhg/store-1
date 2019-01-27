@@ -39,37 +39,42 @@ class DashboardRegistrationController extends MainDashboardController
         $em = $this->getDoctrine()->getManager();
         $dashboard_users = new DashboardUsers();
 
-        if (strlen($request->request->get('input_user_name')) >= 3 && strlen($request->request->get('input_user_name')) < 50) {
-            return $this->render('error_request.html.twig', [
-              'translation' => $this->getTranslation(),
-              'error' => 'App/DashboardRegistrationController::registerUserAction > input_user_name'
-            ]);
+        if (strlen($request->request->get('input_user_name')) >= 3 && strlen($request->request->get('input_user_name')) < 60) {
+          $dashboard_users->setUserName($request->request->get('input_user_name'));
         } else {
-            $dashboard_users->setUserName($request->request->get('input_user_name'));
+          return $this->render('error_request.html.twig', [
+            'translation' => $this->getTranslation(),
+            'error' => 'App/DashboardRegistrationController::registerUserAction > input_user_name'
+          ]);
         }
 
-        if ($this->checkPhoneNumber($request->request->get('input_user_phone')) == true) {
-            $dashboard_users->setUserPhone($request->request->get('input_user_phone'));
+        if ($this->checkEmail($request->request->get('input_user_email')) == false) {
+          return $this->render('error_request.html.twig', [
+            'translation' => $this->getTranslation(),
+            'error' => 'App/DashboardRegistrationController::registerUserAction > [input_user_email] Email format error'
+          ]);
+        } elseif ($this->checkUserEmailExists($request->request->get('input_user_email')) == false) {
+          return $this->render('error_request.html.twig', [
+            'translation' => $this->getTranslation(),
+            'error' => 'App/DashboardRegistrationController::registerUserAction > [input_user_email] The folowing Email exists'
+          ]);
         } else {
-            return $this->render('error_request.html.twig', ['translation' => $this->getTranslation()]);
-        }
-
-        if ($this->checkEmail($request->request->get('input_user_email')) == true) {
             $dashboard_users->setUserEmail($request->request->get('input_user_email'));
-        } else {
-            return $this->render('error_request.html.twig', ['translation' => $this->getTranslation()]);
         }
 
-        if (strlen($request->request->get('input_user_password')) >= 6 && strlen($request->request->get('input_user_password')) < 50) {
+        if (strlen($request->request->get('input_user_password')) >= 6 && strlen($request->request->get('input_user_password')) < 60) {
             $dashboard_users->setUserPassword($this->getPasswordHash($request->request->get('input_user_password')));
         } else {
-            return $this->render('error_request.html.twig', ['translation' => $this->getTranslation()]);
+            return $this->render('error_request.html.twig', [
+              'translation' => $this->getTranslation(),
+              'error' => 'App/DashboardRegistrationController::registerUserAction > input_user_password'
+            ]);
         }
 
         $dashboard_users->setUserStatus(0);
 
-        //$em->persist($dashboard_users);
-        //$em->flush();
+        $em->persist($dashboard_users);
+        $em->flush();
 
         return new RedirectResponse($this->generateUrl('dashboard_dashboard'));
     }
@@ -91,10 +96,4 @@ class DashboardRegistrationController extends MainDashboardController
         return true;
     }
 
-    /* ##################################################################################### */
-    // Проверяет наличие в БД аккаунта с таким номером телефона
-    /* ##################################################################################### */
-    public function checkUserPhoneNumberExists()
-    {
-    }
 }

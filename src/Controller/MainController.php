@@ -34,17 +34,6 @@ class MainController extends Controller
     //protected function getTranslation(TranslatorInterface $translator)
     protected function getTranslation()
     {
-      // установить по дефолту английский язык чтоб если при получении языков из БД не было совпадений
-      // управление языками в панели управления
-      // получить из БД все языки и сравнить с тем, который установлен в куки
-      // если в куки нет языка, то установить по умолчанию дефолтный
-      // но все эти идеи кажутся мне калечными и нужно что-то более гениальное придумать
-        //$translator = new Translator('ru_UA');
-        //$translator->addLoader('yaml', new YamlFileLoader());
-        //$translator->addResource('yaml', 'translations/store.ru.yaml', 'ru_UA');
-
-        //$translation = $translator->trans('sometext');
-
         $translation = Yaml::parseFile($this->getAppDir() . 'translations/translation.ru.yaml');
 
         return $translation;

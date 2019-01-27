@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Янв 24 2019 г., 23:05
+-- Время создания: Янв 27 2019 г., 23:57
 -- Версия сервера: 10.1.37-MariaDB-0+deb9u1
 -- Версия PHP: 7.2.14-1+0~20190113100742.14+stretch~1.gbpd83c69
 
@@ -62,11 +62,17 @@ INSERT INTO `common_settings` (`setting_id`, `setting_name`, `setting_data`) VAL
 CREATE TABLE `dashboard_users` (
   `user_id` int(11) NOT NULL,
   `user_name` text NOT NULL,
-  `user_phone` text NOT NULL,
   `user_email` text NOT NULL,
   `user_password` text NOT NULL,
   `user_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `dashboard_users`
+--
+
+INSERT INTO `dashboard_users` (`user_id`, `user_name`, `user_email`, `user_password`, `user_status`) VALUES
+(2, 'login', 'serjbliznyuk@gmail.com', '$2y$11$qux3r6jQR4B.74mnA/P6UOf2THuf/i9rtLLYsKHsoGyV3bLKNR1c6', 0);
 
 -- --------------------------------------------------------
 
@@ -268,7 +274,7 @@ ALTER TABLE `common_settings`
 -- AUTO_INCREMENT для таблицы `dashboard_users`
 --
 ALTER TABLE `dashboard_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `store_analytics`
 --

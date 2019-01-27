@@ -94,7 +94,7 @@ class MainDashboardController extends MainController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function loginAuthorAction(Request $request)
+    public function loginUserAction(Request $request)
     {
         $session = new Session();
         $session->invalidate();
@@ -107,19 +107,17 @@ class MainDashboardController extends MainController
 
         $form_data = $request->request->get('form_data');
 
-        $dashboard_authors_repository = $this->getDoctrine()->getRepository('App:DashboardAuthors');
-        $dashboard_authors_object = $dashboard_authors_repository->findAll();
+        $dashboard_users_repository = $this->getDoctrine()->getRepository('App:DashboardUsers');
+        $dashboard_users_object = $dashboard_users_repository->findAll();
 
         $result['result'] = false;
 
-        foreach ($dashboard_authors_object as $author) {
-            if (strcmp($author->getAuthorLogin(), $form_data['login']) == 0 && $this->checkPasswordHash($form_data['password'], $author->getAuthorPassword()) == true && $author->getAuthorStatus() == true) {
-                $response->headers->setCookie(new Cookie('author_id', $author->getAuthorId()));
-                $response->headers->setCookie(new Cookie('author_name', $author->getAuthorName()));
-                $response->headers->setCookie(new Cookie('author_email', $author->getAuthorEmail()));
-                $response->headers->setCookie(new Cookie('author_image', $author->getAuthorImage()));
-                //$response->headers->setCookie(new Cookie('author_login', $author->getAuthorLogin()));
-                $response->headers->setCookie(new Cookie('author_password', $author->getAuthorPassword()));
+        foreach ($dashboard_users_object as $user) {
+            if (strcmp($user->getUserEmail(), $form_data['email']) == 0 && $this->checkPasswordHash($form_data['password'], $user->getUserPassword()) == true && $user->getUserStatus() == true) {
+                $response->headers->setCookie(new Cookie('user_id', $user->getUserId()));
+                $response->headers->setCookie(new Cookie('user_name', $user->getUserName()));
+                $response->headers->setCookie(new Cookie('user_email', $user->getUserEmail()));
+                $response->headers->setCookie(new Cookie('user_password', $user->getUserPassword()));
 
                 $response->send();
 
@@ -136,10 +134,10 @@ class MainDashboardController extends MainController
     protected function checkAuthorization()
     {
         $request = Request::createFromGlobals();
-        if ($request->cookies->has('author_id')) {
-            $dashboard_authors_repository = $this->getDoctrine()->getRepository('App:DashboardAuthors');
-            $author_object = $dashboard_authors_repository->findOneByAuthorId($request->cookies->get('author_id'));
-            if (strcmp($request->cookies->get('author_login'), $author_object->getAuthorLogin()) == 0 && strcmp($request->cookies->get('author_password'), $author_object->getAuthorPassword()) == 0 && $author_object->getAuthorStatus() == true) {
+        if ($request->cookies->has('user_id')) {
+            $dashboard_users_repository = $this->getDoctrine()->getRepository('App:DashboardUser');
+            $user_object = $dashboard_users_repository->findOneByUserId($request->cookies->get('user_id'));
+            if (strcmp($request->cookies->get('user_email'), $author_object->getUserEmail()) == 0 && strcmp($request->cookies->get('user_password'), $user_object->getUserPassword()) == 0 && $user_object->getUserStatus() == true) {
                 return true;
             }
         }
@@ -150,15 +148,13 @@ class MainDashboardController extends MainController
     /* #################################### LOGOUT USER ##################################### */
     //
     /* ##################################################################################### */
-    public function logoutAuthorAction()
+    public function logoutUserAction()
     {
         $response = new Response();
-        $response->headers->clearCookie('author_id');
-        $response->headers->clearCookie('author_login');
-        $response->headers->clearCookie('author_name');
-        $response->headers->clearCookie('author_email');
-        $response->headers->clearCookie('author_image');
-        $response->headers->clearCookie('author_password');
+        $response->headers->clearCookie('user_id');
+        $response->headers->clearCookie('user_name');
+        $response->headers->clearCookie('user_email');
+        $response->headers->clearCookie('user_password');
 
         $response->send();
 

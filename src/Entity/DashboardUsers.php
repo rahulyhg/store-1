@@ -31,13 +31,6 @@ class DashboardUsers
     /**
      * @var string
      *
-     * @ORM\Column(name="user_phone", type="text", length=65535, nullable=false)
-     */
-    private $userPhone;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="user_email", type="text", length=65535, nullable=false)
      */
     private $userEmail;
@@ -69,18 +62,6 @@ class DashboardUsers
     public function setUserName(string $userName): self
     {
         $this->userName = $userName;
-
-        return $this;
-    }
-
-    public function getUserPhone(): ?string
-    {
-        return $this->userPhone;
-    }
-
-    public function setUserPhone(string $userPhone): self
-    {
-        $this->userPhone = $userPhone;
 
         return $this;
     }

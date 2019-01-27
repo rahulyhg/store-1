@@ -13,7 +13,7 @@ store_public:
 ############################ DASHBOARD #########################################
 dashboard_dashboard:
   path: /dashboard
-  controller: App\Controller\DashboardDashboardController::renderDashboardDasboardAction
+  controller: App\Controller\DashboardDashboardController::renderDashboardDashboardTemplateAction
 
 write_log_action:
   path: /write_log_action
@@ -25,3 +25,7 @@ dashboard_registration:
 dashboard_register_user_action:
   path: /dashboard/registration/register_user_action
   controller: App\Controller\DashboardRegistrationController::registerUserAction
+
+dashboard_login_user_action:
+  path: /dashboard/login_user_action
+  controller: App\Controller\MainDashboardController::loginUserAction

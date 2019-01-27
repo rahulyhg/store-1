@@ -41,3 +41,16 @@ dashboard:
     alert_clear_form: 'Форма ввода очищена'
     alert_register_user: 'Форма введена правильно, продолжение регистрации'
     error_register_user: 'Ошибка регистрации пользователя'
+
+  authorization:
+    page_title: 'Авторизация'
+    form_title: 'Авторизация в панели управления'
+    input_user_email: 'E-mail'
+    input_user_password: 'Пароль'
+    button_login_user: 'Войти'
+    alert_allow_authorization: 'Авторизация успешна'
+    alert_deny_authorization: 'Неверны email или пароль'
+    error_login_author: 'Ошибка авторизации на сервере.'
+
+  dashboard:
+    page_title: 'Панель управления'

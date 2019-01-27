@@ -44,7 +44,9 @@
 				<div class="col s12 m12 l12">
           <b>{{ translation.dashboard.error.error_text }}</b>
           <br />
-          {{ error }}
+					{% if error %}
+          	{{ error }}
+					{% endif %}
         </div>
 			</div>
 		</main>
