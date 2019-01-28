@@ -2,9 +2,13 @@ store_public:
   path: /
   controller: App\Controller\StorePublicController::renderPublicTemplateAction
 
-#write_log_action:
-#  path: /write_log_action
-#  controller: App\Controller\MainController::writeLogAction
+write_log_action:
+  path: /write_log_action
+  controller: App\Controller\MainController::writeLogAction
+
+public_send_message:
+  path: /contactus/send
+  controller: App\Controller\DashboardInboxController::sendContactUsMessageAction
 
 #send_message_action:
 #  path: /seand_message_action
@@ -29,3 +33,40 @@ dashboard_register_user_action:
 dashboard_login_user_action:
   path: /dashboard/login_user_action
   controller: App\Controller\MainDashboardController::loginUserAction
+
+dashboard_profile:
+  path: /dashboard/profile
+  controller: App\Controller\DashboardProfileController::renderDashboardProfileAction
+dashboard_edit_profile_action:
+  path: /dashboard/profile/edit_profile_action
+  controller: App\Controller\DashboardProfileController::editProfileAction
+
+dashboard_inbox:
+  path: /dashboard/inbox
+  controller: App\Controller\DashboardInboxController::renderDashboardInboxAction
+dashboard_delete_message_action:
+  path: /dashboard/inbox/delete_message_action/{message_id}
+  controller: App\Controller\DashboardInboxController::deleteMessageAction
+
+dashboard_public:
+  path: /dashboard/public
+  controller: App\Controller\DashboardPublicController::renderDashboardPublicAction
+dashboard_get_public_meta_data_action:
+  path: /dashboard/public/get_public_meta_data_action
+  controller: App\Controller\DashboardPublicController::getPublicMetaDataAction
+dashboard_set_public_meta_data_action:
+  path: /dashboard/public/set_public_meta_data_action
+  controller: App\Controller\DashboardPublicController::setPublicMetaDataAction
+
+dashboard_logs:
+  path: /dashboard/logs
+  controller: App\Controller\DashboardLogsController::renderDashboardLogsAction
+dashboard_get_logs_action:
+  path: /dashboard/logs/get_logs_action
+  controller: App\Controller\DashboardLogsController::getLogsAction
+dashboard_delete_log_action:
+  path: /dashboard/logs/delete_log_action
+  controller: App\Controller\DashboardLogsController::deleteLogAction
+dashboard_delete_logs_action:
+  path: /dashboard/logs/delete_logs_action
+  controller: App\Controller\DashboardLogsController::deleteLogsAction

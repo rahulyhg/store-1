@@ -1,0 +1,61 @@
+{# DASHBOARD LOGS TEMPLATE #}
+{% extends 'main_dashboard.html.twig' %}
+
+{% block init %}
+	var get_logs_action_url = "{{ path('dashboard_get_logs_action') }}";
+	var delete_log_action_url = "{{ path('dashboard_delete_log_action') }}";
+	var delete_logs_action_url = "{{ path('dashboard_delete_logs_action') }}";
+
+	var html = new String;
+	var log_id = new Number;
+
+	var alert_delete_log = "{{ translation.logs.alert_delete_log }}";
+	var alert_delete_logs = "{{ translation.logs.alert_delete_logs }}";
+
+	var error_get_logs = "{{ translation.logs.error_get_logs }}";
+	var error_delete_log = "{{ translation.logs.error_delete_log }}";
+	var error_delete_logs = "{{ translation.logs.error_delete_logs }}";
+{% endblock %}
+
+{% block include %}
+	<script type="text/javascript" src="{{ asset('javascript/common/dashboard_logs.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+	<h4 class="center">{{ translation.logs.page_title }}</h4>
+
+	<div class="col s12 m12 l12">
+		<div class="card hoverable">
+			<div class="card-content">
+				<p>
+					{{ translation.logs.text_logs_count }} <span id="logs_count"></span>
+				</p>
+			</div>
+			<div class="card-action">
+				<a class="clickable" id="button_delete_logs">{{ translation.logs.button_delete_logs }}</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="col s12 m12 l12">
+		<table>
+			<thead>
+				<tr>
+					<th class="left-align">{{ translation.logs.column_log_id }}</th>
+					<th class="center">{{ translation.logs.column_log_data }}</th>
+					<th class="center">{{ translation.logs.column_log_datetime }}</th>
+					<th class="right-align">{{ translation.logs.column_log_action }}</th>
+				</tr>
+			</thead>
+			<tbody id="logs_content"></tbody>
+		</table>
+	</div>
+{% endblock %}
+
+{% block javascript %}
+	getLogs();
+
+	$('#button_delete_logs').on('click', function() {
+		deleteLogs();
+	});
+{% endblock %}

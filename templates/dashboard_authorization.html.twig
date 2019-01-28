@@ -2,7 +2,7 @@
 {% extends 'main_dashboard.html.twig' %}
 
 {% block init %}
-	var login_author_action_url = "{{ path('dashboard_login_author_action') }}";
+	var login_user_action_url = "{{ path('dashboard_login_user_action') }}";
 
 	var alert_allow_authorization = "{{ translation.dashboard.authorization.alert_allow_authorization }}";
 	var alert_deny_authorization = "{{ translation.dashboard.authorization.alert_deny_authorization }}";
@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block include %}
-	<script type="text/javascript" src="{{ asset('javascript/common/dashboard_authorization.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('include/javascript/dashboard_authorization.js') }}"></script>
 {% endblock %}
 
 {% block main %}
@@ -32,7 +32,7 @@
 				</p>
 			</div>
 			<div class="card-action">
-				<a class="clickable" id="button_login_author">{{ translation.dashboard.authorization.button_login_user }}</a>
+				<a class="clickable" id="button_login_user">{{ translation.dashboard.authorization.button_login_user }}</a>
 			</div>
 		</div>
 	</div>
