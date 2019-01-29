@@ -14,17 +14,17 @@ class DashboardLogsController extends MainDashboardController
     // ============================ RENDER DASHBOARD LOGS TEMPLATE =================
     //
     /* ##################################################################################### */
-    public function renderDashboardLogsAction()
+    public function renderDashboardLogsTemplateAction()
     {
         if ($this->checkAuthorization() == true) {
             $request = Request::createFromGlobals();
-            return $this->render('dashboard_logs.html.twig', array(
-              'translation' => $this->getTranslation('logs'),
-              'profile' => $this->getProfile($request->cookies->get('author_id')),
+            return $this->render('dashboard_logs.twig', array(
+              'translation' => $this->getTranslation(),
+              'profile' => $this->getProfile($request->cookies->get('user_id')),
             ));
         } else {
-            return $this->render('dashboard_authorization.html.twig', array(
-              'translation' => $this->getTranslation('authorization')
+            return $this->render('dashboard_authorization.twig', array(
+              'translation' => $this->getTranslation()
             ));
         }
     }
@@ -59,8 +59,8 @@ class DashboardLogsController extends MainDashboardController
             return new JsonResponse($logs);
         } else {
             $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
-            return $this->render('common_access_error.html.twig', array(
-                'translation' => $this->getTranslation('access_error')
+            return $this->render('error_access.twig', array(
+                'translation' => $this->getTranslation()
             ));
         }
     }
@@ -87,8 +87,8 @@ class DashboardLogsController extends MainDashboardController
             return new JsonResponse($result);
         } else {
             $this->writeLog("Controller/Dashboard/Logs/deleteLog: Authorization Error");
-            return $this->render('common_access_error.html.twig', array(
-                'translation' => $this->getTranslation('access_error')
+            return $this->render('error_access.twig', array(
+                'translation' => $this->getTranslation()
             ));
         }
     }
@@ -116,8 +116,8 @@ class DashboardLogsController extends MainDashboardController
             return new JsonResponse($result);
         } else {
             $this->writeLog("Controller/Dashboard/Logs/deleteLogs: Authorization Error");
-            return $this->render('common_access_error.html.twig', array(
-                'translation' => $this->getTranslation('access_error')
+            return $this->render('error_access.twig', array(
+                'translation' => $this->getTranslation()
             ));
         }
     }

@@ -21,11 +21,12 @@ dashboard:
   main:
     page_title: 'Панель управления'
     link_dashboard: 'Главная страница'
-
-  error:
-    request_page_title: 'Ошибка запроса'
-    request_page_info: 'Проверьте пожалуйста введенные данные'
-    error_text: 'Адрес запроса'
+    link_profile: 'Мой профиль'
+    link_public: 'Главная страница'
+    link_categories: 'Категории'
+    link_products: 'Товары'
+    link_users: 'Администраторы'
+    link_analytics: 'Аналитика'
 
   registration:
     page_title: 'Регистрация'
@@ -54,6 +55,22 @@ dashboard:
 
   dashboard:
     page_title: 'Панель управления'
+
+  logs:
+    page_title: 'Управление логами'
+    text_logs_count: 'Количество записей'
+    button_delete_logs: 'Удалить все записи'
+    column_log_id: 'ID'
+    column_log_data: 'Данные'
+    column_log_datetime: 'Дата'
+    column_log_action: 'Действие'
+    alert_delete_log: 'Запись удалена'
+    alert_delete_logs: 'Все записи удалены'
+    error_get_logs: 'Ошибка получения записей логов'
+    error_delete_log: 'Ошибка удаления записи'
+    error_delete_logs: 'Ошибка удаления всех записей'
+
+
 
 ################################## ERRORS ######################################
 error:

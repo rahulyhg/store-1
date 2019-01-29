@@ -10,16 +10,16 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 //use App\Entity\DashboardAuthors;
 
-class DashboardDashboardController extends MainDashboardController
+class DashboardCategoriesController extends MainDashboardController
 {
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function renderDashboardDashboardTemplateAction()
+    public function renderDashboardCategoriesTemplateAction()
     {
         if ($this->checkAuthorization() == true) {
             $request = Request::createFromGlobals();
-            return $this->render('dashboard_dashboard.twig', array(
+            return $this->render('dashboard_categories.twig', array(
             'translation' => $this->getTranslation(),
             'profile' => $this->getProfile($request->cookies->get('user_id')),
 

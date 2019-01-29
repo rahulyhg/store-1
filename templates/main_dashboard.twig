@@ -62,7 +62,7 @@
 						<ul class="right">
 							<li><a class="clickable" href="{{ path('dashboard_inbox') }}"><i class="material-icons">email</i></a></li>
 							<li><a class="clickable" id="clear_alerts"><i class="material-icons">clear_all</i></a></li>
-							<li><a class="clickable" id="button_logout_author"><i class="material-icons">exit_to_app</i></a></li>
+							<li><a class="clickable" id="button_logout_user"><i class="material-icons">exit_to_app</i></a></li>
 						</ul>
 					{% endif %}
 					<div class="progress red" id="preloader"><div class="indeterminate green"></div></div>
@@ -80,18 +80,18 @@
 				<a><span class="white-text email">{{ profile.email }}</span></a>
 			</div>
 		</li>
-		<li><a href="{{ path ('dashboard_dashboard') }}">{{ translation.main.link_dashboard }}</a></li>
+		<li><a href="{{ path ('dashboard_dashboard') }}">{{ translation.dashboard.main.link_dashboard }}</a></li>
 		<li class="divider"></li>
-		<li><a href="{{ path('dashboard_profile') }}">{{ translation.main.link_profile }}</a></li>
+		<li><a href="{{ path('dashboard_profile') }}">{{ translation.dashboard.main.link_profile }}</a></li>
 		<li class="divider"></li>
-		<li><a href="{{ path('dashboard_public') }}">{{ translation.main.link_public }}</a></li>
+		<li><a href="{{ path('dashboard_public') }}">{{ translation.dashboard.main.link_public }}</a></li>
 		<li><a href="{{ path ('dashboard_categories') }}">{{ translation.dashboard.main.link_categories }}</a></li>
 		<li><a href="{{ path ('dashboard_products') }}">{{ translation.dashboard.main.link_products }}</a></li>
 		<li class="divider"></li>
-		<li><a href="{{ path ('dashboard_users') }}">{{ translation.main.link_authors }}</a></li>
+		<li><a href="{{ path ('dashboard_users') }}">{{ translation.dashboard.main.link_users }}</a></li>
 		<li class="divider"></li>
 
-		<li><a href="{{ path ('dashboard_analytics') }}">{{ translation.main.link_seo }}</a></li>
+		<li><a href="{{ path ('dashboard_analytics') }}">{{ translation.dashboard.main.link_analytics }}</a></li>
 		<li class="divider"></li>
 
 	</ul>

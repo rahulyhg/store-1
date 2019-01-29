@@ -15,18 +15,18 @@ class DashboardInboxController extends MainDashboardController
     // ============================ RENDER DASHBOARD INBOX TEMPLATE =================
     //
     /* ##################################################################################### */
-    public function renderDashboardInboxAction()
+    public function renderDashboardInboxTemplateAction()
     {
         if ($this->checkAuthorization() == true) {
             $request = Request::createFromGlobals();
-            return $this->render('dashboard_inbox.html.twig', array(
-              'translation' => $this->getTranslation('inbox'),
-              'profile' => $this->getProfile($request->cookies->get('author_id')),
+            return $this->render('dashboard_inbox.twig', array(
+              'translation' => $this->getTranslation(),
+              'profile' => $this->getProfile($request->cookies->get('user_id')),
               'messages' => $this->getMessages(),
             ));
         } else {
-            return $this->render('dashboard_authorization.html.twig', array(
-              'translation' => $this->getTranslation('authorization')
+            return $this->render('dashboard_authorization.twig', array(
+              'translation' => $this->getTranslation()
             ));
         }
     }
@@ -75,8 +75,8 @@ class DashboardInboxController extends MainDashboardController
             return new RedirectResponse($this->generateUrl('dashboard_inbox'));
         } else {
             $this->writeLog("Controller/Dashboard/Inbox/deleteMessage: Authorization Error");
-            return $this->render('common_access_error.html.twig', array(
-              'translation' => $this->getTranslation('access_error')
+            return $this->render('error_access.twig', array(
+              'translation' => $this->getTranslation()
             ));
         }
     }

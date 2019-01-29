@@ -23,7 +23,7 @@ class DashboardRegistrationController extends MainDashboardController
         $session = new Session();
         $session->invalidate();
 
-        return $this->render('dashboard_registration.html.twig', array(
+        return $this->render('dashboard_registration.twig', array(
           'translation' => $this->getTranslation(),
         ));
     }
@@ -42,19 +42,19 @@ class DashboardRegistrationController extends MainDashboardController
         if (strlen($request->request->get('input_user_name')) >= 3 && strlen($request->request->get('input_user_name')) < 60) {
           $dashboard_users->setUserName($request->request->get('input_user_name'));
         } else {
-          return $this->render('error_request.html.twig', [
+          return $this->render('error_request.twig', [
             'translation' => $this->getTranslation(),
             'error' => 'App/DashboardRegistrationController::registerUserAction > input_user_name'
           ]);
         }
 
         if ($this->checkEmail($request->request->get('input_user_email')) == false) {
-          return $this->render('error_request.html.twig', [
+          return $this->render('error_request.twig', [
             'translation' => $this->getTranslation(),
             'error' => 'App/DashboardRegistrationController::registerUserAction > [input_user_email] Email format error'
           ]);
         } elseif ($this->checkUserEmailExists($request->request->get('input_user_email')) == false) {
-          return $this->render('error_request.html.twig', [
+          return $this->render('error_request.twig', [
             'translation' => $this->getTranslation(),
             'error' => 'App/DashboardRegistrationController::registerUserAction > [input_user_email] The folowing Email exists'
           ]);
@@ -65,7 +65,7 @@ class DashboardRegistrationController extends MainDashboardController
         if (strlen($request->request->get('input_user_password')) >= 6 && strlen($request->request->get('input_user_password')) < 60) {
             $dashboard_users->setUserPassword($this->getPasswordHash($request->request->get('input_user_password')));
         } else {
-            return $this->render('error_request.html.twig', [
+            return $this->render('error_request.twig', [
               'translation' => $this->getTranslation(),
               'error' => 'App/DashboardRegistrationController::registerUserAction > input_user_password'
             ]);

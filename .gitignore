@@ -24,7 +24,4 @@
 
 /public/images/brands/*
 !/public/images/brands/.gitignore
-
-/public/images/users/*
-!/public/images/users/.gitignore
 ###< Images cache ###

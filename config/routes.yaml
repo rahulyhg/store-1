@@ -1,27 +1,21 @@
-store_public:
-  path: /
-  controller: App\Controller\StorePublicController::renderPublicTemplateAction
-
+############################ MAIN ##############################################
 write_log_action:
   path: /write_log_action
   controller: App\Controller\MainController::writeLogAction
+
+############################ STORE #############################################
+store_public:
+  path: /
+  controller: App\Controller\StorePublicController::renderPublicTemplateAction
 
 public_send_message:
   path: /contactus/send
   controller: App\Controller\DashboardInboxController::sendContactUsMessageAction
 
-#send_message_action:
-#  path: /seand_message_action
-#  controller: App\Controller\MainStoreController::sendMessageAction
-
 ############################ DASHBOARD #########################################
 dashboard_dashboard:
   path: /dashboard
   controller: App\Controller\DashboardDashboardController::renderDashboardDashboardTemplateAction
-
-write_log_action:
-  path: /write_log_action
-  controller: App\Controller\MainController::writeLogAction
 
 dashboard_registration:
   path: /dashboard/registration
@@ -33,6 +27,9 @@ dashboard_register_user_action:
 dashboard_login_user_action:
   path: /dashboard/login_user_action
   controller: App\Controller\MainDashboardController::loginUserAction
+dashboard_logout_author_action:
+  path: /dashboard/logout_author_action
+  controller: App\Controller\MainDashboardController::logoutAuthorAction
 
 dashboard_profile:
   path: /dashboard/profile
@@ -43,10 +40,14 @@ dashboard_edit_profile_action:
 
 dashboard_inbox:
   path: /dashboard/inbox
-  controller: App\Controller\DashboardInboxController::renderDashboardInboxAction
+  controller: App\Controller\DashboardInboxController::renderDashboardInboxTemplateAction
 dashboard_delete_message_action:
   path: /dashboard/inbox/delete_message_action/{message_id}
   controller: App\Controller\DashboardInboxController::deleteMessageAction
+
+dashboard_orders:
+  path: /dashboard/orders
+  controller: App\Controller\DashboardOrdersController::renderDashboardOrdersTemplateAction
 
 dashboard_public:
   path: /dashboard/public
@@ -58,9 +59,13 @@ dashboard_set_public_meta_data_action:
   path: /dashboard/public/set_public_meta_data_action
   controller: App\Controller\DashboardPublicController::setPublicMetaDataAction
 
+dashboard_categories:
+  path: /dashboard/categories
+  controller: App\Controller\DashboardCategoriesController::renderDashboardCategoriesTemplateAction
+
 dashboard_logs:
   path: /dashboard/logs
-  controller: App\Controller\DashboardLogsController::renderDashboardLogsAction
+  controller: App\Controller\DashboardLogsController::renderDashboardLogsTemplateAction
 dashboard_get_logs_action:
   path: /dashboard/logs/get_logs_action
   controller: App\Controller\DashboardLogsController::getLogsAction
