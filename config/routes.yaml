@@ -27,9 +27,9 @@ dashboard_register_user_action:
 dashboard_login_user_action:
   path: /dashboard/login_user_action
   controller: App\Controller\MainDashboardController::loginUserAction
-dashboard_logout_author_action:
-  path: /dashboard/logout_author_action
-  controller: App\Controller\MainDashboardController::logoutAuthorAction
+dashboard_logout_user_action:
+  path: /dashboard/logout_user_action
+  controller: App\Controller\MainDashboardController::logoutUserAction
 
 dashboard_profile:
   path: /dashboard/profile
@@ -62,6 +62,22 @@ dashboard_set_public_meta_data_action:
 dashboard_categories:
   path: /dashboard/categories
   controller: App\Controller\DashboardCategoriesController::renderDashboardCategoriesTemplateAction
+
+dashboard_products:
+  path: /dashboard/products
+  controller: App\Controller\DashboardProductsController::renderDashboardProductsTemplateAction
+
+dashboard_users:
+  path: /dashboard/users
+  controller: App\Controller\DashboardUsersController::renderDashboardUsersTemplateAction
+
+dashboard_settings:
+  path: /dashboard/settings
+  controller: App\Controller\DashboardSettingsController::renderDashboardSettingsTemplateAction
+
+dashboard_analytics:
+  path: /dashboard/analytics
+  controller: App\Controller\DashboardAnalyticsController::renderDashboardAnalyticsTemplateAction
 
 dashboard_logs:
   path: /dashboard/logs

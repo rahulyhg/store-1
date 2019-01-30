@@ -51,8 +51,8 @@
 			<nav>
 				<div class="nav-wrapper light-blue accent-4">
 					{% if app.request.cookies.get('user_id') %}
-						<ul class="show-on-large show-on-medium-and-down left">
-							<li><a data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a></li>
+						<ul class="left">
+							<li><a class="clickable" id="button_open_menu"><i class="material-icons">menu</i></a></li>
 						</ul>
 					{% endif %}
 						<ul class="left hide-on-med-and-down">
@@ -80,18 +80,22 @@
 				<a><span class="white-text email">{{ profile.email }}</span></a>
 			</div>
 		</li>
-		<li><a href="{{ path ('dashboard_dashboard') }}">{{ translation.dashboard.main.link_dashboard }}</a></li>
+		<li><a href="{{ path('dashboard_dashboard') }}"><i class="material-icons left">dashboard</i>{{ translation.dashboard.main.link_dashboard }}</a></li>
+		<li><a href="{{ path('store_public') }}" target="_blank"><i class="material-icons left">store</i>{{ translation.dashboard.main.link_store }}</a></li>
 		<li class="divider"></li>
-		<li><a href="{{ path('dashboard_profile') }}">{{ translation.dashboard.main.link_profile }}</a></li>
+		<li><a href="{{ path('dashboard_profile') }}"><i class="material-icons left">person</i>{{ translation.dashboard.main.link_profile }}</a></li>
 		<li class="divider"></li>
-		<li><a href="{{ path('dashboard_public') }}">{{ translation.dashboard.main.link_public }}</a></li>
-		<li><a href="{{ path ('dashboard_categories') }}">{{ translation.dashboard.main.link_categories }}</a></li>
-		<li><a href="{{ path ('dashboard_products') }}">{{ translation.dashboard.main.link_products }}</a></li>
+		<li><a href="{{ path('dashboard_orders') }}"><i class="material-icons left">shopping_cart</i>{{ translation.dashboard.main.link_orders }}</a></li>
 		<li class="divider"></li>
-		<li><a href="{{ path ('dashboard_users') }}">{{ translation.dashboard.main.link_users }}</a></li>
+		<li><a href="{{ path('dashboard_public') }}"><i class="material-icons left">code</i>{{ translation.dashboard.main.link_metadata }}</a></li>
+		<li><a href="{{ path('dashboard_categories') }}"><i class="material-icons left">apps</i>{{ translation.dashboard.main.link_categories }}</a></li>
+		<li><a href="{{ path('dashboard_products') }}"><i class="material-icons left">widgets</i>{{ translation.dashboard.main.link_products }}</a></li>
 		<li class="divider"></li>
-
-		<li><a href="{{ path ('dashboard_analytics') }}">{{ translation.dashboard.main.link_analytics }}</a></li>
+		<li><a href="{{ path('dashboard_users') }}"><i class="material-icons left">supervisor_account</i>{{ translation.dashboard.main.link_users }}</a></li>
+		<li class="divider"></li>
+		<li><a href="{{ path('dashboard_settings') }}"><i class="material-icons left">settings</i>{{ translation.dashboard.main.link_settings }}</a></li>
+		<li><a href="{{ path('dashboard_analytics') }}"><i class="material-icons left">assessment</i>{{ translation.dashboard.main.link_analytics }}</a></li>
+		<li><a href="{{ path('dashboard_logs') }}"><i class="material-icons left">list</i>{{ translation.dashboard.main.link_logs }}</a></li>
 		<li class="divider"></li>
 
 	</ul>
@@ -109,30 +113,6 @@
 			</div>
 		</main>
 
-		{% if app.request.cookies.get('author_id') %}
-			<div class="fixed-action-btn toolbar">
-				<a class="btn-floating btn-large red"><i class="large material-icons">apps</i></a>
-				<ul>
-					{% block buttonopenform %}{% endblock %}
-					<li class="waves-effect waves-light"><a class="tooltipped" href="{{ path('dashboard_logs') }}" data-position="top" data-delay="50" data-tooltip="{{ translation.main.link_logs }}"><i class="material-icons">list</i></a></li>
-					<li class="waves-effect waves-light"><a class="clickable" id="button_modal_settings"><i class="material-icons">settings</i></a></li>
-					<li class="waves-effect waves-light"><a href="{{ path('public_public') }}" target="_blank"><i class="material-icons">link</i></a></li>
-				</ul>
-			</div>
-
-			<div id="modal_settings" class="modal modal-fixed-footer">
-				<div class="modal-content">
-					<h5>{{ translation.main.title_modal_settings }}</h5>
-					<p>
-
-					</p>
-				</div>
-				<div class="modal-footer">
-					<a class="modal-action modal-close waves-effect waves-red btn-flat clickable">{{ translation.main.button_modal_close }}</a>
-				</div>
-			</div>
-		{% endif %}
-
 		<div id="input_form" class="modal modal-fixed-footer">
 			{% block inputform %}{% endblock %}
 		</div>
@@ -149,19 +129,29 @@
 				{% block javascript %}{% endblock %}
 			});
 
-			{% if app.request.cookies.get('author_id') %}
+			{% if app.request.cookies.get('user_id') %}
+				/* Открытие бокового меню */
+				var sidenav_elem = $('#slide-out');
+				var instance = M.Sidenav.getInstance(sidenav_elem);
+				$('#button_open_menu').on('click', function() {
+					$('#slide-out').sidenav('open');
+					//instance.open();
+				});
+
+				/* Окно настроек */
 				$('#button_modal_settings').on('click', function()  {
 					$('#modal_settings').modal('open');
 				});
 
-				$('#button_logout_author').on('click', function() {
+				/* Кнопка выхода из панели управления */
+				$('#button_logout_user').on('click', function() {
 					$.ajax({
-						url: '{{ path ('dashboard_logout_author_action') }}',
+						url: '{{ path ('dashboard_logout_user_action') }}',
 						type: "POST",
 						cache: true,
 						async: true,
 						data: {
-							"logout_author_action": true
+							"logout_user_action": true
 						},
 						dataType: "json",
 						beforeSend: function () {

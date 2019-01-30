@@ -20,13 +20,17 @@ store:
 dashboard:
   main:
     page_title: 'Панель управления'
-    link_dashboard: 'Главная страница'
+    link_dashboard: 'Панель управления'
+    link_store: 'В магазин'
     link_profile: 'Мой профиль'
-    link_public: 'Главная страница'
+    link_metadata: 'Meta-данные'
+    link_orders: 'Заказы'
     link_categories: 'Категории'
     link_products: 'Товары'
     link_users: 'Администраторы'
+    link_settings: 'Настройки'
     link_analytics: 'Аналитика'
+    link_logs: 'Просмотр логов'
 
   registration:
     page_title: 'Регистрация'
