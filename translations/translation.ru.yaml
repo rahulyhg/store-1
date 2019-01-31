@@ -25,11 +25,14 @@ dashboard:
     link_profile: 'Мой профиль'
     link_metadata: 'Meta-данные'
     link_orders: 'Заказы'
+    link_recommendations: 'Рекомендации'
     link_categories: 'Категории'
     link_products: 'Товары'
     link_users: 'Администраторы'
     link_settings: 'Настройки'
+    link_languages: 'Языки'
     link_analytics: 'Аналитика'
+    link_modules: 'Модули'
     link_logs: 'Просмотр логов'
 
   registration:

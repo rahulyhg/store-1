@@ -59,6 +59,10 @@ dashboard_set_public_meta_data_action:
   path: /dashboard/public/set_public_meta_data_action
   controller: App\Controller\DashboardPublicController::setPublicMetaDataAction
 
+dashboard_recommendations:
+  path: /dashboard/recommendations
+  controller: App\Controller\DashboardRecommendationsController::renderDashboardRecommendationsTemplateAction
+
 dashboard_categories:
   path: /dashboard/categories
   controller: App\Controller\DashboardCategoriesController::renderDashboardCategoriesTemplateAction
@@ -75,9 +79,17 @@ dashboard_settings:
   path: /dashboard/settings
   controller: App\Controller\DashboardSettingsController::renderDashboardSettingsTemplateAction
 
+dashboard_languages:
+  path: /dashboard/languages
+  controller: App\Controller\DashboardLanguagesController::renderDashboardLanguagesTemplateAction
+
 dashboard_analytics:
   path: /dashboard/analytics
   controller: App\Controller\DashboardAnalyticsController::renderDashboardAnalyticsTemplateAction
+
+dashboard_modules:
+  path: /dashboard/modules
+  controller: App\Controller\DashboardModulesController::renderDashboardModulesTemplateAction
 
 dashboard_logs:
   path: /dashboard/logs

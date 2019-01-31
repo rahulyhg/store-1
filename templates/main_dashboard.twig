@@ -87,14 +87,17 @@
 		<li class="divider"></li>
 		<li><a href="{{ path('dashboard_orders') }}"><i class="material-icons left">shopping_cart</i>{{ translation.dashboard.main.link_orders }}</a></li>
 		<li class="divider"></li>
-		<li><a href="{{ path('dashboard_public') }}"><i class="material-icons left">code</i>{{ translation.dashboard.main.link_metadata }}</a></li>
 		<li><a href="{{ path('dashboard_categories') }}"><i class="material-icons left">apps</i>{{ translation.dashboard.main.link_categories }}</a></li>
 		<li><a href="{{ path('dashboard_products') }}"><i class="material-icons left">widgets</i>{{ translation.dashboard.main.link_products }}</a></li>
+		<li><a href="{{ path('dashboard_recommendations') }}"><i class="material-icons left">favorite</i>{{ translation.dashboard.main.link_recommendations }}</a></li>
 		<li class="divider"></li>
 		<li><a href="{{ path('dashboard_users') }}"><i class="material-icons left">supervisor_account</i>{{ translation.dashboard.main.link_users }}</a></li>
 		<li class="divider"></li>
 		<li><a href="{{ path('dashboard_settings') }}"><i class="material-icons left">settings</i>{{ translation.dashboard.main.link_settings }}</a></li>
+		<li><a href="{{ path('dashboard_public') }}"><i class="material-icons left">code</i>{{ translation.dashboard.main.link_metadata }}</a></li>
+		<li><a href="{{ path('dashboard_languages') }}"><i class="material-icons left">language</i>{{ translation.dashboard.main.link_languages }}</a></li>
 		<li><a href="{{ path('dashboard_analytics') }}"><i class="material-icons left">assessment</i>{{ translation.dashboard.main.link_analytics }}</a></li>
+		<li><a href="{{ path('dashboard_modules') }}"><i class="material-icons left">extension</i>{{ translation.dashboard.main.link_modules }}</a></li>
 		<li><a href="{{ path('dashboard_logs') }}"><i class="material-icons left">list</i>{{ translation.dashboard.main.link_logs }}</a></li>
 		<li class="divider"></li>
 
@@ -117,7 +120,8 @@
 			{% block inputform %}{% endblock %}
 		</div>
 
-		{% block extras %}{% endblock %}
+         
+		{% block modules %}{% endblock %}
 
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -138,14 +142,11 @@
 					//instance.open();
 				});
 
-				/* Окно настроек */
-				$('#button_modal_settings').on('click', function()  {
-					$('#modal_settings').modal('open');
-				});
-
 				/* Кнопка выхода из панели управления */
 				$('#button_logout_user').on('click', function() {
-					$.ajax({
+				location.href("{{ path('dashboard_logout_user_action') }}");
+				
+					/*$.ajax({
 						url: '{{ path ('dashboard_logout_user_action') }}',
 						type: "POST",
 						cache: true,
@@ -168,7 +169,7 @@
 						error: function (xhr) {
 							console.log(xhr);
 						}
-					});
+					});*/
 				});
 			{% endif %}
 		</script>
