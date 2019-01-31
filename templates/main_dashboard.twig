@@ -120,7 +120,7 @@
 			{% block inputform %}{% endblock %}
 		</div>
 
-         
+
 		{% block modules %}{% endblock %}
 
 		<script type="text/javascript">
@@ -135,41 +135,13 @@
 
 			{% if app.request.cookies.get('user_id') %}
 				/* Открытие бокового меню */
-				var sidenav_elem = $('#slide-out');
-				var instance = M.Sidenav.getInstance(sidenav_elem);
 				$('#button_open_menu').on('click', function() {
 					$('#slide-out').sidenav('open');
-					//instance.open();
 				});
 
 				/* Кнопка выхода из панели управления */
 				$('#button_logout_user').on('click', function() {
-				location.href("{{ path('dashboard_logout_user_action') }}");
-				
-					/*$.ajax({
-						url: '{{ path ('dashboard_logout_user_action') }}',
-						type: "POST",
-						cache: true,
-						async: true,
-						data: {
-							"logout_user_action": true
-						},
-						dataType: "json",
-						beforeSend: function () {
-							$('#preloader').show();
-						},
-						success: function (response) {
-							if (response.result == true) {
-								location.reload(false);
-							}
-						},
-						complete: function () {
-							$('#preloader').hide();
-						},
-						error: function (xhr) {
-							console.log(xhr);
-						}
-					});*/
+					window.location.replace("{{ path('dashboard_logout_user_action') }}");
 				});
 			{% endif %}
 		</script>

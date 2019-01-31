@@ -44,7 +44,7 @@ class MainDashboardController extends MainController
             return $profile;
         } else {
             $this->writeLog("App/Controller/MainDashboardController::getProfile [authorization error]");
-            return $this->render('error_access.html.twig', array(
+            return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation(),
               'error' => 'App/Controller/MainDashboardController::getProfile [authorization error]'
           ));
@@ -155,6 +155,7 @@ class MainDashboardController extends MainController
         $session = new Session();
         $session->invalidate();
 
-        return new JsonResponse(['result' => true]);
+        return new RedirectResponse($this->generateUrl('dashboard_dashboard'));
+        //return new JsonResponse(['result' => true]);
     }
 }

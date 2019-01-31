@@ -63,6 +63,17 @@ dashboard:
   dashboard:
     page_title: 'Панель управления'
 
+  profile:
+    page_title: 'Мой профиль'
+    input_user_name: 'Ваше имя'
+    input_user_email: 'Ваш E-mail'
+    form_authorization_title: 'Данные для авторизации'
+    text_info: 'После изменения Email и/или пароля нужно заново пройти авторизацию.'
+    input_user_password: 'Новый пароль'
+    button_save_profile: 'Сохранить'
+    warning_input_password: 'Неправильно введен пароль. Должен быть больше 6 символов.'
+    warning_input_form: 'Неправильно введены Имя или E-mail'
+
   logs:
     page_title: 'Управление логами'
     text_logs_count: 'Количество записей'
