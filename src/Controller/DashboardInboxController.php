@@ -21,6 +21,7 @@ class DashboardInboxController extends MainDashboardController
             $request = Request::createFromGlobals();
             return $this->render('dashboard_inbox.twig', array(
               'translation' => $this->getTranslation(),
+              'authorization' => $this->checkAuthorization(),
               'profile' => $this->getProfile($request->cookies->get('user_id')),
               'messages' => $this->getMessages(),
             ));

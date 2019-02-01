@@ -42,7 +42,7 @@ class DashboardProfileController extends MainDashboardController
         if ($this->checkAuthorization() == false) {
             $this->writeLog("Controller/Dashboard/Profile/editProfile: Authorization Error");
             return $this->render('error_access.twig', array(
-                'translation' => $this->getTranslation()
+                'translation' => $this->getTranslation(),
             ));
         }
 
@@ -61,8 +61,6 @@ class DashboardProfileController extends MainDashboardController
         }
 
         $em->flush();
-        
-        //$this->logoutUserAction();
 
         return new RedirectResponse($this->generateUrl('dashboard_profile'));
     }

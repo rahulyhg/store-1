@@ -50,7 +50,7 @@
 		<div class="navbar-fixed">
 			<nav>
 				<div class="nav-wrapper light-blue accent-4">
-					{% if app.request.cookies.get('user_id') %}
+					{% if authorization == true %}
 						<ul class="left">
 							<li><a class="clickable" id="button_open_menu"><i class="material-icons">menu</i></a></li>
 						</ul>
@@ -58,7 +58,7 @@
 						<ul class="left hide-on-med-and-down">
 							<li><a href="{{ path('dashboard_dashboard') }}">{{ translation.dashboard.main.link_dashboard }}</a></li>
 						</ul>
-					{% if app.request.cookies.get('user_id') %}
+					{% if authorization == true %}
 						<ul class="right">
 							<li><a class="clickable" href="{{ path('dashboard_inbox') }}"><i class="material-icons">email</i></a></li>
 							<li><a class="clickable" id="clear_alerts"><i class="material-icons">clear_all</i></a></li>
@@ -128,12 +128,11 @@
 				$('#preloader').hide();
 				$('#clear_alerts').on('click', function() {
 					M.Toast.dismissAll();
-					//$('#clear_alerts').trigger('blur');
 				});
 				{% block javascript %}{% endblock %}
 			});
 
-			{% if app.request.cookies.get('user_id') %}
+			{% if authorization == true %}
 				/* Открытие бокового меню */
 				$('#button_open_menu').on('click', function() {
 					$('#slide-out').sidenav('open');

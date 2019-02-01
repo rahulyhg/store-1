@@ -21,11 +21,13 @@ class DashboardUsersController extends MainDashboardController
             $request = Request::createFromGlobals();
             return $this->render('dashboard_users.twig', array(
                 'translation' => $this->getTranslation(),
+                'authorization' => $this->checkAuthorization(),
                 'profile' => $this->getProfile($request->cookies->get('user_id')),
             ));
         } else {
             return $this->render('dashboard_authorization.twig', array(
-                'translation' => $this->getTranslation()
+                'translation' => $this->getTranslation(),
+                'authorization' => $this->checkAuthorization(),
             ));
         }
     }
