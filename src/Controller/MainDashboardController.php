@@ -21,6 +21,10 @@ class MainDashboardController extends MainController
     /* ##################################################################################### */
     protected function getProfile($user_id)
     {
+    	 if (!is_integer($user_id) || $user_id <= 0) {
+    	    $this->logoutUserAction();
+         }
+         
         $users_repository = $this->getDoctrine()->getRepository('App:DashboardUsers');
         $user_object = $users_repository->findOneByUserId($user_id);
 
@@ -49,6 +53,7 @@ class MainDashboardController extends MainController
               'error' => 'App/Controller/MainDashboardController::getProfile [authorization error]'
           ));
         }
+        //return $profile;
     }
 
     /* ##################################################################################### */

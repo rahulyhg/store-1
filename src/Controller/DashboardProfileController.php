@@ -18,15 +18,18 @@ class DashboardProfileController extends MainDashboardController
     /* ##################################################################################### */
     public function renderDashboardProfileAction()
     {
+    	$request = Request::createFromGlobals();
+         $user_id = $request->cookies->get('user_id');
         if ($this->checkAuthorization() == true) {
-            $request = Request::createFromGlobals();
             return $this->render('dashboard_profile.twig', array(
               'translation' => $this->getTranslation(),
-              'profile' => $this->getProfile($request->cookies->get('user_id')),
+              'authorization' => $this->checkAuthorization(),
+              'profile' => $this->getProfile($user_id),
             ));
         } else {
             return $this->render('dashboard_authorization.twig', array(
-              'translation' => $this->getTranslation()
+              'translation' => $this->getTranslation(),
+              'authorization' => $this->checkAuthorization(),
             ));
         }
     }
@@ -44,10 +47,11 @@ class DashboardProfileController extends MainDashboardController
         }
 
         $em = $this->getDoctrine()->getManager();
-        $user_id = $this->getProfile($request->request->get('input_user_id'));
+        $user_id = $request->request->get('input_user_id');
+        //$user_id = $this->getProfile($request->request->get('input_user_id'));
         $user_object = $em->getRepository('App:DashboardUsers')->findOneByUserId($user_id);
 
-        $user_object->setUserStatus(1);
+        $user_object->setUserStatus(true);
 
         $user_object->setUserName($request->request->get('input_user_name'));
         $user_object->setUserEmail($request->request->get('input_user_email'));
@@ -56,9 +60,9 @@ class DashboardProfileController extends MainDashboardController
             $user_object->setUserPassword($this->getPasswordHash($request->request->get('input_user_password')));
         }
 
-
-
         $em->flush();
+        
+        //$this->logoutUserAction();
 
         return new RedirectResponse($this->generateUrl('dashboard_profile'));
     }

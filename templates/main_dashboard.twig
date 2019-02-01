@@ -70,7 +70,7 @@
 
 			</nav>
 		</div>
-	{% if app.request.cookies.get('user_id') %}
+	{% if authorization == true %}
 	<ul id="slide-out" class="sidenav">
 		<li>
 			<div class="user-view">
