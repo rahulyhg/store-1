@@ -86,6 +86,10 @@ dashboard:
     error_change_user: 'Ошибка смены статуса администратора'
     error_delete_user: 'Ошибка удаления пользователя'
 
+  analytics:
+    page_title: 'Управление аналитикой'
+    page_info: 'Скрипты аналитики нужно добавлять между тегами <script></script>.'
+
   logs:
     page_title: 'Управление логами'
     text_logs_count: 'Количество записей'

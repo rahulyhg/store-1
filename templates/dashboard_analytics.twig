@@ -1,0 +1,38 @@
+{# DASHBOARD ANALYTICS TEMPLATE #}
+{% extends 'main_dashboard.twig' %}
+
+{% block init %}
+  var get_analytics_list_action_url = "{{ path('dashboard_get_analytics_list_action') }}";
+  var get_analytics_action_url = "{{ path('dashboard_get_analytics_action') }}";
+  var add_analytics_action_url = "{{ path('dashboard_add_analytics_action') }}";
+  var edit_analytics_action_url = "{{ path('dashboard_edit_analytics_action') }}";
+  var delete_analytics_action_url = "{{ path('dashboard_delete_analytics_action') }}";
+
+  var html = new String;
+
+  var alert_add_analytics = "{{ translation.dashboard.analytics.alert_add_analytics }}";
+  var alert_edit_seo = "{{ translation.seo.alert_edit_seo }}";
+  var alert_delete_seo = "{{ translation.seo.alert_delete_seo }}";
+
+  var error_get_seos = "{{ translation.seo.error_get_seos }}";
+  var error_get_seo = "{{ translation.seo.error_get_seo }}";
+  var error_add_seo = "{{ translation.seo.error_add_seo }}";
+  var error_edit_seo = "{{ translation.seo.error_edit_seo }}";
+  var error_delete_seo = "{{ translation.seo.error_delete_seo }}";
+{% endblock %}
+
+{% block include %}
+
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

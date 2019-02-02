@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-//use App\Entity\DashboardAuthors;
+use App\Entity\DashboardAnalytics;
 
 class DashboardAnalyticsController extends MainDashboardController
 {
@@ -17,12 +17,13 @@ class DashboardAnalyticsController extends MainDashboardController
     /* ##################################################################################### */
     public function renderDashboardAnalyticsTemplateAction()
     {
+        $request = Request::createFromGlobals();
+        $user_id = $request->cookies->get('user_id');
         if ($this->checkAuthorization() == true) {
-            $request = Request::createFromGlobals();
             return $this->render('dashboard_analytics.twig', array(
             'translation' => $this->getTranslation(),
             'authorization' => $this->checkAuthorization(),
-            'profile' => $this->getProfile($request->cookies->get('user_id')),
+            'profile' => $this->getProfile($user_id),
 
           ));
         } else {
