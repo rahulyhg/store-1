@@ -1,0 +1,33 @@
+{# DASHBOARD AUTHORS TEMPLATE #}
+{% extends 'main_dashboard.twig' %}
+
+{% block init %}
+	var get_users_action_url = '{{ path('dashboard_get_users_action') }}';
+	var change_user_action_url = '{{ path('dashboard_change_user_action') }}';
+	var delete_user_action_url = '{{ path('dashboard_delete_user_action') }}';
+
+	var user_email_tooltip = "{{ translation.dashboard.users.user_email_tooltip }}";
+	var text_current_user = "{{ translation.dashboard.users.text_current_user }}";
+	var text_user_status = "{{ translation.dashboard.users.text_user_status }}";
+
+	var alert_change_user = "{{ translation.dashboard.users.alert_change_user }}";
+	var alert_delete_user = "{{ translation.dashboard.users.alert_delete_user }}";
+
+	var error_get_users = "{{ translation.dashboard.users.error_get_users }}";
+	var error_change_user = "{{ translation.dashboard.users.error_change_user }}";
+	var error_delete_user = "{{ translation.dashboard.users.error_delete_user }}";
+{% endblock %}
+
+{% block include %}
+	<script type="text/javascript" src="{{ asset ('include/javascript/dashboard_users.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+	<h5 class="center">{{ translation.dashboard.users.page_title }}</h5>
+
+	<div id="users_content"></div>
+{% endblock %}
+
+{% block javascript %}
+	getUsers();
+{% endblock %}

@@ -5,9 +5,7 @@ $(document).ready(function() {
     edge: 'left'
   });
   $('.parallax').parallax();
-  $('.tooltipped').tooltip({
-    delay: 50
-  });
+  $('.tooltipped').tooltip();
   $('.modal').modal();
   $('.collapsible').collapsible();
 });
@@ -71,4 +69,3 @@ function writeLog(log_data) {
     }
   });
 }
-

@@ -2,10 +2,8 @@
 {% extends 'main_dashboard.twig' %}
 
 {% block include %}
-	<script type="text/javascript" src="{{ asset('/library/javascript/form_verification.js') }}"></script>
-
+	<script type="text/javascript" src="{{ asset('library/javascript/form_verification.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('include/javascript/dashboard_profile.js') }}"></script>
-
 {% endblock %}
 
 {% block main %}
@@ -21,7 +19,6 @@
 							<label for="input_user_name">{{ translation.dashboard.profile.input_user_name }}</label>
 						</div>
           </p>
-
           <span class="card-title center">{{ translation.dashboard.profile.form_authorization_title }}</span>
           <p>{{ translation.dashboard.profile.text_info }}</p>
           <p>
@@ -34,13 +31,12 @@
 							<label for="input_user_password">{{ translation.dashboard.profile.input_user_password }}</label>
 						</div>
 					</p>
-
 					<input type="hidden" name="input_user_id" value="{{ profile.id}}" />
 				</form>
 			</div>
 			<div class="card-action">
 				<a class="clickable" id="button_save_profile">{{ translation.dashboard.profile.button_save_profile }}</a>
-				<a href="{{ path('dashboard_dashboard') }}">??????</a>
+				<a href="{{ path('dashboard_dashboard') }}">{{ translation.dashboard.profile.button_cancel }}</a>
 			</div>
 		</div>
 	</div>

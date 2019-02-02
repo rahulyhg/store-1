@@ -25,6 +25,7 @@ class DashboardRegistrationController extends MainDashboardController
 
         return $this->render('dashboard_registration.twig', array(
           'translation' => $this->getTranslation(),
+          'authorization' => $this->checkAuthorization(),
         ));
     }
 

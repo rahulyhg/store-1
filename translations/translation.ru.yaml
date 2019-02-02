@@ -71,8 +71,20 @@ dashboard:
     text_info: 'После изменения Email и/или пароля нужно заново пройти авторизацию.'
     input_user_password: 'Новый пароль'
     button_save_profile: 'Сохранить'
+    button_cancel: 'Отмена'
     warning_input_password: 'Неправильно введен пароль. Должен быть больше 6 символов.'
     warning_input_form: 'Неправильно введены Имя или E-mail'
+
+  users:
+    page_title: 'Администраторы магазина'
+    user_email_tooltip: 'Отправить e-mail администратору используя внешнее приложение'
+    text_current_user: 'Вы не можете сами себя удалить или изменить свой статус'
+    text_user_status: 'Статус откл/вкл'
+    alert_change_user: 'Статус администратора успешно изменён'
+    alert_delete_user: 'Администратор успешно удалён'
+    error_get_users: 'Ошибка получения списка администраторов'
+    error_change_user: 'Ошибка смены статуса администратора'
+    error_delete_user: 'Ошибка удаления пользователя'
 
   logs:
     page_title: 'Управление логами'

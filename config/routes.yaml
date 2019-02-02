@@ -17,6 +17,7 @@ dashboard_dashboard:
   path: /dashboard
   controller: App\Controller\DashboardDashboardController::renderDashboardDashboardTemplateAction
 
+### REGISTRATION
 dashboard_registration:
   path: /dashboard/registration
   controller: App\Controller\DashboardRegistrationController::renderDashboardRegistrationAction
@@ -24,6 +25,7 @@ dashboard_register_user_action:
   path: /dashboard/registration/register_user_action
   controller: App\Controller\DashboardRegistrationController::registerUserAction
 
+### LOGIN and LOGOUT
 dashboard_login_user_action:
   path: /dashboard/login_user_action
   controller: App\Controller\MainDashboardController::loginUserAction
@@ -31,6 +33,7 @@ dashboard_logout_user_action:
   path: /dashboard/logout_user_action
   controller: App\Controller\MainDashboardController::logoutUserAction
 
+### PROFILE
 dashboard_profile:
   path: /dashboard/profile
   controller: App\Controller\DashboardProfileController::renderDashboardProfileAction
@@ -38,6 +41,7 @@ dashboard_edit_profile_action:
   path: /dashboard/profile/edit_profile_action
   controller: App\Controller\DashboardProfileController::editProfileAction
 
+### INBOX
 dashboard_inbox:
   path: /dashboard/inbox
   controller: App\Controller\DashboardInboxController::renderDashboardInboxTemplateAction
@@ -45,10 +49,12 @@ dashboard_delete_message_action:
   path: /dashboard/inbox/delete_message_action/{message_id}
   controller: App\Controller\DashboardInboxController::deleteMessageAction
 
+### ORDERS
 dashboard_orders:
   path: /dashboard/orders
   controller: App\Controller\DashboardOrdersController::renderDashboardOrdersTemplateAction
 
+### PUBLIC STORE
 dashboard_public:
   path: /dashboard/public
   controller: App\Controller\DashboardPublicController::renderDashboardPublicAction
@@ -59,38 +65,56 @@ dashboard_set_public_meta_data_action:
   path: /dashboard/public/set_public_meta_data_action
   controller: App\Controller\DashboardPublicController::setPublicMetaDataAction
 
+### RECOMMENDATIONS
 dashboard_recommendations:
   path: /dashboard/recommendations
   controller: App\Controller\DashboardRecommendationsController::renderDashboardRecommendationsTemplateAction
 
+### CATEGORIES
 dashboard_categories:
   path: /dashboard/categories
   controller: App\Controller\DashboardCategoriesController::renderDashboardCategoriesTemplateAction
 
+### PRODUCTS
 dashboard_products:
   path: /dashboard/products
   controller: App\Controller\DashboardProductsController::renderDashboardProductsTemplateAction
 
+### USERS
 dashboard_users:
   path: /dashboard/users
   controller: App\Controller\DashboardUsersController::renderDashboardUsersTemplateAction
+dashboard_get_users_action:
+  path: /dashboard/users/get_users_action
+  controller: App\Controller\DashboardUsersController::getUsersAction
+dashboard_change_user_action:
+  path: /dashboard/users/change_user_action
+  controller: App\Controller\DashboardUsersController::changeUserAction
+dashboard_delete_user_action:
+  path: /dashboard/users/delete_user_action
+  controller: App\Controller\DashboardUsersController::deleteUserAction
 
+### SETTINGS
 dashboard_settings:
   path: /dashboard/settings
   controller: App\Controller\DashboardSettingsController::renderDashboardSettingsTemplateAction
 
+### LANGUAGES
 dashboard_languages:
   path: /dashboard/languages
   controller: App\Controller\DashboardLanguagesController::renderDashboardLanguagesTemplateAction
 
+### ANALYTICS
 dashboard_analytics:
   path: /dashboard/analytics
   controller: App\Controller\DashboardAnalyticsController::renderDashboardAnalyticsTemplateAction
 
+### MODULES
 dashboard_modules:
   path: /dashboard/modules
   controller: App\Controller\DashboardModulesController::renderDashboardModulesTemplateAction
 
+### LOGS
 dashboard_logs:
   path: /dashboard/logs
   controller: App\Controller\DashboardLogsController::renderDashboardLogsTemplateAction

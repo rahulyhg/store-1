@@ -4,11 +4,7 @@ namespace App\Controller;
 use App\Controller\MainDashboardController;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Filesystem\Filesystem;
-
-//use App\Entity\DashboardUsers;
 
 class DashboardProfileController extends MainDashboardController
 {
@@ -18,8 +14,8 @@ class DashboardProfileController extends MainDashboardController
     /* ##################################################################################### */
     public function renderDashboardProfileAction()
     {
-    	$request = Request::createFromGlobals();
-         $user_id = $request->cookies->get('user_id');
+        $request = Request::createFromGlobals();
+        $user_id = $request->cookies->get('user_id');
         if ($this->checkAuthorization() == true) {
             return $this->render('dashboard_profile.twig', array(
               'translation' => $this->getTranslation(),
@@ -48,7 +44,7 @@ class DashboardProfileController extends MainDashboardController
 
         $em = $this->getDoctrine()->getManager();
         $user_id = $request->request->get('input_user_id');
-        //$user_id = $this->getProfile($request->request->get('input_user_id'));
+
         $user_object = $em->getRepository('App:DashboardUsers')->findOneByUserId($user_id);
 
         $user_object->setUserStatus(true);
