@@ -1,0 +1,87 @@
+{# DASHBOARD ANALYTICS TEMPLATE #}
+{% extends 'main_dashboard.twig' %}
+
+{% block init %}
+  var get_scripts_action_url = "{{ path('dashboard_get_scripts_action') }}";
+  var get_script_action_url = "{{ path('dashboard_get_script_action') }}";
+  var add_script_action_url = "{{ path('dashboard_add_script_action') }}";
+  var edit_script_action_url = "{{ path('dashboard_edit_script_action') }}";
+  var delete_script_action_url = "{{ path('dashboard_delete_script_action') }}";
+
+  var html = new String;
+
+  var alert_add_script = "{{ translation.dashboard.scripts.alert_add_script }}";
+  var alert_edit_script = "{{ translation.dashboard.scripts.alert_edit_script }}";
+  var alert_delete_script = "{{ translation.dashboard.scripts.alert_delete_script }}";
+
+  var error_get_scripts = "{{ translation.dashboard.scripts.error_get_scripts }}";
+  var error_get_script = "{{ translation.dashboard.scripts.error_get_script }}";
+  var error_add_script = "{{ translation.dashboard.scripts.error_add_script }}";
+  var error_edit_script = "{{ translation.dashboard.scripts.error_edit_script }}";
+  var error_delete_script = "{{ translation.dashboard.scripts.error_delete_script }}";
+{% endblock %}
+
+{% block include %}
+  <script type="text/javascript" src="{{ asset('include/javascript/dashboard_scripts.js') }}"></script>
+{% endblock %}
+
+{% block header %}
+  <h5 class="center">{{ translation.dashboard.scripts.page_title }}</h5>
+
+{% endblock %}
+
+{% block main %}
+  <div class="col s12 m12 l12">
+    <ul class="tabs">
+      <li class="tab col s6 m6 l6"><a href="#tab_form">{{ translation.dashboard.scripts.tab_form }}</a></li>
+      <li class="tab col s6 m6 l6"><a class="active" href="#tab_scripts">{{ translation.dashboard.scripts.tab_scripts }}</a></li>
+    </ul>
+  </div>
+
+  <div id="tab_form">
+    <div class="col s12 m12 l12">
+      <div class="card hoverable">
+        <div class="card-content">
+          <p>
+            <i class="material-icons left">info</i> {{ translation.dashboard.scripts.page_info }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s12 m12 l12">
+      <div class="card hoverable">
+        <div class="card-content">
+          <span class="card-title" id="form_title_add_script">{{ translation.dashboard.scripts.form_title_add_script }}</span>
+          <span class="card-title" id="form_title_edit_script">{{ translation.dashboard.scripts.form_title_edit_script }}</span>
+
+        </div>
+        <div class="card-action">
+          <a class="clickable" id="button_add_script">{{ translation.dashboard.scripts.button_add_script }}</a>
+          <a class="clickable" id="button_edit_script">{{ translation.dashboard.scripts.button_edit_script }}</a>
+          <a class="clickable" id="button_clear_form">{{ translation.dashboard.scripts.button_clear_form }}</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="tab_scripts">
+    <div class="col s12 m12 l12">
+      <div class="card hoverable">
+        <div class="card-content">
+          <p>
+            <i class="material-icons left">info</i> {{ translation.dashboard.scripts.text_scripts_missing }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}
+
+{% block javascript %}
+  $('#form_title_edit_script').hide();
+  $('#button_edit_script').hide();
+{% endblock %}

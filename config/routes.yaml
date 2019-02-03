@@ -104,10 +104,25 @@ dashboard_languages:
   path: /dashboard/languages
   controller: App\Controller\DashboardLanguagesController::renderDashboardLanguagesTemplateAction
 
-### ANALYTICS
-dashboard_analytics:
-  path: /dashboard/analytics
-  controller: App\Controller\DashboardAnalyticsController::renderDashboardAnalyticsTemplateAction
+### SCRIPTS
+dashboard_scripts:
+  path: /dashboard/scripts
+  controller: App\Controller\DashboardScriptsController::renderDashboardScriptsTemplateAction
+dashboard_get_scripts_action:
+  path: /dashboard/scripts/get_scripts_action
+  controller: App\Controller\DashboardScriptsController::getScriptsAction
+dashboard_get_script_action:
+  path: /dashboard/scripts/get_script_action
+  controller: App\Controller\DashboardScriptsController::getScriptAction
+dashboard_add_script_action:
+  path: /dashboard/scripts/add_script_action
+  controller: App\Controller\DashboardScriptsController::addScriptAction
+dashboard_edit_script_action:
+  path: /dashboard/scripts/edit_script_action
+  controller: App\Controller\DashboardScriptsController::editScriptAction
+dashboard_delete_script_action:
+  path: /dashboard/script/delete_script_action
+  controller: App\Controller\DashboardScriptsController::deleteScriptAction
 
 ### MODULES
 dashboard_modules:

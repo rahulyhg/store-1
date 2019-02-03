@@ -1,29 +1,36 @@
-App\Entity\StoreAnalytics:
+App\Entity\StoreScripts:
     type: entity
-    table: store_analytics
+    table: store_scripts
     id:
-        analyticsId:
+        scriptId:
             type: integer
             nullable: false
             options:
                 unsigned: false
             id: true
-            column: analytics_id
+            column: script_id
             generator:
                 strategy: IDENTITY
     fields:
-        analyticsName:
+        scriptName:
             type: text
             nullable: false
             length: 65535
             options:
                 fixed: false
-            column: analytics_name
-        analyticsCode:
+            column: script_name
+        scriptDescription:
             type: text
             nullable: false
             length: 65535
             options:
                 fixed: false
-            column: analytics_code
+            column: script_description
+        scriptData:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: script_data
     lifecycleCallbacks: {  }

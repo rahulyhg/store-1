@@ -31,7 +31,7 @@ dashboard:
     link_users: 'Администраторы'
     link_settings: 'Настройки'
     link_languages: 'Языки'
-    link_analytics: 'Аналитика'
+    link_scripts: 'Скрипты'
     link_modules: 'Модули'
     link_logs: 'Просмотр логов'
 
@@ -86,9 +86,25 @@ dashboard:
     error_change_user: 'Ошибка смены статуса администратора'
     error_delete_user: 'Ошибка удаления пользователя'
 
-  analytics:
-    page_title: 'Управление аналитикой'
-    page_info: 'Скрипты аналитики нужно добавлять между тегами <script></script>.'
+  scripts:
+    page_title: 'Управление скриптами'
+    page_info: 'Скрипты позволяют добавить на Ваш сайт дополнения со сторонней аналитикой (например, Google Analytics). Скрипты нужно добавлять между тегами <script></script>, иначе код скрипта будет отображаться на сайте в виде обычного текста.'
+    tab_form: 'Форма'
+    tab_scripts: 'Скрипты'
+    text_scripts_missing: 'В базе данных отсутствуют скрипты. Для добавления новых воспользуйтесь формой.'
+    form_title_add_script: 'Добавить новый скрипт'
+    form_title_edit_script: 'Изменить скрипт'
+    button_add_script: 'Добавить'
+    button_edit_script: 'Сохранить'
+    button_clear_form: 'Очистить форму'
+    alert_add_script: 'Новый скрипт успешно добавлен'
+    alert_edit_script: 'Скрипт успешно изменен'
+    alert_delete_script: 'Скрипт удалён'
+    error_get_scripts: 'Ошибка получения всех скриптов'
+    error_get_script: 'Ошибка получения скрипта'
+    error_add_script: 'Ошибка добавления нового скрипта'
+    error_edit_script: 'Ошибка изменения скрипта'
+    error_delete_script: 'Ошибка удаления скрипта'
 
   logs:
     page_title: 'Управление логами'
