@@ -8,6 +8,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use App\Entity\DashboardUsers;
 
+/*
+  Попробовать добавить на кнопку с email (отправить админу почту с использованием внешнего приложения)
+  чтоб отправлять почту через встроеный в симфони бандл
+*/
+
 class DashboardUsersController extends MainDashboardController
 {
     /* ##################################################################################### */
