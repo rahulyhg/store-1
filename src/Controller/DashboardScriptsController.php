@@ -4,11 +4,11 @@ namespace App\Controller;
 use App\Controller\MainDashboardController;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+//use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+//use Symfony\Component\HttpFoundation\RedirectResponse;
 
-use App\Entity\DashboardAnalytics;
+use App\Entity\StoreScripts;
 
 class DashboardScriptsController extends MainDashboardController
 {
@@ -37,7 +37,7 @@ class DashboardScriptsController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function getScripts()
+    public function getScriptsAction()
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
             $store_scripts_repository = $this->getDoctrine()->getRepository('App:StoreScripts');
@@ -52,6 +52,11 @@ class DashboardScriptsController extends MainDashboardController
                 );
             }
 
+            if (count($scripts)) < 1) {
+              $scripts['status'] = false;
+              return new JsonResponse($scripts);
+            }
+
             return new JsonResponse($scripts);
         } else {
             $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
@@ -64,28 +69,96 @@ class DashboardScriptsController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function getAnalytics()
+    public function getScriptAction(Request $request)
     {
+      if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
+          $script_id = $request->request->get('script_id');
+          $store_scripts_repository = $this->getDoctrine()->getRepository('App:StoreScripts');
+          $store_script_object = $store_scripts_repository->findOneByScriptId($script_id);
+
+          $script = array(
+            'id' => $store_script_object->getScriptId(),
+            'name' => $store_script_object->getScriptName(),
+            'description' => $store_script_object->getScriptDescription(),
+            'data' => $store_script_object->getScriptData()
+          );
+
+          return new JsonResponse($script);
+      } else {
+          $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+          return $this->render('error_access.twig', array(
+            'translation' => $this->getTranslation()
+        ));
+      }
     }
 
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function addAnalytics()
+    public function addScriptAction(Request $request)
     {
+      if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
+        $form = $request->request->get('form');
+        $public_scripts = new PublicScripts();
+        $em = $this->getDoctrine()->getManager();
+
+        $public_scripts->setScriptName($form['name']);
+        $public_scripts->setScriptDescription($form['description']);
+        $public_scripts->setScriptData($form['data']);
+
+        $em->persist($public_seo);
+        $em->flush();
+
+        $result['result'] = true;
+
+        return new JsonResponse($result);
+      } else {
+          $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+          return $this->render('error_access.twig', array(
+            'translation' => $this->getTranslation()
+        ));
+      }
     }
 
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function editAnalytics()
+    public function editScriptAction(Request $request)
     {
+      if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
+        $em = $this->getDoctrine()->getManager();
+        $seo_object = $em->getRepository('App:PublicSeo')->findOneBySeoId($form_data['id']);
+        $seo_object->setSeoName($form_data['name']);
+        $seo_object->setSeoData($form_data['data']);
+        $em->flush();
+
+        return true;
+      } else {
+          $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+          return $this->render('error_access.twig', array(
+            'translation' => $this->getTranslation()
+        ));
+      }
     }
 
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function deleteAnalytics()
+    public function deleteScriptAction(Request $request)
     {
+      if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
+        $em = $this->getDoctrine()->getManager();
+        $seo_object = $em->getRepository('App:PublicSeo')->findOneBySeoId($seo_id);
+
+        $em->remove($seo_object);
+        $em->flush();
+
+        return true;
+      } else {
+          $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+          return $this->render('error_access.twig', array(
+            'translation' => $this->getTranslation()
+        ));
+      }
     }
 }
