@@ -106,7 +106,7 @@ class DashboardScriptsController extends MainDashboardController
         $public_scripts->setScriptDescription($form['description']);
         $public_scripts->setScriptData($form['data']);
 
-        $em->persist($public_seo);
+        $em->persist($public_scripts);
         $em->flush();
 
         $result['result'] = true;
@@ -126,13 +126,18 @@ class DashboardScriptsController extends MainDashboardController
     public function editScriptAction(Request $request)
     {
       if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
+      	$form = $request->request->get('form');
         $em = $this->getDoctrine()->getManager();
-        $seo_object = $em->getRepository('App:PublicSeo')->findOneBySeoId($form_data['id']);
-        $seo_object->setSeoName($form_data['name']);
-        $seo_object->setSeoData($form_data['data']);
+        $script_object = $em->getRepository('App:PublicScripts')->findOneByScriptId($form['id']);
+        
+        $script_object->setScriptName($form['name']);
+        $script_object->setScriptDescription($form['description']);
+        $script_object->setScriptData($form['data']);
         $em->flush();
 
-        return true;
+        $result['result'] = true;
+
+        return new JsonResponse($result);
       } else {
           $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
           return $this->render('error_access.twig', array(
