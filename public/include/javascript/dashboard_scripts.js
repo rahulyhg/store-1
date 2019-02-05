@@ -3,19 +3,21 @@
 /* ##################################################################################### */
 function renderContent(scripts) {
   for (var script in scripts) {
-    html += '<tr>';
-    html += '<td class="left-align">' + scripts[script]['id'] + '</td>';
-    html += '<td class="left-align">' + scripts[script]['name'] + '</td>';
-    html += '<td class="left-align">';
+    html += '<div class="col s12 m12 l12">';
+    html += '<div class="card hoverable">';
+    html += '<div class="card-content">';
 
+    html += '<span class="card-title">' + scripts[script]['id'] + '. ' + scripts[script]['name'] + '</span>';
+    html += '<p>' + scripts[script]['description'] + '</p>';
     html += '<pre><small>' + String(scripts[script]['data']).replace(/\</g, '&lt;').replace(/\>/g, '&gt;') + '</small></pre>';
 
-    html += '</td>';
-    html += '<td class="right-align">';
-    html += '<a class="btn green clickable" onclick="getScript(' + scripts[script]['id'] + ')"><i class="material-icons">edit</i></a>';
-    html += '<a class="btn red clickable" onclick="deleteScript(' + scripts[script]['id'] + ')"><i class="material-icons">delete</i></a>';
-    html += '</td>';
-    html += '</tr>';
+    html += '</div>';
+    html += '<div class="card-action">';
+    html += '<a class="green-text clickable" onclick="getScript(' + scripts[script]['id'] + ')">' + button_edit_script + '</a>';
+    html += '<a class="red-text clickable" onclick="deleteScript(' + scripts[script]['id'] + ')">' + button_delete_script + '</a>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
   }
 
   return html;
@@ -65,13 +67,18 @@ function getScripts() {
       $('#preloader').show();
     },
     success: function(response) {
-      html = "";
-      html = renderContent(response);
-      $('#scripts_content').html(html);
+      if (response.status == false) {
+        elegant_alert.error(warning_scripts_missing);
+        $('#card_scripts_missing').show();
+      } else {
+        html = "";
+        html = renderContent(response);
+        $('#tab_scripts').html(html);
 
-      $('html, body').animate({
-        scrollTop: 0
-      }, 500);
+        $('html, body').animate({
+          scrollTop: 0
+        }, 500);
+      }
     },
     complete: function() {
       $('#preloader').hide();

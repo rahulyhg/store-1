@@ -10,10 +10,13 @@
 
   var html = new String;
 
+  var button_edit_script = "{{ translation.dashboard.scripts.button_edit_script }}";
+  var button_delete_script = "{{ translation.dashboard.scripts.button_delete_script }}";
+
   var alert_add_script = "{{ translation.dashboard.scripts.alert_add_script }}";
   var alert_edit_script = "{{ translation.dashboard.scripts.alert_edit_script }}";
   var alert_delete_script = "{{ translation.dashboard.scripts.alert_delete_script }}";
-
+  var warning_scripts_missing = "{{ translation.dashboard.scripts.warning_scripts_missing }}";
   var error_get_scripts = "{{ translation.dashboard.scripts.error_get_scripts }}";
   var error_get_script = "{{ translation.dashboard.scripts.error_get_script }}";
   var error_add_script = "{{ translation.dashboard.scripts.error_add_script }}";
@@ -40,13 +43,12 @@
 
   <div id="tab_form">
     <div class="col s12 m12 l12">
-      <div class="card hoverable">
-        <div class="card-content">
-          <p>
-            <i class="material-icons left">info</i> {{ translation.dashboard.scripts.page_info }}
-          </p>
-        </div>
-      </div>
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header"><i class="material-icons left">info</i>{{ translation.dashboard.scripts.page_info_title }}</div>
+          <div class="collapsible-body"><p>{{ translation.dashboard.scripts.page_info }}</p></div>
+        </li>
+      </ul>
     </div>
 
     <div class="col s12 m12 l12">
@@ -54,6 +56,21 @@
         <div class="card-content">
           <span class="card-title" id="form_title_add_script">{{ translation.dashboard.scripts.form_title_add_script }}</span>
           <span class="card-title" id="form_title_edit_script">{{ translation.dashboard.scripts.form_title_edit_script }}</span>
+
+          <div class="input-field">
+    				<input type="text" id="input_script_name" value="" />
+    				<label for="input_script_name">{{ translation.dashboard.scripts.input_script_name }}</label>
+    			</div>
+          <div class="input-field">
+    				<textarea class="materialize-textarea" id="input_script_description"></textarea>
+    				<label for="input_script_description">{{ translation.dashboard.scripts.input_script_description }}</label>
+    			</div>
+    			<div class="input-field">
+    				<textarea class="materialize-textarea" id="input_script_data"></textarea>
+    				<label for="input_script_data">{{ translation.dashboard.scripts.input_script_data }}</label>
+    			</div>
+    			<input type="hidden" id="input_script_id" value="" />
+
 
         </div>
         <div class="card-action">
@@ -67,7 +84,7 @@
   </div>
 
   <div id="tab_scripts">
-    <div class="col s12 m12 l12">
+    <div class="col s12 m12 l12" id="card_scripts_missing">
       <div class="card hoverable">
         <div class="card-content">
           <p>
@@ -82,6 +99,9 @@
 {% endblock %}
 
 {% block javascript %}
+  $('#card_scripts_missing').hide();
   $('#form_title_edit_script').hide();
   $('#button_edit_script').hide();
+
+  getScripts();
 {% endblock %}
