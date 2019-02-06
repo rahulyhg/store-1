@@ -6,11 +6,9 @@ function renderContent(scripts) {
     html += '<div class="col s12 m12 l12">';
     html += '<div class="card hoverable">';
     html += '<div class="card-content">';
-
     html += '<span class="card-title">' + scripts[script]['id'] + '. ' + scripts[script]['name'] + '</span>';
     html += '<p>' + scripts[script]['description'] + '</p>';
     html += '<pre><small>' + String(scripts[script]['data']).replace(/\</g, '&lt;').replace(/\>/g, '&gt;') + '</small></pre>';
-
     html += '</div>';
     html += '<div class="card-action">';
     html += '<a class="green-text clickable" onclick="getScript(' + scripts[script]['id'] + ')">' + button_edit_script + '</a>';
@@ -27,23 +25,25 @@ function renderContent(scripts) {
 //
 /* ##################################################################################### */
 function serializeForm() {
-  var form_data = {
+  var form = {
     'id': $('#input_script_id').val(),
     'name': $('#input_script_name').val(),
+    'description': $('#input_script_description').val(),
     'data': $('#input_script_data').val()
   };
-  return form_data;
+  return form;
 }
 
 /* ##################################################################################### */
-//
+// Проверить правильность autoresize для текстовых полей
 /* ##################################################################################### */
 function clearForm() {
-  $('#title_edit_script').hide();
-  $('#title_add_script').show();
+  $('#form_title_edit_script').hide();
+  $('#form_title_add_script').show();
 
   $('#input_script_id').val(null);
   $('#input_script_name').val(null).trigger('blur');
+  $('#input_script_description').val(null).trigger('blur');
   $('#input_script_data').val(null).trigger('blur').trigger('autoresize');
 
   $('#button_save_script').hide();
@@ -92,7 +92,7 @@ function getScripts() {
 }
 
 /* ##################################################################################### */
-//
+// Проверить триггер autoresize
 /* ##################################################################################### */
 function getScript(script_id) {
   $.ajax({
@@ -109,13 +109,13 @@ function getScript(script_id) {
       $('#preloader').show();
     },
     success: function(response) {
-      $('#input_form').modal('open');
-
-      $('#title_add_script').hide();
-      $('#title_edit_script').show();
+    	// добавить переход на вкладку формы
+      $('#form_title_add_script').hide();
+      $('#form_title_edit_script').show();
 
       $('#input_script_id').val(response.id);
       $('#input_script_name').val(response.name).trigger('focus');
+      $('#input_script_description').val(response.description).trigger('focus');
       $('#input_script_data').val(response.data).trigger('focus').trigger('autoresize');
 
       $('#button_add_script').hide();

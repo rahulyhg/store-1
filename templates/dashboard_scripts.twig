@@ -104,4 +104,9 @@
   $('#button_edit_script').hide();
 
   getScripts();
+  
+  $('#button_clear_form').on('click', function() {
+  	clearForm();
+      elegant_alert.success("{{ translation.dashboard.scripts.alert_clear_form }}");
+  });
 {% endblock %}
