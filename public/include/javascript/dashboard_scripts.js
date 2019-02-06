@@ -7,7 +7,13 @@ function renderContent(scripts) {
     html += '<div class="card hoverable">';
     html += '<div class="card-content">';
     html += '<span class="card-title">' + scripts[script]['id'] + '. ' + scripts[script]['name'] + '</span>';
-    html += '<p>' + scripts[script]['description'] + '</p>';
+
+    if (scripts[script]['status'] == true) {
+      html += '<p><label><i class="material-icons left">link</i>' + render_script_status_on + '</label></p>';
+    } else {
+      html += '<p><label><i class="material-icons left">link_off</i>' + render_script_status_off + '</label></p>';
+    }
+
     html += '<pre><small>' + String(scripts[script]['data']).replace(/\</g, '&lt;').replace(/\>/g, '&gt;') + '</small></pre>';
     html += '</div>';
     html += '<div class="card-action">';
@@ -28,8 +34,8 @@ function serializeForm() {
   var form = {
     'id': $('#input_script_id').val(),
     'name': $('#input_script_name').val(),
-    'description': $('#input_script_description').val(),
-    'data': $('#input_script_data').val()
+    'data': $('#input_script_data').val(),
+    'status': $('#input_script_status').val()
   };
   return form;
 }
@@ -42,9 +48,15 @@ function clearForm() {
   $('#form_title_add_script').show();
 
   $('#input_script_id').val(null);
-  $('#input_script_name').val(null).trigger('blur');
-  $('#input_script_description').val(null).trigger('blur');
-  $('#input_script_data').val(null).trigger('blur').trigger('autoresize');
+
+  $('#input_script_name').val(null);
+
+  $('#input_script_data').val(null);
+  M.textareaAutoResize($('#input_script_data'));
+
+  $('#input_script_status').val(0).formSelect();
+
+  M.updateTextFields();
 
   $('#button_save_script').hide();
   $('#button_add_script').show();
@@ -64,27 +76,28 @@ function getScripts() {
     },
     dataType: "json",
     beforeSend: function() {
-      $('#preloader').show();
+      $('#preloader_circle').show();
     },
     success: function(response) {
       if (response.status == false) {
+        html = "";
+        $('#scripts_content').html(html);
         elegant_alert.error(warning_scripts_missing);
         $('#card_scripts_missing').show();
       } else {
+        $('#card_scripts_missing').hide();
         html = "";
         html = renderContent(response);
-        $('#tab_scripts').html(html);
-
-        $('html, body').animate({
-          scrollTop: 0
-        }, 500);
+        $('#scripts_content').html(html);
       }
+      $('html, body').animate({
+        scrollTop: 0
+      }, 500);
     },
     complete: function() {
-      $('#preloader').hide();
+      $('#preloader_circle').hide();
     },
     error: function(xhr) {
-      console.log(xhr);
       elegant_alert.error(error_get_scripts);
       writeLog('Dashboard/JS/Script: Error Get Scripts');
     }
@@ -109,14 +122,27 @@ function getScript(script_id) {
       $('#preloader').show();
     },
     success: function(response) {
-    	// добавить переход на вкладку формы
+      var el = document.getElementById("scripts_tabs");
+      var instance = M.Tabs.getInstance(el);
+      instance.select('tab_form');
+
       $('#form_title_add_script').hide();
       $('#form_title_edit_script').show();
 
       $('#input_script_id').val(response.id);
-      $('#input_script_name').val(response.name).trigger('focus');
-      $('#input_script_description').val(response.description).trigger('focus');
-      $('#input_script_data').val(response.data).trigger('focus').trigger('autoresize');
+
+      $('#input_script_name').val(response.name);
+
+      $('#input_script_data').val(response.data);
+      M.textareaAutoResize($('#input_script_data'));
+
+      if (response.status == true) {
+        $('#input_script_status').val(1).formSelect();
+      } else {
+        $('#input_script_status').val(0).formSelect();
+      }
+
+      M.updateTextFields();
 
       $('#button_add_script').hide();
       $('#button_save_script').show();
@@ -125,7 +151,6 @@ function getScript(script_id) {
       $('#preloader').hide();
     },
     error: function(xhr) {
-      console.log(xhr);
       elegant_alert.error(error_get_script);
       writeLog('Dashboard/JS/Script: Error Get Script');
     }
@@ -135,7 +160,7 @@ function getScript(script_id) {
 /* ##################################################################################### */
 //
 /* ##################################################################################### */
-function addScript(form_data) {
+function addScript(form) {
   $.ajax({
     url: add_script_action_url,
     type: "POST",
@@ -143,7 +168,7 @@ function addScript(form_data) {
     async: true,
     data: {
       'request': true,
-      'form_data': form_data
+      'form': form
     },
     dataType: "json",
     beforeSend: function() {
@@ -152,7 +177,11 @@ function addScript(form_data) {
     success: function(response) {
       if (response.result == true) {
         clearForm();
-        $('#input_form').modal('close');
+
+        var el = document.getElementById("scripts_tabs");
+        var instance = M.Tabs.getInstance(el);
+        instance.select('tab_scripts');
+
         getScripts();
         elegant_alert.success(alert_add_script);
       } else {
@@ -163,7 +192,6 @@ function addScript(form_data) {
       $('#preloader').hide();
     },
     error: function(xhr) {
-      console.log(xhr);
       elegant_alert.error(error_add_script);
       writeLog('Dashboard/JS/Script: Error Add Script');
     }
@@ -173,7 +201,7 @@ function addScript(form_data) {
 /* ##################################################################################### */
 //
 /* ##################################################################################### */
-function editScript(form_data) {
+function editScript(form) {
   $.ajax({
     url: edit_script_action_url,
     type: "POST",
@@ -181,7 +209,7 @@ function editScript(form_data) {
     async: true,
     data: {
       'request': true,
-      'form_data': form_data
+      'form': form
     },
     dataType: "json",
     beforeSend: function() {
@@ -190,7 +218,11 @@ function editScript(form_data) {
     success: function(response) {
       if (response.result == true) {
         clearForm();
-        $('#input_form').modal('close');
+
+        var el = document.getElementById("scripts_tabs");
+        var instance = M.Tabs.getInstance(el);
+        instance.select('tab_scripts');
+
         getScripts();
         elegant_alert.success(alert_edit_script);
       } else {

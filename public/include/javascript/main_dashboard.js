@@ -18,22 +18,29 @@ var elegant_alert = {
   'success': function(alert_data) {
     M.toast({
       html: '<span class="text-select-none"><i class="left material-icons light-green-text text-accent-3 notranslate">done_all</i>' + alert_data + '</span>',
-      classes: 'rounded'
+      classes: 'rounded',
+      displayLength: 25000
     });
   },
   'warning': function(alert_data) {
     M.toast({
-      html: '<span class="text-select-none"><i class="left material-icons yellow-text text-accent-3 notranslate">warning</i>' + alert_data + '</span>'
+      html: '<span class="text-select-none"><i class="left material-icons yellow-text text-accent-3 notranslate">warning</i>' + alert_data + '</span>',
+      classes: 'rounded',
+      displayLength: 25000
     });
   },
   'attention': function(alert_data) {
     M.toast({
-      html: '<span class="text-select-none"><i class="left material-icons blue-text notranslate">error_outline</i>' + alert_data + '</span>'
+      html: '<span class="text-select-none"><i class="left material-icons blue-text notranslate">error_outline</i>' + alert_data + '</span>',
+      classes: 'rounded',
+      displayLength: 25000
     });
   },
   'error': function(alert_data) {
     M.toast({
-      html: '<span class="text-select-none"><i class="left material-icons red-text notranslate">error</i>' + alert_data + '</span>'
+      html: '<span class="text-select-none"><i class="left material-icons red-text notranslate">error</i>' + alert_data + '</span>',
+      classes: 'rounded',
+      displayLength: 25000
     });
   }
 };

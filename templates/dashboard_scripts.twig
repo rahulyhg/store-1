@@ -10,6 +10,9 @@
 
   var html = new String;
 
+  var render_script_status_on = "{{ translation.dashboard.scripts.render_script_status_on }}";
+  var render_script_status_off = "{{ translation.dashboard.scripts.render_script_status_off }}";
+
   var button_edit_script = "{{ translation.dashboard.scripts.button_edit_script }}";
   var button_delete_script = "{{ translation.dashboard.scripts.button_delete_script }}";
 
@@ -35,7 +38,7 @@
 
 {% block main %}
   <div class="col s12 m12 l12">
-    <ul class="tabs">
+    <ul class="tabs" id="scripts_tabs">
       <li class="tab col s6 m6 l6"><a href="#tab_form">{{ translation.dashboard.scripts.tab_form }}</a></li>
       <li class="tab col s6 m6 l6"><a class="active" href="#tab_scripts">{{ translation.dashboard.scripts.tab_scripts }}</a></li>
     </ul>
@@ -61,21 +64,24 @@
     				<input type="text" id="input_script_name" value="" />
     				<label for="input_script_name">{{ translation.dashboard.scripts.input_script_name }}</label>
     			</div>
-          <div class="input-field">
-    				<textarea class="materialize-textarea" id="input_script_description"></textarea>
-    				<label for="input_script_description">{{ translation.dashboard.scripts.input_script_description }}</label>
-    			</div>
     			<div class="input-field">
     				<textarea class="materialize-textarea" id="input_script_data"></textarea>
     				<label for="input_script_data">{{ translation.dashboard.scripts.input_script_data }}</label>
     			</div>
-    			<input type="hidden" id="input_script_id" value="" />
+          <div class="input-field">
+            <select id="input_script_status">
+              <option value="0" selected>{{ translation.dashboard.scripts.script_status_off }}</option>
+              <option value="1">{{ translation.dashboard.scripts.script_status_on }}</option>
+            </select>
+            <label>{{ translation.dashboard.scripts.input_script_status }}</label>
+          </div>
 
+    			<input type="hidden" id="input_script_id" value="" />
 
         </div>
         <div class="card-action">
           <a class="clickable" id="button_add_script">{{ translation.dashboard.scripts.button_add_script }}</a>
-          <a class="clickable" id="button_edit_script">{{ translation.dashboard.scripts.button_edit_script }}</a>
+          <a class="clickable display-none" id="button_save_script">{{ translation.dashboard.scripts.button_save_script }}</a>
           <a class="clickable" id="button_clear_form">{{ translation.dashboard.scripts.button_clear_form }}</a>
         </div>
       </div>
@@ -84,7 +90,7 @@
   </div>
 
   <div id="tab_scripts">
-    <div class="col s12 m12 l12" id="card_scripts_missing">
+    <div class="col s12 m12 l12 display-none" id="card_scripts_missing">
       <div class="card hoverable">
         <div class="card-content">
           <p>
@@ -94,19 +100,41 @@
       </div>
     </div>
 
+    <div class="center display-none" id="preloader_circle">
+			{% include 'preloader_circle.html' %}
+		</div>
+
+    <div id="scripts_content"></div>
   </div>
 
 {% endblock %}
 
 {% block javascript %}
-  $('#card_scripts_missing').hide();
   $('#form_title_edit_script').hide();
-  $('#button_edit_script').hide();
+  $('select').formSelect();
 
   getScripts();
-  
+
   $('#button_clear_form').on('click', function() {
   	clearForm();
       elegant_alert.success("{{ translation.dashboard.scripts.alert_clear_form }}");
+  });
+
+  $('#button_add_script').on('click', function() {
+    var form = serializeForm();
+    if (form.name.length >= 2 && form.data.length >=3) {
+      addScript(form);
+    } else {
+      elegant_alert.warning("{{ translation.dashboard.scripts.warning_input_form }}");
+    }
+  });
+
+  $('#button_save_script').on('click', function() {
+    var form = serializeForm();
+    if (form.name.length >= 2 && form.data.length >=3) {
+      editScript(form);
+    } else {
+      elegant_alert.warning("{{ translation.dashboard.scripts.warning_input_form }}");
+    }
   });
 {% endblock %}

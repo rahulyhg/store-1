@@ -51,8 +51,8 @@ class DashboardScriptsController extends MainDashboardController
                 $scripts[] = array(
                   'id' => $script->getScriptId(),
                   'name' => $script->getScriptName(),
-                  'description' => $script->getScriptDescription(),
                   'data' => $script->getScriptData(),
+                  'status' => $script->getScriptStatus(),
                 );
             }
 
@@ -78,8 +78,8 @@ class DashboardScriptsController extends MainDashboardController
             $script = array(
               'id' => $store_script_object->getScriptId(),
               'name' => $store_script_object->getScriptName(),
-              'description' => $store_script_object->getScriptDescription(),
-              'data' => $store_script_object->getScriptData()
+              'data' => $store_script_object->getScriptData(),
+              'status' => $store_script_object->getScriptStatus()
             );
 
             return new JsonResponse($script);
@@ -98,14 +98,14 @@ class DashboardScriptsController extends MainDashboardController
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
             $form = $request->request->get('form');
-            $public_scripts = new PublicScripts();
+            $store_scripts = new StoreScripts();
             $em = $this->getDoctrine()->getManager();
 
-            $public_scripts->setScriptName($form['name']);
-            $public_scripts->setScriptDescription($form['description']);
-            $public_scripts->setScriptData($form['data']);
+            $store_scripts->setScriptName($form['name']);
+            $store_scripts->setScriptData($form['data']);
+            $store_scripts->setScriptStatus($form['status']);
 
-            $em->persist($public_scripts);
+            $em->persist($store_scripts);
             $em->flush();
 
             $result['result'] = true;
@@ -127,11 +127,12 @@ class DashboardScriptsController extends MainDashboardController
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
             $form = $request->request->get('form');
             $em = $this->getDoctrine()->getManager();
-            $script_object = $em->getRepository('App:PublicScripts')->findOneByScriptId($form['id']);
+            $script_object = $em->getRepository('App:StoreScripts')->findOneByScriptId($form['id']);
 
             $script_object->setScriptName($form['name']);
-            $script_object->setScriptDescription($form['description']);
             $script_object->setScriptData($form['data']);
+            $script_object->setScriptStatus($form['status']);
+
             $em->flush();
 
             $result['result'] = true;
@@ -151,13 +152,16 @@ class DashboardScriptsController extends MainDashboardController
     public function deleteScriptAction(Request $request)
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
+            $script_id = $request->request->get('script_id');
             $em = $this->getDoctrine()->getManager();
-            $seo_object = $em->getRepository('App:PublicSeo')->findOneBySeoId($seo_id);
+            $script_object = $em->getRepository('App:StoreScripts')->findOneByScriptId($script_id);
 
-            $em->remove($seo_object);
+            $em->remove($script_object);
             $em->flush();
 
-            return true;
+            $result['result'] = true;
+
+            return new JsonResponse($result);
         } else {
             $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
             return $this->render('error_access.twig', array(

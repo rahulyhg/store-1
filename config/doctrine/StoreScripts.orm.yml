@@ -19,13 +19,6 @@ App\Entity\StoreScripts:
             options:
                 fixed: false
             column: script_name
-        scriptDescription:
-            type: text
-            nullable: false
-            length: 65535
-            options:
-                fixed: false
-            column: script_description
         scriptData:
             type: text
             nullable: false
@@ -33,4 +26,8 @@ App\Entity\StoreScripts:
             options:
                 fixed: false
             column: script_data
+        scriptStatus:
+            type: boolean
+            nullable: false
+            column: script_status
     lifecycleCallbacks: {  }
