@@ -19,13 +19,6 @@ App\Entity\StoreModules:
             options:
                 fixed: false
             column: module_name
-        moduleDescription:
-            type: text
-            nullable: false
-            length: 65535
-            options:
-                fixed: false
-            column: module_description
         moduleData:
             type: text
             nullable: false
@@ -33,4 +26,8 @@ App\Entity\StoreModules:
             options:
                 fixed: false
             column: module_data
+        moduleStatus:
+            type: boolean
+            nullable: false
+            column: module_status
     lifecycleCallbacks: {  }

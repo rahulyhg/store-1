@@ -121,13 +121,28 @@ dashboard_edit_script_action:
   path: /dashboard/scripts/edit_script_action
   controller: App\Controller\DashboardScriptsController::editScriptAction
 dashboard_delete_script_action:
-  path: /dashboard/script/delete_script_action
+  path: /dashboard/scripts/delete_script_action
   controller: App\Controller\DashboardScriptsController::deleteScriptAction
 
 ### MODULES
 dashboard_modules:
   path: /dashboard/modules
   controller: App\Controller\DashboardModulesController::renderDashboardModulesTemplateAction
+dashboard_get_modules_action:
+  path: /dashboard/modules/get_modules_action
+  controller: App\Controller\DashboardModulesController::getModulesAction
+dashboard_get_module_action:
+  path: /dashboard/modules/get_module_action
+  controller: App\Controller\DashboardModulesController::getModuleAction
+dashboard_add_module_action:
+  path: /dashboard/modules/add_module_action
+  controller: App\Controller\DashboardModulesController::addModuleAction
+dashboard_edit_module_action:
+  path: /dashboard/modules/edit_module_action
+  controller: App\Controller\DashboardModulesController::editModuleAction
+dashboard_delete_module_action:
+  path: /dashboard/modules/delete_module_action
+  controller: App\Controller\DashboardModulesController::deleteModuleAction
 
 ### LOGS
 dashboard_logs:

@@ -1,0 +1,140 @@
+{# DASHBOARD SCRIPTS TEMPLATE #}
+{% extends 'main_dashboard.twig' %}
+
+{% block init %}
+  var get_modules_action_url = "{{ path('dashboard_get_modules_action') }}";
+  var get_module_action_url = "{{ path('dashboard_get_module_action') }}";
+  var add_module_action_url = "{{ path('dashboard_add_module_action') }}";
+  var edit_module_action_url = "{{ path('dashboard_edit_module_action') }}";
+  var delete_module_action_url = "{{ path('dashboard_delete_module_action') }}";
+
+  var html = new String;
+
+  var render_module_status_on = "{{ translation.dashboard.modules.render_module_status_on }}";
+  var render_module_status_off = "{{ translation.dashboard.modules.render_module_status_off }}";
+
+  var button_edit_module = "{{ translation.dashboard.modules.button_edit_module }}";
+  var button_delete_module = "{{ translation.dashboard.modules.button_delete_module }}";
+
+  var alert_add_module = "{{ translation.dashboard.modules.alert_add_module }}";
+  var alert_edit_module = "{{ translation.dashboard.modules.alert_edit_module }}";
+  var alert_delete_module = "{{ translation.dashboard.modules.alert_delete_module }}";
+  var warning_modules_missing = "{{ translation.dashboard.modules.warning_modules_missing }}";
+  var error_get_modules = "{{ translation.dashboard.modules.error_get_modules }}";
+  var error_get_module = "{{ translation.dashboard.modules.error_get_module }}";
+  var error_add_module = "{{ translation.dashboard.modules.error_add_module }}";
+  var error_edit_module = "{{ translation.dashboard.modules.error_edit_module }}";
+  var error_delete_module = "{{ translation.dashboard.modules.error_delete_module }}";
+{% endblock %}
+
+{% block include %}
+  <script type="text/javascript" src="{{ asset('include/javascript/dashboard_modules.js') }}"></script>
+{% endblock %}
+
+{% block header %}
+  <h5 class="center">{{ translation.dashboard.modules.page_title }}</h5>
+
+{% endblock %}
+
+{% block main %}
+  <div class="col s12 m12 l12">
+    <ul class="tabs" id="modules_tabs">
+      <li class="tab col s6 m6 l6"><a href="#tab_form">{{ translation.dashboard.modules.tab_form }}</a></li>
+      <li class="tab col s6 m6 l6"><a class="active" href="#tab_modules">{{ translation.dashboard.modules.tab_modules }}</a></li>
+    </ul>
+  </div>
+
+  <div id="tab_form">
+    <div class="col s12 m12 l12">
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header"><i class="material-icons left">info</i>{{ translation.dashboard.modules.page_info_title }}</div>
+          <div class="collapsible-body"><p>{{ translation.dashboard.modules.page_info }}</p></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col s12 m12 l12">
+      <div class="card hoverable">
+        <div class="card-content">
+          <span class="card-title" id="form_title_add_module">{{ translation.dashboard.modules.form_title_add_module }}</span>
+          <span class="card-title" id="form_title_edit_module">{{ translation.dashboard.modules.form_title_edit_module }}</span>
+
+          <div class="input-field">
+    				<input type="text" id="input_module_name" value="" />
+    				<label for="input_module_name">{{ translation.dashboard.modules.input_module_name }}</label>
+    			</div>
+    			<div class="input-field">
+    				<textarea class="materialize-textarea" id="input_module_data"></textarea>
+    				<label for="input_module_data">{{ translation.dashboard.modules.input_module_data }}</label>
+    			</div>
+          <div class="input-field">
+            <select id="input_module_status">
+              <option value="0" selected>{{ translation.dashboard.modules.module_status_off }}</option>
+              <option value="1">{{ translation.dashboard.modules.module_status_on }}</option>
+            </select>
+            <label>{{ translation.dashboard.modules.input_module_status }}</label>
+          </div>
+
+    			<input type="hidden" id="input_module_id" value="" />
+
+        </div>
+        <div class="card-action">
+          <a class="clickable" id="button_add_module">{{ translation.dashboard.modules.button_add_module }}</a>
+          <a class="clickable display-none" id="button_save_module">{{ translation.dashboard.modules.button_save_module }}</a>
+          <a class="clickable" id="button_clear_form">{{ translation.dashboard.modules.button_clear_form }}</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="tab_modules">
+    <div class="col s12 m12 l12 display-none" id="card_modules_missing">
+      <div class="card hoverable">
+        <div class="card-content">
+          <p>
+            <i class="material-icons left">info</i> {{ translation.dashboard.modules.text_modules_missing }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="center display-none" id="preloader_circle">
+			{% include 'preloader_circle.html' %}
+		</div>
+
+    <div id="modules_content"></div>
+  </div>
+
+{% endblock %}
+
+{% block javascript %}
+  $('#form_title_edit_module').hide();
+  $('select').formSelect();
+
+  getModules();
+
+  $('#button_clear_form').on('click', function() {
+  	clearForm();
+      elegant_alert.success("{{ translation.dashboard.modules.alert_clear_form }}");
+  });
+
+  $('#button_add_module').on('click', function() {
+    var form = serializeForm();
+    if (form.name.length >= 2 && form.data.length >=3) {
+      addModule(form);
+    } else {
+      elegant_alert.warning("{{ translation.dashboard.modules.warning_input_form }}");
+    }
+  });
+
+  $('#button_save_module').on('click', function() {
+    var form = serializeForm();
+    if (form.name.length >= 2 && form.data.length >=3) {
+      editModule(form);
+    } else {
+      elegant_alert.warning("{{ translation.dashboard.modules.warning_input_form }}");
+    }
+  });
+{% endblock %}

@@ -31,16 +31,16 @@ class StoreModules
     /**
      * @var string
      *
-     * @ORM\Column(name="module_description", type="text", length=65535, nullable=false)
-     */
-    private $moduleDescription;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="module_data", type="text", length=65535, nullable=false)
      */
     private $moduleData;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="module_status", type="boolean", nullable=false)
+     */
+    private $moduleStatus;
 
     public function getModuleId(): ?int
     {
@@ -59,18 +59,6 @@ class StoreModules
         return $this;
     }
 
-    public function getModuleDescription(): ?string
-    {
-        return $this->moduleDescription;
-    }
-
-    public function setModuleDescription(string $moduleDescription): self
-    {
-        $this->moduleDescription = $moduleDescription;
-
-        return $this;
-    }
-
     public function getModuleData(): ?string
     {
         return $this->moduleData;
@@ -79,6 +67,18 @@ class StoreModules
     public function setModuleData(string $moduleData): self
     {
         $this->moduleData = $moduleData;
+
+        return $this;
+    }
+
+    public function getModuleStatus(): ?bool
+    {
+        return $this->moduleStatus;
+    }
+
+    public function setModuleStatus(bool $moduleStatus): self
+    {
+        $this->moduleStatus = $moduleStatus;
 
         return $this;
     }
