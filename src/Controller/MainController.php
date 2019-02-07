@@ -10,8 +10,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /* =============== Локализация ====================== */
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\Translation\Loader\YamlFileLoader;
+//use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 
 /* ==================== Include entities ================== */
@@ -31,10 +32,14 @@ class MainController extends Controller
     /* ##################################################################################### */
     // Получение локализации для всего приложения
     /* ##################################################################################### */
-    //protected function getTranslation(TranslatorInterface $translator)
     protected function getTranslation()
     {
-        $translation = Yaml::parseFile($this->getAppDir() . 'translations/translation.ru.yaml');
+        try {
+            $translation = Yaml::parseFile($this->getAppDir() . 'translations/translation.ru.yaml');
+        } catch (ParseException $exception) {
+            $this->writeLog('Ошибка получения языкового пакета. Возможно пакет отсутствует. Текст ошибки: %s', $exception->getMessage());
+            $translation = Yaml::parseFile($this->getAppDir() . 'translations/translation.ru.yaml');
+        }
 
         return $translation;
     }

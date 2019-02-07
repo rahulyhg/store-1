@@ -1,0 +1,29 @@
+App\Entity\CommonLanguages:
+    type: entity
+    table: common_languages
+    id:
+        languageId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: language_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        languageName:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: language_name
+        languageCode:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: language_code
+    lifecycleCallbacks: {  }
