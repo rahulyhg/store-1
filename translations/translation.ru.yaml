@@ -86,6 +86,13 @@ dashboard:
     error_change_user: 'Ошибка смены статуса администратора'
     error_delete_user: 'Ошибка удаления пользователя'
 
+  settings:
+    page_title: 'Настройки магазина'
+    input_store_language: 'Язык магазина'
+    input_dashboard_language: 'Язык панели управления'
+    button_save_settings: 'Сохранить'
+    button_cancel_settings: 'Отменить'
+
   languages:
     page_title: 'Управление языками'
     page_info_title: 'Информация'
