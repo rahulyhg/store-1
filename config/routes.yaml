@@ -103,6 +103,21 @@ dashboard_settings:
 dashboard_languages:
   path: /dashboard/languages
   controller: App\Controller\DashboardLanguagesController::renderDashboardLanguagesTemplateAction
+dashboard_get_languages_action:
+  path: /dashboard/languages/get_languages_action
+  controller: App\Controller\DashboardLanguagesController::getLanguagesAction
+dashboard_get_language_action:
+  path: /dashboard/languages/get_language_action
+  controller: App\Controller\DashboardLanguagesController::getLanguageAction
+dashboard_add_language_action:
+  path: /dashboard/languages/add_language_action
+  controller: App\Controller\DashboardLanguagesController::addLanguageAction
+dashboard_edit_language_action:
+  path: /dashboard/languages/edit_language_action
+  controller: App\Controller\DashboardLanguagesController::editLanguageAction
+dashboard_delete_language_action:
+  path: /dashboard/languages/delete_language_action
+  controller: App\Controller\DashboardLanguagesController::deleteLanguageAction
 
 ### SCRIPTS
 dashboard_scripts:

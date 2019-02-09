@@ -1,0 +1,132 @@
+{# DASHBOARD SCRIPTS TEMPLATE #}
+{% extends 'main_dashboard.twig' %}
+
+{% block init %}
+  var get_languages_action_url = "{{ path('dashboard_get_languages_action') }}";
+  var get_language_action_url = "{{ path('dashboard_get_language_action') }}";
+  var add_language_action_url = "{{ path('dashboard_add_language_action') }}";
+  var edit_language_action_url = "{{ path('dashboard_edit_language_action') }}";
+  var delete_language_action_url = "{{ path('dashboard_delete_language_action') }}";
+
+  var html = new String;
+
+  var text_language_code = "{{ translation.dashboard.languages.text_language_code }}";
+
+  var button_edit_language = "{{ translation.dashboard.languages.button_edit_language }}";
+  var button_delete_language = "{{ translation.dashboard.languages.button_delete_language }}";
+
+  var alert_add_language = "{{ translation.dashboard.languages.alert_add_language }}";
+  var alert_edit_language = "{{ translation.dashboard.languages.alert_edit_language }}";
+  var alert_delete_language = "{{ translation.dashboard.languages.alert_delete_language }}";
+  var warning_languages_missing = "{{ translation.dashboard.languages.warning_languages_missing }}";
+  var error_get_languages = "{{ translation.dashboard.languages.error_get_languages }}";
+  var error_get_language = "{{ translation.dashboard.languages.error_get_language }}";
+  var error_add_language = "{{ translation.dashboard.languages.error_add_language }}";
+  var error_edit_language = "{{ translation.dashboard.languages.error_edit_language }}";
+  var error_delete_language = "{{ translation.dashboard.languages.error_delete_language }}";
+{% endblock %}
+
+{% block include %}
+  <script type="text/javascript" src="{{ asset('include/javascript/dashboard_languages.js') }}"></script>
+{% endblock %}
+
+{% block header %}
+  <h5 class="center">{{ translation.dashboard.languages.page_title }}</h5>
+
+{% endblock %}
+
+{% block main %}
+  <div class="col s12 m12 l12">
+    <ul class="tabs" id="languages_tabs">
+      <li class="tab col s6 m6 l6"><a href="#tab_form">{{ translation.dashboard.languages.tab_form }}</a></li>
+      <li class="tab col s6 m6 l6"><a class="active" href="#tab_languages">{{ translation.dashboard.languages.tab_languages }}</a></li>
+    </ul>
+  </div>
+
+  <div id="tab_form">
+    <div class="col s12 m12 l12">
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header"><i class="material-icons left">info</i>{{ translation.dashboard.languages.page_info_title }}</div>
+          <div class="collapsible-body"><p>{{ translation.dashboard.languages.page_info }}</p></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col s12 m12 l12">
+      <div class="card hoverable">
+        <div class="card-content">
+          <span class="card-title" id="form_title_add_language">{{ translation.dashboard.languages.form_title_add_language }}</span>
+          <span class="card-title" id="form_title_edit_language">{{ translation.dashboard.languages.form_title_edit_language }}</span>
+
+          <div class="input-field">
+    				<input type="text" id="input_language_name" value="" />
+    				<label for="input_language_name">{{ translation.dashboard.languages.input_language_name }}</label>
+    			</div>
+    			<div class="input-field">
+    				<textarea class="materialize-textarea" id="input_language_code"></textarea>
+    				<label for="input_language_code">{{ translation.dashboard.languages.input_language_code }}</label>
+    			</div>
+
+    			<input type="hidden" id="input_language_id" value="" />
+
+        </div>
+        <div class="card-action">
+          <a class="clickable" id="button_add_language">{{ translation.dashboard.languages.button_add_language }}</a>
+          <a class="clickable display-none" id="button_save_language">{{ translation.dashboard.languages.button_save_language }}</a>
+          <a class="clickable" id="button_clear_form">{{ translation.dashboard.languages.button_clear_form }}</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="tab_languages">
+    <div class="col s12 m12 l12 display-none" id="card_languages_missing">
+      <div class="card hoverable">
+        <div class="card-content">
+          <p>
+            <i class="material-icons left">info</i> {{ translation.dashboard.languages.text_languages_missing }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="center display-none" id="preloader_circle">
+			{% include 'preloader_circle.html' %}
+		</div>
+
+    <div id="languages_content"></div>
+  </div>
+
+{% endblock %}
+
+{% block javascript %}
+  $('#form_title_edit_language').hide();
+  $('select').formSelect();
+
+  getLanguages();
+
+  $('#button_clear_form').on('click', function() {
+  	clearForm();
+      elegant_alert.success("{{ translation.dashboard.languages.alert_clear_form }}");
+  });
+
+  $('#button_add_language').on('click', function() {
+    var form = serializeForm();
+    if (form.name.length >= 2 && form.code.length == 2) {
+      addLanguage(form);
+    } else {
+      elegant_alert.warning("{{ translation.dashboard.languages.warning_input_form }}");
+    }
+  });
+
+  $('#button_save_language').on('click', function() {
+    var form = serializeForm();
+    if (form.name.length >= 2 && form.code.length == 2) {
+      editLanguage(form);
+    } else {
+      elegant_alert.warning("{{ translation.dashboard.languages.warning_input_form }}");
+    }
+  });
+{% endblock %}

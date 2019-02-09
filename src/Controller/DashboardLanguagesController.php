@@ -49,8 +49,7 @@ class DashboardLanguagesController extends MainDashboardController
                 $languages[] = array(
                   'id' => $language->getLanguageId(),
                   'name' => $language->getLanguageName(),
-                  'data' => $language->getLanguageData(),
-                  'status' => $language->getLanguageStatus(),
+                  'code' => $language->getLanguageCode(),
                 );
             }
 
@@ -76,8 +75,7 @@ class DashboardLanguagesController extends MainDashboardController
             $language = array(
               'id' => $store_language_object->getLanguageId(),
               'name' => $store_language_object->getLanguageName(),
-              'data' => $store_language_object->getLanguageData(),
-              'status' => $store_language_object->getLanguageStatus()
+              'code' => $store_language_object->getLanguageCode(),
             );
 
             return new JsonResponse($language);
@@ -100,8 +98,7 @@ class DashboardLanguagesController extends MainDashboardController
             $em = $this->getDoctrine()->getManager();
 
             $common_languages->setLanguageName($form['name']);
-            $common_languages->setLanguageData($form['data']);
-            $common_languages->setLanguageStatus($form['status']);
+            $common_languages->setLanguageCode($form['code']);
 
             $em->persist($common_languages);
             $em->flush();
@@ -128,8 +125,7 @@ class DashboardLanguagesController extends MainDashboardController
             $language_object = $em->getRepository('App:CommonLanguages')->findOneByLanguageId($form['id']);
 
             $language_object->setLanguageName($form['name']);
-            $language_object->setLanguageData($form['data']);
-            $language_object->setLanguageStatus($form['status']);
+            $language_object->setLanguageCode($form['code']);
 
             $em->flush();
 
