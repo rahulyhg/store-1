@@ -49,6 +49,7 @@ class MainController extends Controller
     /* ##################################################################################### */
     public function getStoreSettings()
     {
+        // устанавливать все настройки в куки
         return $settings;
     }
 
@@ -87,6 +88,36 @@ class MainController extends Controller
         $random_token = bin2hex($random_token);
 
         return $random_token;
+    }
+
+    /* ##################################################################################### */
+    // Получает список всех языков для рендеринга в шаблонах
+    /* ##################################################################################### */
+    protected function getAllLanguages()
+    {
+        if ($this->checkAuthorization() == true) {
+            $common_languages_repository = $this->getDoctrine()->getRepository('App:CommonLanguages');
+            $common_languages_object = $common_languages_repository->findAll();
+
+            if (count($common_languages_object) < 1) {
+                return false;
+            }
+
+            foreach ($common_languages_object as $language) {
+                $languages[] = array(
+                  'id' => $language->getLanguageId(),
+                  'name' => $language->getLanguageName(),
+                  'code' => $language->getLanguageCode(),
+                );
+            }
+
+            return $languages;
+        } else {
+            $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+            return $this->render('error_access.twig', array(
+              'translation' => $this->getTranslation()
+          ));
+        }
     }
 
     /* ##################################################################################### */

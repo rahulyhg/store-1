@@ -98,6 +98,9 @@ dashboard_delete_user_action:
 dashboard_settings:
   path: /dashboard/settings
   controller: App\Controller\DashboardSettingsController::renderDashboardSettingsTemplateAction
+dashboard_save_settings_action:
+  path: /dashboard/settings/save_settings_action
+  controller: App\Controller\DashboardSettingsController::saveSettingsAction
 
 ### LANGUAGES
 dashboard_languages:

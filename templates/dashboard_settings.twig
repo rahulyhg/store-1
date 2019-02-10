@@ -2,47 +2,56 @@
 
 {% extends 'main_dashboard.twig' %}
 
-{% block init %}
-
-{% endblock %}
+{% block init %}{% endblock %}
 
 {% block include %}
   <script type="text/javascript" src="{{ asset('include/javascript/dashboard_settings.js') }}"></script>
 {% endblock %}
 
 {% block header %}
-  <h5 class="center">{{ translation.dashboard.settings.page_title }}</h5>
+  <div class="col s12 m12 l12 xl12">
+    <h5 class="center">{{ translation.dashboard.settings.page_title }}</h5>
+  </div>
 {% endblock %}
 
 {% block main %}
-  <div class="col s12 m12 l12 xl12">
-    <div class="card hoverable">
-      <div class="card-content">
-        <!-- можно поместить все элементы формы сюда, и в экшене сделать две кнопки Сохранить и Отменить
-      По нажатию на Сохранить вызывать JS метод для сохранения, при нажатии Отмена вызывать метод для получения всех настроек -->
+  <form action="{{ path('dashboard_save_settings_action') }}">
+    {% if languages != false %}
+      <div class="col s12 m12 l12 xl12">
+        <div class="input-field">
+          <select id="input_store_language" name="input_store_language">
+            {% for language in languages %}
+              <option value="{{ language.id }}">{{ language.name }} <b>[{{ language.code }}]</b></option>
+            {% endfor %}
+          </select>
+          <label>{{ translation.dashboard.settings.input_store_language }}</label>
+        </div>
       </div>
-      <div class="card-action">
-        <a class="clickable" id="button_save_settings">{{ translation.dashboard.settings.button_save_settings }}</a>
-        <a class="clickable" id="button_cancel_settings">{{ translation.dashboard.settings.button_cancel_settings }}</a>
+    {% endif %}
+
+    {% if languages != false %}
+      <div class="col s12 m12 l12 xl12">
+        <div class="input-field">
+          <select id="input_dashboard_language" name="input_dashboard_language">
+            {% for language in languages %}
+              <option value="{{ language.id }}">{{ language.name }} <b>[{{ language.code }}]</b></option>
+            {% endfor %}
+          </select>
+          <label>{{ translation.dashboard.settings.input_dashboard_language }}</label>
+        </div>
       </div>
-    </div>
-  </div>
+    {% endif %}
 
-  <div class="col s12 m12 l12 xl12">
-    <div class="input-field">
-      <select id="input_store_language">
-        <option value="">ajdfksjdhf</option>
-      </select>
-      <label>{{ translation.dashboard.settings.input_store_language }}</label>
-    </div>
-  </div>
+    <!-- шаг пагинации в списке продуктов -->
+    <!-- цвет панели и цвет футера -->
+    <!-- надписи хэдера и футера -->
+    <!-- название магазина -->
+  </form>
 
-  <div class="col s12 m12 l12 xl12">
+  <div class="col s12 m12 l12 xl12 center">
     <div class="input-field">
-      <select id="input_store_language">
-        <option value="">ajdfksjdhf</option>
-      </select>
-      <label>{{ translation.dashboard.settings.input_dashboard_language }}</label>
+      <a class="btn btn-large green white-text clickable" id="button_save_settings">{{ translation.dashboard.settings.button_save_settings }}</a>
+      <a class="btn btn-large red white-text clickable" href="{{ path('dashboard_dashboard') }}">{{ translation.dashboard.settings.button_cancel_settings }}</a>
     </div>
   </div>
 {% endblock %}

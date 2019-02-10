@@ -34,6 +34,14 @@ class DashboardLanguagesController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
+    private function checkLanguageDependence($language_id) {
+      $common_settings_repository = $this->getDoctrine()->getRepository('App:CommonSettings');
+      $common_settings_object = $common_settings_repository->findAll();
+    }
+
+    /* ##################################################################################### */
+    //
+    /* ##################################################################################### */
     public function getLanguagesAction(Request $request)
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {

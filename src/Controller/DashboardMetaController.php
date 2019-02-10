@@ -7,14 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-use App\Entity\CommonSettings;
-
-class DashboardSettingsController extends MainDashboardController
+class DashboardMetaController extends MainDashboardController
 {
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function renderDashboardSettingsTemplateAction()
+    public function renderDashboardMetaTemplateAction()
     {
         if ($this->checkAuthorization() == true) {
           $request = Request::createFromGlobals();
@@ -22,7 +20,6 @@ class DashboardSettingsController extends MainDashboardController
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),
               'profile' => $this->getProfile($request->cookies->get('user_id')),
-              'languages' => $this->getAllLanguages(),
           ));
         } else {
             return $this->render('dashboard_authorization.twig', array(
@@ -32,19 +29,4 @@ class DashboardSettingsController extends MainDashboardController
         }
     }
 
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    public function saveSettingsAction(Request $request)
-    {
-        if ($this->checkAuthorization() == true) {
-          // yaml
-          
-        } else {
-            return $this->render('dashboard_authorization.twig', [
-              'translation' => $this->getTranslation(),
-              'authorization' => $this->checkAuthorization(),
-            ]);
-        }
-    }
 }
