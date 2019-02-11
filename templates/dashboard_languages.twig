@@ -99,6 +99,40 @@
     <div id="languages_content"></div>
   </div>
 
+  <!-- позже это настроить как надо в отдельной вкладке -->
+  <form action="{{ path('dashboard_save_settings_action') }}">
+    {% if languages != false %}
+      <div class="col s12 m12 l12 xl12">
+        <div class="input-field">
+          <select id="input_store_language" name="input_store_language">
+            {% for language in languages %}
+              <option value="{{ language.id }}">{{ language.name }} <b>[{{ language.code }}]</b></option>
+            {% endfor %}
+          </select>
+          <label>{{ translation.dashboard.settings.input_store_language }}</label>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if languages != false %}
+      <div class="col s12 m12 l12 xl12">
+        <div class="input-field">
+          <select id="input_dashboard_language" name="input_dashboard_language">
+            {% for language in languages %}
+              <option value="{{ language.id }}">{{ language.name }} <b>[{{ language.code }}]</b></option>
+            {% endfor %}
+          </select>
+          <label>{{ translation.dashboard.settings.input_dashboard_language }}</label>
+        </div>
+      </div>
+    {% endif %}
+    <div class="col s12 m12 l12 xl12 center">
+      <div class="input-field">
+        <a class="btn btn-large green white-text clickable" id="button_save_settings">{{ translation.dashboard.settings.button_save_settings }}</a>
+        <a class="btn btn-large red white-text clickable" href="{{ path('dashboard_dashboard') }}">{{ translation.dashboard.settings.button_cancel_settings }}</a>
+      </div>
+    </div>
+
 {% endblock %}
 
 {% block javascript %}

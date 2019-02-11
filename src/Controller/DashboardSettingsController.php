@@ -12,17 +12,36 @@ use App\Entity\CommonSettings;
 class DashboardSettingsController extends MainDashboardController
 {
     /* ##################################################################################### */
-    //
+    // SETTINGS MAIN TEMPLATE
     /* ##################################################################################### */
-    public function renderDashboardSettingsTemplateAction()
+    public function renderDashboardSettingsMainTemplateAction()
     {
         if ($this->checkAuthorization() == true) {
           $request = Request::createFromGlobals();
-          return $this->render('dashboard_settings.twig', array(
+          return $this->render('dashboard_settings_main.twig', array(
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),
               'profile' => $this->getProfile($request->cookies->get('user_id')),
-              'languages' => $this->getAllLanguages(),
+          ));
+        } else {
+            return $this->render('dashboard_authorization.twig', array(
+              'translation' => $this->getTranslation(),
+              'authorization' => $this->checkAuthorization(),
+          ));
+        }
+    }
+
+    /* ##################################################################################### */
+    // SETTINGS GENERAL TEMPLATE
+    /* ##################################################################################### */
+    public function renderDashboardSettingsGeneralTemplateAction()
+    {
+        if ($this->checkAuthorization() == true) {
+          $request = Request::createFromGlobals();
+          return $this->render('dashboard_settings_general.twig', array(
+              'translation' => $this->getTranslation(),
+              'authorization' => $this->checkAuthorization(),
+              'profile' => $this->getProfile($request->cookies->get('user_id')),
           ));
         } else {
             return $this->render('dashboard_authorization.twig', array(
@@ -39,7 +58,7 @@ class DashboardSettingsController extends MainDashboardController
     {
         if ($this->checkAuthorization() == true) {
           // yaml
-          
+
         } else {
             return $this->render('dashboard_authorization.twig', [
               'translation' => $this->getTranslation(),

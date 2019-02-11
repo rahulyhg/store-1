@@ -82,96 +82,99 @@ dashboard_products:
 
 ### USERS
 dashboard_users:
-  path: /dashboard/users
+  path: /dashboard/settings/users
   controller: App\Controller\DashboardUsersController::renderDashboardUsersTemplateAction
 dashboard_get_users_action:
-  path: /dashboard/users/get_users_action
+  path: /dashboard/settings/users/get_users_action
   controller: App\Controller\DashboardUsersController::getUsersAction
 dashboard_change_user_action:
-  path: /dashboard/users/change_user_action
+  path: /dashboard/settings/users/change_user_action
   controller: App\Controller\DashboardUsersController::changeUserAction
 dashboard_delete_user_action:
-  path: /dashboard/users/delete_user_action
+  path: /dashboard/settings/users/delete_user_action
   controller: App\Controller\DashboardUsersController::deleteUserAction
 
 ### SETTINGS
-dashboard_settings:
+dashboard_settings_main:
   path: /dashboard/settings
-  controller: App\Controller\DashboardSettingsController::renderDashboardSettingsTemplateAction
-dashboard_save_settings_action:
-  path: /dashboard/settings/save_settings_action
-  controller: App\Controller\DashboardSettingsController::saveSettingsAction
+  controller: App\Controller\DashboardSettingsController::renderDashboardSettingsMainTemplateAction
+dashboard_settings_general:
+  path: /dashboard/settings/general
+  controller: App\Controller\DashboardSettingsController::renderDashboardSettingsGeneralTemplateAction
+dashboard_save_general_settings_action:
+  path: /dashboard/settings/general/save_general_settings_action
+  controller: App\Controller\DashboardSettingsController::saveGeneralSettingsAction
 
 ### LANGUAGES
 dashboard_languages:
-  path: /dashboard/languages
+  path: /dashboard/settings/languages
   controller: App\Controller\DashboardLanguagesController::renderDashboardLanguagesTemplateAction
 dashboard_get_languages_action:
-  path: /dashboard/languages/get_languages_action
+  path: /dashboard/settings/languages/get_languages_action
   controller: App\Controller\DashboardLanguagesController::getLanguagesAction
 dashboard_get_language_action:
-  path: /dashboard/languages/get_language_action
+  path: /dashboard/settings/languages/get_language_action
   controller: App\Controller\DashboardLanguagesController::getLanguageAction
 dashboard_add_language_action:
-  path: /dashboard/languages/add_language_action
+  path: /dashboard/settings/languages/add_language_action
   controller: App\Controller\DashboardLanguagesController::addLanguageAction
 dashboard_edit_language_action:
-  path: /dashboard/languages/edit_language_action
+  path: /dashboard/settings/languages/edit_language_action
   controller: App\Controller\DashboardLanguagesController::editLanguageAction
 dashboard_delete_language_action:
-  path: /dashboard/languages/delete_language_action
+  path: /dashboard/settings/languages/delete_language_action
   controller: App\Controller\DashboardLanguagesController::deleteLanguageAction
 
 ### SCRIPTS
 dashboard_scripts:
-  path: /dashboard/scripts
+  path: /dashboard/settings/scripts
   controller: App\Controller\DashboardScriptsController::renderDashboardScriptsTemplateAction
 dashboard_get_scripts_action:
-  path: /dashboard/scripts/get_scripts_action
+  path: /dashboard/settings/scripts/get_scripts_action
   controller: App\Controller\DashboardScriptsController::getScriptsAction
 dashboard_get_script_action:
-  path: /dashboard/scripts/get_script_action
+  path: /dashboard/settings/scripts/get_script_action
   controller: App\Controller\DashboardScriptsController::getScriptAction
 dashboard_add_script_action:
-  path: /dashboard/scripts/add_script_action
+  path: /dashboard/settings/scripts/add_script_action
   controller: App\Controller\DashboardScriptsController::addScriptAction
 dashboard_edit_script_action:
-  path: /dashboard/scripts/edit_script_action
+  path: /dashboard/settings/scripts/edit_script_action
   controller: App\Controller\DashboardScriptsController::editScriptAction
 dashboard_delete_script_action:
-  path: /dashboard/scripts/delete_script_action
+  path: /dashboard/settings/scripts/delete_script_action
   controller: App\Controller\DashboardScriptsController::deleteScriptAction
 
 ### MODULES
 dashboard_modules:
-  path: /dashboard/modules
+  path: /dashboard/settings/modules
   controller: App\Controller\DashboardModulesController::renderDashboardModulesTemplateAction
 dashboard_get_modules_action:
-  path: /dashboard/modules/get_modules_action
+  path: /dashboard/settings/modules/get_modules_action
   controller: App\Controller\DashboardModulesController::getModulesAction
 dashboard_get_module_action:
-  path: /dashboard/modules/get_module_action
+  path: /dashboard/settings/modules/get_module_action
   controller: App\Controller\DashboardModulesController::getModuleAction
 dashboard_add_module_action:
-  path: /dashboard/modules/add_module_action
+  path: /dashboard/settings/modules/add_module_action
   controller: App\Controller\DashboardModulesController::addModuleAction
 dashboard_edit_module_action:
-  path: /dashboard/modules/edit_module_action
+  path: /dashboard/settings/modules/edit_module_action
   controller: App\Controller\DashboardModulesController::editModuleAction
 dashboard_delete_module_action:
-  path: /dashboard/modules/delete_module_action
+  path: /dashboard/settings/modules/delete_module_action
   controller: App\Controller\DashboardModulesController::deleteModuleAction
 
 ### LOGS
 dashboard_logs:
-  path: /dashboard/logs
+  path: /dashboard/settings/logs
   controller: App\Controller\DashboardLogsController::renderDashboardLogsTemplateAction
 dashboard_get_logs_action:
-  path: /dashboard/logs/get_logs_action
+  path: /dashboard/settings/logs/get_logs_action
   controller: App\Controller\DashboardLogsController::getLogsAction
 dashboard_delete_log_action:
-  path: /dashboard/logs/delete_log_action
+  path: /dashboard/settings/logs/delete_log_action
   controller: App\Controller\DashboardLogsController::deleteLogAction
 dashboard_delete_logs_action:
-  path: /dashboard/logs/delete_logs_action
+  path: /dashboard/settings/logs/delete_logs_action
   controller: App\Controller\DashboardLogsController::deleteLogsAction

@@ -1,0 +1,40 @@
+{# DASHBOARD SETTINGS TEMPLATE #}
+
+{% extends 'main_dashboard.twig' %}
+
+{% block init %}{% endblock %}
+
+{% block include %}
+  <script type="text/javascript" src="{{ asset('include/javascript/dashboard_settings.js') }}"></script>
+{% endblock %}
+
+{% block header %}
+  <div class="col s12 m12 l12 xl12">
+    <h5 class="center">{{ translation.dashboard.settings_main.page_title }}</h5>
+  </div>
+{% endblock %}
+
+{% block main %}
+  <div class="collection">
+    <a class="collection-item" href="{{ path('dashboard_settings_general') }}"><i class="material-icons left">settings</i>{{ translation.dashboard.settings_main.link_general_settings }}</a>
+    <a class="collection-item" href="{{ path('dashboard_languages') }}"><i class="material-icons left">language</i>{{ translation.dashboard.settings_main.link_dashboard_languages }}</a>
+    <a class="collection-item" href="{{ path('dashboard_users') }}"><i class="material-icons left">supervisor_account</i>{{ translation.dashboard.settings_main.link_dashboard_users }}</a>
+    <a class="collection-item" href="{{ path('dashboard_scripts') }}"><i class="material-icons left">assessment</i>{{ translation.dashboard.settings_main.link_dashboard_scripts }}</a>
+    <a class="collection-item" href="{{ path('dashboard_modules') }}"><i class="material-icons left">extension</i>{{ translation.dashboard.settings_main.link_dashboard_modules }}</a>
+    <a class="collection-item" href="{{ path('dashboard_logs') }}"><i class="material-icons left">list</i>{{ translation.dashboard.settings_main.link_dashboard_logs }}</a>
+  </div>
+
+
+
+
+    <!-- шаг пагинации в списке продуктов -->
+    <!-- цвет панели и цвет футера -->
+    <!-- надписи хэдера и футера -->
+    <!-- название магазина -->
+
+
+{% endblock %}
+
+{% block javascript %}
+  $('select').formSelect();
+{% endblock %}
