@@ -13,3 +13,5 @@ function checkPhone(phone) {
   var pattern = new RegExp(/^\d[\d\(\)\ -]{4,14}\d$/);
   return pattern.test(phone);
 }
+
+// функции проверки имени, пароля
