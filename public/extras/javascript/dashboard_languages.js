@@ -257,3 +257,44 @@ function deleteLanguage(language_id) {
     }
   });
 }
+
+/* ##################################################################################### */
+//
+/* ##################################################################################### */
+function saveDefaults(form) {
+  $.ajax({
+    url: save_default_languages_action_url,
+    type: "POST",
+    cache: true,
+    async: true,
+    data: {
+      'request': true,
+      'form': form
+    },
+    dataType: "json",
+    beforeSend: function() {
+      $('#preloader').show();
+    },
+    success: function(response) {
+      if (response.result == true) {
+        clearForm();
+
+        var el = document.getElementById("languages_tabs");
+        var instance = M.Tabs.getInstance(el);
+        instance.select('tab_languages');
+
+        getLanguages();
+        elegant_alert.success(alert_add_language);
+      } else {
+        elegant_alert.error(error_add_language);
+      }
+    },
+    complete: function() {
+      $('#preloader').hide();
+    },
+    error: function(xhr) {
+      elegant_alert.error(error_add_language);
+      writeLog('Dashboard/JS/Language: Error Add Language');
+    }
+  });
+}

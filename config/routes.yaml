@@ -124,6 +124,9 @@ dashboard_edit_language_action:
 dashboard_delete_language_action:
   path: /dashboard/settings/languages/delete_language_action
   controller: App\Controller\DashboardLanguagesController::deleteLanguageAction
+save_default_languages_action_url:
+  path: /dashboard/settings/languages/save_default_languages_action_url
+  controller: App\Controller\DashboardLanguagesController::saveDefaultLanguagesAction
 
 ### SCRIPTS
 dashboard_scripts:

@@ -2,28 +2,7 @@
 {% extends 'main_dashboard.twig' %}
 
 {% block init %}
-  var get_languages_action_url = "{{ path('dashboard_get_languages_action') }}";
-  var get_language_action_url = "{{ path('dashboard_get_language_action') }}";
-  var add_language_action_url = "{{ path('dashboard_add_language_action') }}";
-  var edit_language_action_url = "{{ path('dashboard_edit_language_action') }}";
-  var delete_language_action_url = "{{ path('dashboard_delete_language_action') }}";
-
-  var html = new String;
-
-  var text_language_code = "{{ translation.dashboard.languages.text_language_code }}";
-
-  var button_edit_language = "{{ translation.dashboard.languages.button_edit_language }}";
-  var button_delete_language = "{{ translation.dashboard.languages.button_delete_language }}";
-
-  var alert_add_language = "{{ translation.dashboard.languages.alert_add_language }}";
-  var alert_edit_language = "{{ translation.dashboard.languages.alert_edit_language }}";
-  var alert_delete_language = "{{ translation.dashboard.languages.alert_delete_language }}";
-  var warning_languages_missing = "{{ translation.dashboard.languages.warning_languages_missing }}";
-  var error_get_languages = "{{ translation.dashboard.languages.error_get_languages }}";
-  var error_get_language = "{{ translation.dashboard.languages.error_get_language }}";
-  var error_add_language = "{{ translation.dashboard.languages.error_add_language }}";
-  var error_edit_language = "{{ translation.dashboard.languages.error_edit_language }}";
-  var error_delete_language = "{{ translation.dashboard.languages.error_delete_language }}";
+  var get_languages_action_url = "{{ path('dashboard_get_languages_action') }}"; var get_language_action_url = "{{ path('dashboard_get_language_action') }}"; var add_language_action_url = "{{ path('dashboard_add_language_action') }}"; var edit_language_action_url = "{{ path('dashboard_edit_language_action') }}"; var delete_language_action_url = "{{ path('dashboard_delete_language_action') }}"; var html = new String; var text_language_code = "{{ translation.dashboard.languages.text_language_code }}"; var button_edit_language = "{{ translation.dashboard.languages.button_edit_language }}"; var button_delete_language = "{{ translation.dashboard.languages.button_delete_language }}"; var alert_add_language = "{{ translation.dashboard.languages.alert_add_language }}"; var alert_edit_language = "{{ translation.dashboard.languages.alert_edit_language }}"; var alert_delete_language = "{{ translation.dashboard.languages.alert_delete_language }}"; var warning_languages_missing = "{{ translation.dashboard.languages.warning_languages_missing }}"; var error_get_languages = "{{ translation.dashboard.languages.error_get_languages }}"; var error_get_language = "{{ translation.dashboard.languages.error_get_language }}"; var error_add_language = "{{ translation.dashboard.languages.error_add_language }}"; var error_edit_language = "{{ translation.dashboard.languages.error_edit_language }}"; var error_delete_language = "{{ translation.dashboard.languages.error_delete_language }}";
 {% endblock %}
 
 {% block include %}
@@ -38,9 +17,24 @@
 {% block main %}
   <div class="col s12 m12 l12">
     <ul class="tabs" id="languages_tabs">
-      <li class="tab col s6 m6 l6"><a class="active" href="#tab_languages">{{ translation.dashboard.languages.tab_languages }}</a></li>
-      <li class="tab col s6 m6 l6"><a href="#tab_form">{{ translation.dashboard.languages.tab_form }}</a></li>
-      <li class="tab col s6 m6 l6"><a href="#tab_defaults">{{ translation.dashboard.languages.tab_defaults }}</a></li>
+      {% if languages != false %}
+        <li class="tab col s4 m4 l4">
+          <a class="active" href="#tab_languages">{{ translation.dashboard.languages.tab_languages }}</a>
+        </li>
+        <li class="tab col s4 m4 l4">
+          <a href="#tab_form">{{ translation.dashboard.languages.tab_form }}</a>
+        </li>
+        <li class="tab col s4 m4 l4">
+          <a href="#tab_defaults">{{ translation.dashboard.languages.tab_defaults }}</a>
+        </li>
+      {% else %}
+        <li class="tab col s6 m6 l6">
+          <a class="active" href="#tab_languages">{{ translation.dashboard.languages.tab_languages }}</a>
+        </li>
+        <li class="tab col s6 m6 l6">
+          <a href="#tab_form">{{ translation.dashboard.languages.tab_form }}</a>
+        </li>
+      {% endif %}
     </ul>
   </div>
 
@@ -48,8 +42,11 @@
     <div class="col s12 m12 l12">
       <ul class="collapsible">
         <li>
-          <div class="collapsible-header"><i class="material-icons left">info</i>{{ translation.dashboard.languages.page_info_title }}</div>
-          <div class="collapsible-body"><p>{{ translation.dashboard.languages.page_info }}</p></div>
+          <div class="collapsible-header">
+            <i class="material-icons left">info</i>{{ translation.dashboard.languages.page_info_title }}</div>
+          <div class="collapsible-body">
+            <p>{{ translation.dashboard.languages.page_info }}</p>
+          </div>
         </li>
       </ul>
     </div>
@@ -61,15 +58,15 @@
           <span class="card-title" id="form_title_edit_language">{{ translation.dashboard.languages.form_title_edit_language }}</span>
 
           <div class="input-field">
-    				<input type="text" id="input_language_name" value="" />
-    				<label for="input_language_name">{{ translation.dashboard.languages.input_language_name }}</label>
-    			</div>
-    			<div class="input-field">
-    				<textarea class="materialize-textarea" id="input_language_code"></textarea>
-    				<label for="input_language_code">{{ translation.dashboard.languages.input_language_code }}</label>
-    			</div>
+            <input type="text" id="input_language_name" value=""/>
+            <label for="input_language_name">{{ translation.dashboard.languages.input_language_name }}</label>
+          </div>
+          <div class="input-field">
+            <textarea class="materialize-textarea" id="input_language_code"></textarea>
+            <label for="input_language_code">{{ translation.dashboard.languages.input_language_code }}</label>
+          </div>
 
-    			<input type="hidden" id="input_language_id" value="" />
+          <input type="hidden" id="input_language_id" value=""/>
 
         </div>
         <div class="card-action">
@@ -87,53 +84,58 @@
       <div class="card hoverable">
         <div class="card-content">
           <p>
-            <i class="material-icons left">info</i> {{ translation.dashboard.languages.text_languages_missing }}
+            <i class="material-icons left">info</i>
+            {{ translation.dashboard.languages.text_languages_missing }}
           </p>
         </div>
       </div>
     </div>
 
     <div class="center display-none" id="preloader_circle">
-			{% include 'preloader_circle.html' %}
-		</div>
+      {% include 'preloader_circle.html' %}
+    </div>
 
     <div id="languages_content"></div>
   </div>
 
-  <div id="tab_defaults">
-  <!-- позже это настроить как надо в отдельной вкладке -->
-  <form action="{{ path('dashboard_save_settings_action') }}">
-    {% if languages != false %}
+  {% if languages != false %}
+    <div id="tab_defaults">
       <div class="col s12 m12 l12 xl12">
         <div class="input-field">
           <select id="input_store_language" name="input_store_language">
             {% for language in languages %}
-              <option value="{{ language.id }}">{{ language.name }} <b>[{{ language.code }}]</b></option>
+              <option value="{{ language.id }}">{{ language.name }}
+                <b>[{{ language.code }}]</b>
+              </option>
             {% endfor %}
           </select>
-          <label>{{ translation.dashboard.settings.input_store_language }}</label>
+          <label>{{ translation.dashboard.languages.input_store_language }}</label>
         </div>
       </div>
-    {% endif %}
 
-    {% if languages != false %}
       <div class="col s12 m12 l12 xl12">
         <div class="input-field">
           <select id="input_dashboard_language" name="input_dashboard_language">
             {% for language in languages %}
-              <option value="{{ language.id }}">{{ language.name }} <b>[{{ language.code }}]</b></option>
+              <option value="{{ language.id }}">{{ language.name }}
+                <b>[{{ language.code }}]</b>
+              </option>
             {% endfor %}
           </select>
           <label>{{ translation.dashboard.languages.input_dashboard_language }}</label>
         </div>
       </div>
-    {% endif %}
-    <div class="col s12 m12 l12 xl12 center">
-      <div class="input-field">
-        <a class="btn btn-large green white-text clickable" id="button_save_settings">{{ translation.dashboard.settings.button_save_settings }}</a>
-        <a class="btn btn-large red white-text clickable" href="{{ path('dashboard_dashboard') }}">{{ translation.dashboard.settings.button_cancel_settings }}</a>
+
+      <div class="col s12 m12 l12 xl12 center">
+        <div class="input-field">
+          <a class="btn btn-large green white-text clickable" id="button_save_defaults">{{ translation.dashboard.languages.button_save_defaults }}</a>
+        </div>
       </div>
     </div>
+  {% endif %}
+
+  <div class="col s12 m12 l12 xl12 center">
+    <a class="btn btn-large clickable" href="{{ path('dashboard_settings_main') }}">{{ translation.dashboard.languages.button_back_settings }}</a>
   </div>
 
 {% endblock %}
@@ -141,12 +143,11 @@
 {% block javascript %}
   $('#form_title_edit_language').hide();
   $('select').formSelect();
-
   getLanguages();
 
   $('#button_clear_form').on('click', function() {
-  	clearForm();
-      elegant_alert.success("{{ translation.dashboard.languages.alert_clear_form }}");
+    clearForm();
+    elegant_alert.success("{{ translation.dashboard.languages.alert_clear_form }}");
   });
 
   $('#button_add_language').on('click', function() {
@@ -156,6 +157,10 @@
     } else {
       elegant_alert.warning("{{ translation.dashboard.languages.warning_input_form }}");
     }
+  });
+
+  $('#button_save_defaults').on('click', function() {
+    
   });
 
   $('#button_save_language').on('click', function() {
