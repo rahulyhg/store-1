@@ -8,9 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /* =============== Локализация ====================== */
-//use Symfony\Component\Translation\Translator;
-//use Symfony\Component\Translation\TranslatorInterface;
-//use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 
@@ -78,7 +75,7 @@ class MainController extends Controller
             return false;
         }
     }
-    
+
     /* ##################################################################################### */
     // добавить функции проверки имени и пароля
     /* ##################################################################################### */
@@ -113,6 +110,8 @@ class MainController extends Controller
                   'name' => $language->getLanguageName(),
                   'code' => $language->getLanguageCode(),
                 );
+                // добавить парсинг из файла настроек и получение id текущего установленного языка
+                // усли совпадает с id языка в переборе, то добавлять сответственно 'selected_dashboard' = true 
             }
 
             return $languages;

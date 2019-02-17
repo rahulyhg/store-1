@@ -2,7 +2,28 @@
 {% extends 'main_dashboard.twig' %}
 
 {% block init %}
-  var get_languages_action_url = "{{ path('dashboard_get_languages_action') }}"; var get_language_action_url = "{{ path('dashboard_get_language_action') }}"; var add_language_action_url = "{{ path('dashboard_add_language_action') }}"; var edit_language_action_url = "{{ path('dashboard_edit_language_action') }}"; var delete_language_action_url = "{{ path('dashboard_delete_language_action') }}"; var html = new String; var text_language_code = "{{ translation.dashboard.languages.text_language_code }}"; var button_edit_language = "{{ translation.dashboard.languages.button_edit_language }}"; var button_delete_language = "{{ translation.dashboard.languages.button_delete_language }}"; var alert_add_language = "{{ translation.dashboard.languages.alert_add_language }}"; var alert_edit_language = "{{ translation.dashboard.languages.alert_edit_language }}"; var alert_delete_language = "{{ translation.dashboard.languages.alert_delete_language }}"; var warning_languages_missing = "{{ translation.dashboard.languages.warning_languages_missing }}"; var error_get_languages = "{{ translation.dashboard.languages.error_get_languages }}"; var error_get_language = "{{ translation.dashboard.languages.error_get_language }}"; var error_add_language = "{{ translation.dashboard.languages.error_add_language }}"; var error_edit_language = "{{ translation.dashboard.languages.error_edit_language }}"; var error_delete_language = "{{ translation.dashboard.languages.error_delete_language }}";
+  var get_languages_action_url = "{{ path('dashboard_get_languages_action') }}";
+  var get_language_action_url = "{{ path('dashboard_get_language_action') }}";
+  var add_language_action_url = "{{ path('dashboard_add_language_action') }}";
+  var edit_language_action_url = "{{ path('dashboard_edit_language_action') }}";
+  var delete_language_action_url = "{{ path('dashboard_delete_language_action') }}";
+  var save_default_languages_action_url = "{{ path('dashboard_save_default_languages_action') }}";
+  var html = new String;
+  var text_language_code = "{{ translation.dashboard.languages.text_language_code }}";
+  var button_edit_language = "{{ translation.dashboard.languages.button_edit_language }}";
+  var button_delete_language = "{{ translation.dashboard.languages.button_delete_language }}";
+  var alert_add_language = "{{ translation.dashboard.languages.alert_add_language }}";
+  var alert_edit_language = "{{ translation.dashboard.languages.alert_edit_language }}";
+  var alert_delete_language = "{{ translation.dashboard.languages.alert_delete_language }}";
+  var warning_languages_missing = "{{ translation.dashboard.languages.warning_languages_missing }}";
+  var error_get_languages = "{{ translation.dashboard.languages.error_get_languages }}";
+  var error_get_language = "{{ translation.dashboard.languages.error_get_language }}";
+  var error_add_language = "{{ translation.dashboard.languages.error_add_language }}";
+  var error_edit_language = "{{ translation.dashboard.languages.error_edit_language }}";
+  var error_delete_language = "{{ translation.dashboard.languages.error_delete_language }}";
+
+  var alert_save_default_languages = "{{ translation.dashboard.languages.alert_save_default_languages }}";
+  var error_save_default_languages = "{{ translation.dashboard.languages.error_save_default_languages }}";
 {% endblock %}
 
 {% block include %}
@@ -102,7 +123,7 @@
     <div id="tab_defaults">
       <div class="col s12 m12 l12 xl12">
         <div class="input-field">
-          <select id="input_store_language" name="input_store_language">
+          <select id="input_default_store_language" name="input_store_language">
             {% for language in languages %}
               <option value="{{ language.id }}">{{ language.name }}
                 <b>[{{ language.code }}]</b>
@@ -115,7 +136,7 @@
 
       <div class="col s12 m12 l12 xl12">
         <div class="input-field">
-          <select id="input_dashboard_language" name="input_dashboard_language">
+          <select id="input_default_dashboard_language" name="input_dashboard_language">
             {% for language in languages %}
               <option value="{{ language.id }}">{{ language.name }}
                 <b>[{{ language.code }}]</b>
@@ -128,7 +149,7 @@
 
       <div class="col s12 m12 l12 xl12 center">
         <div class="input-field">
-          <a class="btn btn-large green white-text clickable" id="button_save_defaults">{{ translation.dashboard.languages.button_save_defaults }}</a>
+          <a class="btn btn-large green white-text clickable" id="button_save_default_languages">{{ translation.dashboard.languages.button_save_defaults }}</a>
         </div>
       </div>
     </div>
@@ -159,8 +180,15 @@
     }
   });
 
-  $('#button_save_defaults').on('click', function() {
-    
+  $('#button_save_default_languages').on('click', function() {
+    var form = {
+      'store': $('#input_default_store_language').val(),
+      'dashboard': $('#input_default_dashboard_language').val()
+    };
+
+    saveDefaultLanguages(form);
+
+    delete form;
   });
 
   $('#button_save_language').on('click', function() {

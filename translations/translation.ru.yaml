@@ -119,6 +119,8 @@ dashboard:
     input_store_language:       'Язык магазина'
     input_dashboard_language:   'Язык панели управления'
     button_save_defaults:       'Сохранить'
+    alert_save_default_languages: 'Настройки языков сохранены'
+    error_save_default_languages: 'Ошибка сохранения настроек'
     button_back_settings:       'Назад'
     alert_add_language:         'Новый язык успешно добавлен'
     alert_edit_language:        'Язык успешно изменен'

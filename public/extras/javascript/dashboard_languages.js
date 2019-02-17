@@ -13,7 +13,12 @@ function renderContent(languages) {
     html += '</div>';
     html += '<div class="card-action">';
     html += '<a class="green-text clickable" onclick="getLanguage(' + languages[language]['id'] + ')">' + button_edit_language + '</a>';
-    html += '<a class="red-text clickable" onclick="deleteLanguage(' + languages[language]['id'] + ')">' + button_delete_language + '</a>';
+
+    if (languages[language]['dependence'] == false) {
+      html += '<a class="red-text clickable" onclick="deleteLanguage(' + languages[language]['id'] + ')">' + button_delete_language + '</a>';
+    } /*else {
+      html += '<a class="grey-text clickable">' + button_delete_language + '</a>';
+    }*/
     html += '</div>';
     html += '</div>';
     html += '</div>';
@@ -158,13 +163,14 @@ function addLanguage(form) {
     },
     success: function(response) {
       if (response.result == true) {
-        clearForm();
+        location.reload(false);
+        /*clearForm();
 
         var el = document.getElementById("languages_tabs");
         var instance = M.Tabs.getInstance(el);
         instance.select('tab_languages');
 
-        getLanguages();
+        getLanguages();*/
         elegant_alert.success(alert_add_language);
       } else {
         elegant_alert.error(error_add_language);
@@ -261,7 +267,7 @@ function deleteLanguage(language_id) {
 /* ##################################################################################### */
 //
 /* ##################################################################################### */
-function saveDefaults(form) {
+function saveDefaultLanguages(form) {
   $.ajax({
     url: save_default_languages_action_url,
     type: "POST",
@@ -277,23 +283,19 @@ function saveDefaults(form) {
     },
     success: function(response) {
       if (response.result == true) {
-        clearForm();
-
-        var el = document.getElementById("languages_tabs");
-        var instance = M.Tabs.getInstance(el);
-        instance.select('tab_languages');
-
-        getLanguages();
-        elegant_alert.success(alert_add_language);
+        //elegant_alert.success(JSON.stringify(response.settings));
+        elegant_alert.success(alert_save_default_languages);
       } else {
-        elegant_alert.error(error_add_language);
+        elegant_alert.error(response.error);
+        elegant_alert.error(error_save_default_languages);
       }
     },
     complete: function() {
       $('#preloader').hide();
     },
-    error: function(xhr) {
-      elegant_alert.error(error_add_language);
+    error: function(response) {
+      elegant_alert.error(response.error);
+      elegant_alert.error(error_save_default_languages);
       writeLog('Dashboard/JS/Language: Error Add Language');
     }
   });

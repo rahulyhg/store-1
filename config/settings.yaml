@@ -1,9 +1,3 @@
-################################# STORE ########################################
-store:
-  store_language:     1
-  pagination_step:    10
-
-
-################################# DASHBOARD ####################################
-dashboard:
-  dashboard_language: 1
+store_language: 4
+pagination_step: 10
+dashboard_language: 5

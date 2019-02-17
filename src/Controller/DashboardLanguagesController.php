@@ -4,7 +4,12 @@ namespace App\Controller;
 use App\Controller\MainDashboardController;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 use App\Entity\CommonLanguages;
 
@@ -22,6 +27,7 @@ class DashboardLanguagesController extends MainDashboardController
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),
               'profile' => $this->getProfile($user_id),
+              'languages' => $this->getAllLanguages(),
             ));
         } else {
             return $this->render('dashboard_authorization.twig', array(
@@ -34,9 +40,27 @@ class DashboardLanguagesController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    private function checkLanguageDependence($language_id) {
-      $common_settings_repository = $this->getDoctrine()->getRepository('App:CommonSettings');
-      $common_settings_object = $common_settings_repository->findAll();
+    private function checkLanguageDependence($language_id)
+    {
+      $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
+
+      try {
+          $settings = Yaml::parseFile($settings_file_path);
+          $store_language = (int) $settings['store_language'];
+          $dashboard_language = (int) $settings['dashboard_language'];
+
+          if ($language_id == $store_language) {
+            return true;
+          }
+
+          if ($language_id == $dashboard_language) {
+            return true;
+          }
+
+          return false;
+      } catch (ParseException $exception) {
+          printf('Unable to parse the YAML string: %s', $exception->getMessage());
+      }
     }
 
     /* ##################################################################################### */
@@ -58,6 +82,7 @@ class DashboardLanguagesController extends MainDashboardController
                   'id' => $language->getLanguageId(),
                   'name' => $language->getLanguageName(),
                   'code' => $language->getLanguageCode(),
+                  'dependence' => $this->checkLanguageDependence($language->getLanguageId()),
                 );
             }
 
@@ -161,6 +186,52 @@ class DashboardLanguagesController extends MainDashboardController
             $em->remove($language_object);
             $em->flush();
 
+            $result['result'] = true;
+
+            return new JsonResponse($result);
+        } else {
+            $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+            return $this->render('error_access.twig', array(
+              'translation' => $this->getTranslation()
+            ));
+        }
+    }
+
+    /* ##################################################################################### */
+    //
+    /* ##################################################################################### */
+    public function saveDefaultLanguagesAction(Request $request)
+    {
+        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
+            $form = $request->request->get('form');
+
+            $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
+
+            try {
+                $settings = Yaml::parseFile($settings_file_path);
+                $old_language = (int) $settings['dashboard_language'];
+
+                $settings['dashboard_language'] = (int) $form['dashboard'];
+                $settings['store_language'] = (int) $form['store'];
+
+                $yaml = Yaml::dump($settings);
+                file_put_contents($settings_file_path, $yaml);
+
+                // установка настроек в куки только для панели управления
+                /*$response = new Response();
+                $response->headers->setCookie(new Cookie('dashboard_language', $form['dashboard']));
+                $response->send();*/
+
+                /*if($old_language != $form['dashboard']) {
+                  return new RedirectResponse($this->generateUrl('dashboard_languages'));
+                }*/
+            } catch (ParseException $exception) {
+                //printf('Unable to parse the YAML string: %s', $exception->getMessage());
+                $result['error'] = 'Unable to parse the YAML string: ' . $exception->getMessage();
+                $result['result'] = false;
+            }
+
+            //$result['settings'] = $settings;
             $result['result'] = true;
 
             return new JsonResponse($result);
