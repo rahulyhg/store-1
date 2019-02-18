@@ -283,7 +283,7 @@ function saveDefaultLanguages(form) {
     },
     success: function(response) {
       if (response.result == true) {
-        //elegant_alert.success(JSON.stringify(response.settings));
+        getLanguages();
         elegant_alert.success(alert_save_default_languages);
       } else {
         elegant_alert.error(response.error);

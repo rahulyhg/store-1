@@ -32,7 +32,11 @@
 
 {% block header %}
   <h5 class="center">{{ translation.dashboard.languages.page_title }}</h5>
-
+  <div class="col s12 m12 l12 xl12">
+		<div class="collection">
+			<a class="collection-item" href="{{ path('dashboard_settings_main') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.languages.back_to_settings }}</a>
+		</div>
+	</div>
 {% endblock %}
 
 {% block main %}
@@ -64,9 +68,9 @@
       <ul class="collapsible">
         <li>
           <div class="collapsible-header">
-            <i class="material-icons left">info</i>{{ translation.dashboard.languages.page_info_title }}</div>
+            <i class="material-icons left">info</i>{{ translation.dashboard.languages.page_help_title }}</div>
           <div class="collapsible-body">
-            <p>{{ translation.dashboard.languages.page_info }}</p>
+            <p>{{ translation.dashboard.languages.page_form_help_text }}</p>
           </div>
         </li>
       </ul>
@@ -121,13 +125,27 @@
 
   {% if languages != false %}
     <div id="tab_defaults">
+      <div class="col s12 m12 l12">
+        <ul class="collapsible">
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons left">info</i>{{ translation.dashboard.languages.page_help_title }}</div>
+            <div class="collapsible-body">
+              <p>{{ translation.dashboard.languages.page_defaults_help_text }}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
       <div class="col s12 m12 l12 xl12">
         <div class="input-field">
           <select id="input_default_store_language" name="input_store_language">
             {% for language in languages %}
-              <option value="{{ language.id }}">{{ language.name }}
-                <b>[{{ language.code }}]</b>
-              </option>
+              {% if language.store_selected == true %}
+                <option value="{{ language.id }}" selected>{{ language.name }}</option>
+              {% else %}
+                <option value="{{ language.id }}">{{ language.name }}</option>
+              {% endif %}
             {% endfor %}
           </select>
           <label>{{ translation.dashboard.languages.input_store_language }}</label>
@@ -138,9 +156,11 @@
         <div class="input-field">
           <select id="input_default_dashboard_language" name="input_dashboard_language">
             {% for language in languages %}
-              <option value="{{ language.id }}">{{ language.name }}
-                <b>[{{ language.code }}]</b>
-              </option>
+              {% if language.dashboard_selected == true %}
+                <option value="{{ language.id }}" selected>{{ language.name }}</option>
+              {% else %}
+                <option value="{{ language.id }}">{{ language.name }}</option>
+              {% endif %}
             {% endfor %}
           </select>
           <label>{{ translation.dashboard.languages.input_dashboard_language }}</label>
@@ -154,10 +174,6 @@
       </div>
     </div>
   {% endif %}
-
-  <div class="col s12 m12 l12 xl12 center">
-    <a class="btn btn-large clickable" href="{{ path('dashboard_settings_main') }}">{{ translation.dashboard.languages.button_back_settings }}</a>
-  </div>
 
 {% endblock %}
 

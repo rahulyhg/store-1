@@ -104,14 +104,36 @@ class MainController extends Controller
                 return false;
             }
 
+            $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
+
+            try {
+                $settings = Yaml::parseFile($settings_file_path);
+                $store_language = (int) $settings['store_language'];
+                $dashboard_language = (int) $settings['dashboard_language'];
+            } catch (ParseException $exception) {
+                $this->writeLog('App/Controller/MainController::getAllLanguages [' . 'Unable to parse the YAML string: ' . $exception->getMessage() . ']');
+            }
+
             foreach ($common_languages_object as $language) {
-                $languages[] = array(
+                $language_id = $language->getLanguageId();
+
+                $languages[$language_id] = array(
                   'id' => $language->getLanguageId(),
                   'name' => $language->getLanguageName(),
                   'code' => $language->getLanguageCode(),
                 );
-                // добавить парсинг из файла настроек и получение id текущего установленного языка
-                // усли совпадает с id языка в переборе, то добавлять сответственно 'selected_dashboard' = true 
+
+                if ($language->getLanguageId() == $store_language) {
+                  $languages[$language_id]['store_selected'] = true;
+                } else {
+                  $languages[$language_id]['store_selected'] = false;
+                }
+
+                if ($language->getLanguageId() == $dashboard_language) {
+                  $languages[$language_id]['dashboard_selected'] = true;
+                } else {
+                  $languages[$language_id]['dashboard_selected'] = false;
+                }
             }
 
             return $languages;
