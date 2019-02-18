@@ -59,7 +59,7 @@ class DashboardLanguagesController extends MainDashboardController
 
           return false;
       } catch (ParseException $exception) {
-          printf('Unable to parse the YAML string: %s', $exception->getMessage());
+          $this->writeLog('App/Controller/DashboardLanguagesController::checkLanguageDependence Unable to parse the YAML string: ' . $exception->getMessage());
       }
     }
 
@@ -88,7 +88,7 @@ class DashboardLanguagesController extends MainDashboardController
 
             return new JsonResponse($languages);
         } else {
-            $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+            $this->writeLog("App/Controller/DashboardLanguagesController::getLanguagesAction Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation()
           ));
@@ -113,7 +113,7 @@ class DashboardLanguagesController extends MainDashboardController
 
             return new JsonResponse($language);
         } else {
-            $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+            $this->writeLog("App/Controller/DashboardLanguagesController::getLanguageAction Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation()
             ));
@@ -140,7 +140,7 @@ class DashboardLanguagesController extends MainDashboardController
 
             return new JsonResponse($result);
         } else {
-            $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+            $this->writeLog("App/Controller/DashboardLanguagesController::addLanguageAction Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation()
             ));
@@ -166,7 +166,7 @@ class DashboardLanguagesController extends MainDashboardController
 
             return new JsonResponse($result);
         } else {
-            $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+            $this->writeLog("App/Controller/DashboardLanguagesController::editLanguageAction Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation()
             ));
@@ -190,7 +190,7 @@ class DashboardLanguagesController extends MainDashboardController
 
             return new JsonResponse($result);
         } else {
-            $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+            $this->writeLog("App/Controller/DashboardLanguagesController::deleteLanguageAction Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation()
             ));
@@ -216,27 +216,17 @@ class DashboardLanguagesController extends MainDashboardController
 
                 $yaml = Yaml::dump($settings);
                 file_put_contents($settings_file_path, $yaml);
-
-                // установка настроек в куки только для панели управления
-                /*$response = new Response();
-                $response->headers->setCookie(new Cookie('dashboard_language', $form['dashboard']));
-                $response->send();*/
-
-                /*if($old_language != $form['dashboard']) {
-                  return new RedirectResponse($this->generateUrl('dashboard_languages'));
-                }*/
             } catch (ParseException $exception) {
-                //printf('Unable to parse the YAML string: %s', $exception->getMessage());
+                $this->writeLog('App/Controller/DashboardLanguagesController::saveDefaultLanguagesAction Unable to parse the YAML string: ' . $exception->getMessage());
                 $result['error'] = 'Unable to parse the YAML string: ' . $exception->getMessage();
                 $result['result'] = false;
             }
 
-            //$result['settings'] = $settings;
             $result['result'] = true;
 
             return new JsonResponse($result);
         } else {
-            $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+            $this->writeLog("App/Controller/DashboardLanguagesController::saveDefaultLanguagesAction Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation()
             ));
