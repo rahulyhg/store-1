@@ -128,6 +128,17 @@ dashboard_save_default_languages_action:
   path: /dashboard/settings/languages/save_default_languages_action_url
   controller: App\Controller\DashboardLanguagesController::saveDefaultLanguagesAction
 
+### INFORMATION
+dashboard_information:
+  path: /dashboard/settings/information
+  controller: App\Controller\DashboardInformationController::renderDashboardInformationTemplateAction
+dashboard_get_information_action:
+  path: /dashboard/settings/information/get_information_action
+  controller: App\Controller\DashboardInformationsController::getInformationAction
+dashboard_save_information_action:
+  path: /dashboard/settings/information/save_information_action
+  controller: App\Controller\DashboardInformationsController::saveInformationAction
+
 ### SCRIPTS
 dashboard_scripts:
   path: /dashboard/settings/scripts
