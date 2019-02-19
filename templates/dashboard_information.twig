@@ -3,5 +3,44 @@
 {% extends 'main_dashboard.twig' %}
 
 {% block init %}
+  var get_information_action_url = "";
+  var save_information_action_url = "";
+{% endblock %}
 
+{% block header %}
+  <h5 class="center">{{ translation.dashboard.information.page_title }}</h5>
+  <div class="col s12 m12 l12 xl12">
+    <div class="collection">
+      <a class="collection-item" href="{{ path('dashboard_settings_main') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.information.back_to_settings }}</a>
+    </div>
+  </div>
+
+  <div class="col s12 m12 l12">
+    <ul class="collapsible">
+      <li>
+        <div class="collapsible-header">
+          <i class="material-icons left">info</i>{{ translation.dashboard.information.page_help_title }}</div>
+        <div class="collapsible-body">
+          <p>{{ translation.dashboard.information.page_help_text }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
+
+{% block main %}
+  <div class="col s12 m12 l12 xl12">
+    <div class="input-field">
+      <textarea class="materialize-textarea" id="input_information_text"></textarea>
+      <label for="input_information_text">sdfsdf</text>
+    </div>
+  </div>
+
+  <div class="col s12 m12 l12 xl12 center">
+    <a class="btn btn-large green white-text" id="button_save_information">dsdf</a>
+  </div>
+{% endblock %}
+
+{% block javascript %}
+  getInformation();
 {% endblock %}
