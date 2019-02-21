@@ -27,6 +27,6 @@
 ###< Images cache ###
 
 ###> CONTENT ###
-/public/content/*
-!/public/content/.gitignore
+/public/information/*
+!/public/information/.gitignore
 ###< CONTENT ###

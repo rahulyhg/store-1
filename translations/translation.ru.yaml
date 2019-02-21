@@ -89,7 +89,7 @@ dashboard:
   settings_main:
     page_title:                   'Настройки магазина'
     link_general_settings:        'Основные настройки'
-    link_dashboard_information:   'Информации для покупателей'
+    link_dashboard_information:   'Информация для покупателей'
     link_dashboard_languages:     'Управление языками'
     link_dashboard_users:         'Администраторы'
     link_dashboard_scripts:       'Скрипты'
@@ -140,8 +140,15 @@ dashboard:
   information:
     page_title:                   'Информация для покупателей'
     back_to_settings:             'Назад в Настройки'
-    page_help_title:              'Информация'
+    page_help_title:              'Помощь'
     page_help_text:               'Ссылка отображается внизу всех страниц магазина. Сюда можно записывать основную важную информацию для покупателей, политику конфиденциальности, условия и соглашения и многое другое. На сайт отображается в модальном окне как текст с форматированием. В тексте поддерживаются HTML теги.'
+    input_information_language:   'Язык информации'
+    input_information_text:       'Текст информации'
+    button_save_information:      'Сохранить'
+    alert_create_new_file:        'Создан новый пустой файл информации'
+    alert_save_information:       'Файл информации успешно сохранён'
+    error_get_information:        'Ошибка получения файла информации'
+    error_save_information:       'Ошибка сохранения файла информации'
 
   scripts:
     page_title:                   'Управление скриптами'

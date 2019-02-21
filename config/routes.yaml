@@ -134,10 +134,10 @@ dashboard_information:
   controller: App\Controller\DashboardInformationController::renderDashboardInformationTemplateAction
 dashboard_get_information_action:
   path: /dashboard/settings/information/get_information_action
-  controller: App\Controller\DashboardInformationsController::getInformationAction
+  controller: App\Controller\DashboardInformationController::getInformationAction
 dashboard_save_information_action:
   path: /dashboard/settings/information/save_information_action
-  controller: App\Controller\DashboardInformationsController::saveInformationAction
+  controller: App\Controller\DashboardInformationController::saveInformationAction
 
 ### SCRIPTS
 dashboard_scripts:

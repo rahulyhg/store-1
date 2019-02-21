@@ -138,7 +138,7 @@ class MainController extends Controller
 
             return $languages;
         } else {
-            $this->writeLog("Controller/Dashboard/Logs/getLogs: Authorization Error");
+            $this->writeLog("App/Controller/MainController::getAllLanguages Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation()
           ));
