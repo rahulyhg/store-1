@@ -41,6 +41,7 @@ class DashboardInformationController extends MainDashboardController
 
             try {
                 //$fileSystem->mkdir(sys_get_temp_dir().'/'.random_int(0, 1000));
+                // если файл отсутствует, то создать новый
 
             } catch (IOExceptionInterface $exception) {
                 $this->writeLog('App/Controller/DashboardInformationController::getInformationAction & Error read file: ' . $exception->getPath());
