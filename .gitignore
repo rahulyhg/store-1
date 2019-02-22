@@ -24,9 +24,17 @@
 
 /public/images/brands/*
 !/public/images/brands/.gitignore
+
+/public/images/store/*
+!/public/images/store/.gitignore
 ###< Images cache ###
 
 ###> CONTENT ###
 /public/information/*
 !/public/information/.gitignore
 ###< CONTENT ###
+
+###> META DATA ###
+/public/meta/*
+!/public/meta/.gitignore
+###< META DATA ###
