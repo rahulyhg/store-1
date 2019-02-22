@@ -100,6 +100,10 @@ dashboard:
   settings_general:
     page_title:                   'Основные настройки'
 
+  images:
+    page_title:                   'Логотипы магазина'
+    
+
   languages:
     page_title:                   'Управление языками'
     back_to_settings:             'Назад в Настройки'
