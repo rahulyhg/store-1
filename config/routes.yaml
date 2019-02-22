@@ -105,6 +105,17 @@ dashboard_save_general_settings_action:
   path: /dashboard/settings/general/save_general_settings_action
   controller: App\Controller\DashboardSettingsController::saveGeneralSettingsAction
 
+### STORE IMAGES
+dashboard_images:
+  path: /dashboard/settings/images
+  controller: App\Controller\DashboardImagesController::renderDashboardImagesTemplateAction
+dashboard_get_images_action:
+  path: /dashboard/settings/images/get_images_action
+  controller: App\Controller\DashboardImagesController::getImagesAction
+dashboard_save_images:
+  path: /dashboard/settings/images/save_images_action
+  controller: App\Controller\DashboardImagesController::saveImagesAction
+
 ### LANGUAGES
 dashboard_languages:
   path: /dashboard/settings/languages

@@ -89,6 +89,7 @@ dashboard:
   settings_main:
     page_title:                   'Настройки магазина'
     link_general_settings:        'Основные настройки'
+    link_dashboard_images:        'Логотипы магазина'
     link_dashboard_information:   'Информация для покупателей'
     link_dashboard_languages:     'Управление языками'
     link_dashboard_users:         'Администраторы'
