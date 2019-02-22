@@ -72,10 +72,15 @@
   getInformation(Number($('#input_information_language').val()));
 
   $('#input_information_language').on('change', function() {
+    $('#input_information_text').val(null);
+    M.updateTextFields();
+    M.textareaAutoResize($('#input_information_text'));
     getInformation(Number($('#input_information_language').val()));
   });
 
   $('#button_save_information').on('click', function() {
-
+    var language_id = Number($('#input_information_language').val());
+    var information_content = $('#input_information_text').val();
+    saveInformation(language_id, information_content);
   });
 {% endblock %}

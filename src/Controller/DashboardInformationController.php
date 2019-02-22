@@ -34,21 +34,33 @@ class DashboardInformationController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
+    private function getInformationFilePath($language_id)
+    {
+      $common_languages_repository = $this->getDoctrine()->getRepository('App:CommonLanguages');
+      $common_language_object = $common_languages_repository->findOneByLanguageId($language_id);
+      $language_code = $common_language_object->getLanguageCode();
+
+      $information_file_path = $this->getAppDir() . '/public/information/information.' . $language_code . '.html';
+
+      return $information_file_path;
+    }
+
+    /* ##################################################################################### */
+    //
+    /* ##################################################################################### */
     public function getInformationAction(Request $request)
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            // добавить получение кода языка и загрузки соответствующего ему файла
             $language_id = $request->request->get('language_id');
-            $common_languages_repository = $this->getDoctrine()->getRepository('App:CommonLanguages');
-            $common_language_object = $common_languages_repository->findOneByLanguageId($language_id);
-            $language_code = $common_language_object->getLanguageCode();
+
+            $information_file_path = $this->getInformationFilePath($language_id);
 
             $file_system = new Filesystem();
-            $information_file_path = $this->getAppDir() . '/public/information/information.' . $language_code . '.html';
 
             try {
               if (!$file_system->exists($information_file_path)) {
                 $file_system->touch($information_file_path);
+                $result['newfile'] = true;
               }
             } catch (IOExceptionInterface $exception) {
                 $this->writeLog('App/Controller/DashboardInformationController::getInformationAction & Error read file: ' . $exception->getPath());
@@ -57,8 +69,6 @@ class DashboardInformationController extends MainDashboardController
                 ));
             }
 
-            // get contents of a file into a string
-            //$filename = "/usr/local/something.txt";
             $handle = fopen($information_file_path, "r");
             if (filesize($information_file_path) == 0) {
               $result['content'] = "";
@@ -86,8 +96,26 @@ class DashboardInformationController extends MainDashboardController
     /* ##################################################################################### */
     public function saveInformationAction(Request $request)
     {
-        if ($this->checkAuthorization() == true) {
-            return new JsonResponse();
+        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
+            $language_id = $request->request->get('language_id');
+            $information_content = $request->request->get('information_content');
+
+            $information_file_path = $this->getInformationFilePath($language_id);
+
+            $file_system = new Filesystem();
+
+            try {
+              $file_system->dumpFile($information_file_path, $information_content);
+              $result['status'] = true;
+            } catch (IOExceptionInterface $exception) {
+                $this->writeLog('App/Controller/DashboardInformationController::saveInformationAction & Error read file: ' . $exception->getPath());
+                $result['status'] = false;
+                /*return $this->render('error_request.twig', array(
+                  'translation' => $this->getTranslation(),
+                ));*/
+            }
+
+            return new JsonResponse($result);
         } else {
             return $this->render('dashboard_authorization.twig', array(
               'translation' => $this->getTranslation(),
