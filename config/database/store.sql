@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Янв 27 2019 г., 23:57
+-- Время создания: Фев 22 2019 г., 22:26
 -- Версия сервера: 10.1.37-MariaDB-0+deb9u1
--- Версия PHP: 7.2.14-1+0~20190113100742.14+stretch~1.gbpd83c69
+-- Версия PHP: 7.2.15-1+0~20190209065123.16+stretch~1.gbp3ad8c0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,6 +23,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `common_languages`
+--
+
+CREATE TABLE `common_languages` (
+  `language_id` int(11) NOT NULL,
+  `language_name` text NOT NULL,
+  `language_code` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `common_languages`
+--
+
+INSERT INTO `common_languages` (`language_id`, `language_name`, `language_code`) VALUES
+(3, 'Russian', 'ru'),
+(4, 'English', 'en'),
+(5, 'Ukranian', 'ua');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `common_logs`
 --
 
@@ -31,27 +52,6 @@ CREATE TABLE `common_logs` (
   `log_data` text NOT NULL,
   `log_datetime` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `common_settings`
---
-
-CREATE TABLE `common_settings` (
-  `setting_id` int(11) NOT NULL,
-  `setting_name` text NOT NULL,
-  `setting_data` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `common_settings`
---
-
-INSERT INTO `common_settings` (`setting_id`, `setting_name`, `setting_data`) VALUES
-(1, 'language', 'ru'),
-(2, 'currency', 'грн'),
-(3, 'country', 'Украина');
 
 -- --------------------------------------------------------
 
@@ -72,19 +72,7 @@ CREATE TABLE `dashboard_users` (
 --
 
 INSERT INTO `dashboard_users` (`user_id`, `user_name`, `user_email`, `user_password`, `user_status`) VALUES
-(2, 'login', 'serjbliznyuk@gmail.com', '$2y$11$qux3r6jQR4B.74mnA/P6UOf2THuf/i9rtLLYsKHsoGyV3bLKNR1c6', 0);
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `store_analytics`
---
-
-CREATE TABLE `store_analytics` (
-  `analytics_id` int(11) NOT NULL,
-  `analytics_name` text NOT NULL,
-  `analytics_code` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+(2, 'Serj Bliznyuk', 'serjbliznyuk@gmail.com', '$2y$11$8jjE9L2qPtikgo8iRNIRyO4bg5snBR6BAIoF9WPlaziSswKkK2J7u', 1);
 
 -- --------------------------------------------------------
 
@@ -136,6 +124,26 @@ INSERT INTO `store_metadata` (`meta_id`, `meta_name`, `meta_content`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `store_modules`
+--
+
+CREATE TABLE `store_modules` (
+  `module_id` int(11) NOT NULL,
+  `module_name` text NOT NULL,
+  `module_data` text NOT NULL,
+  `module_status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `store_modules`
+--
+
+INSERT INTO `store_modules` (`module_id`, `module_name`, `module_data`, `module_status`) VALUES
+(2, 'sdfsdfds', 'sdfdsfsd', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `store_products`
 --
 
@@ -177,6 +185,26 @@ CREATE TABLE `store_product_category` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `store_scripts`
+--
+
+CREATE TABLE `store_scripts` (
+  `script_id` int(11) NOT NULL,
+  `script_name` text NOT NULL,
+  `script_data` text NOT NULL,
+  `script_status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `store_scripts`
+--
+
+INSERT INTO `store_scripts` (`script_id`, `script_name`, `script_data`, `script_status`) VALUES
+(5, 'Check scripts', '<script type=\"text/javascript\">alert(\"Some alert from dashboard-scripts\");</script>', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `store_subcategory`
 --
 
@@ -191,28 +219,22 @@ CREATE TABLE `store_subcategory` (
 --
 
 --
+-- Индексы таблицы `common_languages`
+--
+ALTER TABLE `common_languages`
+  ADD PRIMARY KEY (`language_id`);
+
+--
 -- Индексы таблицы `common_logs`
 --
 ALTER TABLE `common_logs`
   ADD PRIMARY KEY (`log_id`);
 
 --
--- Индексы таблицы `common_settings`
---
-ALTER TABLE `common_settings`
-  ADD PRIMARY KEY (`setting_id`);
-
---
 -- Индексы таблицы `dashboard_users`
 --
 ALTER TABLE `dashboard_users`
   ADD PRIMARY KEY (`user_id`);
-
---
--- Индексы таблицы `store_analytics`
---
-ALTER TABLE `store_analytics`
-  ADD PRIMARY KEY (`analytics_id`);
 
 --
 -- Индексы таблицы `store_brands`
@@ -233,6 +255,12 @@ ALTER TABLE `store_metadata`
   ADD PRIMARY KEY (`meta_id`);
 
 --
+-- Индексы таблицы `store_modules`
+--
+ALTER TABLE `store_modules`
+  ADD PRIMARY KEY (`module_id`);
+
+--
 -- Индексы таблицы `store_products`
 --
 ALTER TABLE `store_products`
@@ -251,6 +279,12 @@ ALTER TABLE `store_product_category`
   ADD PRIMARY KEY (`product_category_id`);
 
 --
+-- Индексы таблицы `store_scripts`
+--
+ALTER TABLE `store_scripts`
+  ADD PRIMARY KEY (`script_id`);
+
+--
 -- Индексы таблицы `store_subcategory`
 --
 ALTER TABLE `store_subcategory`
@@ -261,25 +295,20 @@ ALTER TABLE `store_subcategory`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `common_languages`
+--
+ALTER TABLE `common_languages`
+  MODIFY `language_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT для таблицы `common_logs`
 --
 ALTER TABLE `common_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT для таблицы `common_settings`
---
-ALTER TABLE `common_settings`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT для таблицы `dashboard_users`
 --
 ALTER TABLE `dashboard_users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT для таблицы `store_analytics`
---
-ALTER TABLE `store_analytics`
-  MODIFY `analytics_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `store_brands`
 --
@@ -296,6 +325,11 @@ ALTER TABLE `store_category`
 ALTER TABLE `store_metadata`
   MODIFY `meta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
+-- AUTO_INCREMENT для таблицы `store_modules`
+--
+ALTER TABLE `store_modules`
+  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT для таблицы `store_products`
 --
 ALTER TABLE `store_products`
@@ -310,6 +344,11 @@ ALTER TABLE `store_product_brand`
 --
 ALTER TABLE `store_product_category`
   MODIFY `product_category_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `store_scripts`
+--
+ALTER TABLE `store_scripts`
+  MODIFY `script_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT для таблицы `store_subcategory`
 --
