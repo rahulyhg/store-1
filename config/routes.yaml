@@ -112,7 +112,7 @@ dashboard_images:
 dashboard_get_images_action:
   path: /dashboard/settings/images/get_images_action
   controller: App\Controller\DashboardImagesController::getImagesAction
-dashboard_save_images:
+dashboard_save_images_action:
   path: /dashboard/settings/images/save_images_action
   controller: App\Controller\DashboardImagesController::saveImagesAction
 

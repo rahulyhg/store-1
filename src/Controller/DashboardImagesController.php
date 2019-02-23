@@ -4,9 +4,11 @@ namespace App\Controller;
 use App\Controller\MainDashboardController;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+//use Symfony\Component\Filesystem\Filesystem;
+//use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 class DashboardImagesController extends MainDashboardController
 {
@@ -17,11 +19,11 @@ class DashboardImagesController extends MainDashboardController
     {
         if ($this->checkAuthorization() == true) {
             $request = Request::createFromGlobals();
-            return $this->render('dashboard_information.twig', array(
+            return $this->render('dashboard_images.twig', array(
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),
               'profile' => $this->getProfile($request->cookies->get('user_id')),
-              'languages' => $this->getAllLanguages(),
+              'images' => $this->getImagesAction(),
             ));
         } else {
             return $this->render('dashboard_authorization.twig', array(
@@ -34,7 +36,7 @@ class DashboardImagesController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    private function getInformationFilePath($language_id)
+    /*private function getInformationFilePath($language_id)
     {
       $common_languages_repository = $this->getDoctrine()->getRepository('App:CommonLanguages');
       $common_language_object = $common_languages_repository->findOneByLanguageId($language_id);
@@ -43,15 +45,16 @@ class DashboardImagesController extends MainDashboardController
       $information_file_path = $this->getAppDir() . '/public/information/information.' . $language_code . '.html';
 
       return $information_file_path;
-    }
+    }*/
 
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function getInformationAction(Request $request)
+    private function getImagesAction()
     {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $language_id = $request->request->get('language_id');
+        if ($this->checkAuthorization() == true) {
+
+            /*$language_id = $request->request->get('language_id');
 
             $information_file_path = $this->getInformationFilePath($language_id);
 
@@ -79,9 +82,14 @@ class DashboardImagesController extends MainDashboardController
             }
             fclose($handle);
 
-            $result['status'] = true;
+            $result['status'] = true;*/
 
-            return new JsonResponse($result);
+            $images_directory_path = $this->getAppDir() . '/public/images/store/';
+
+            $images['icon'] = 'sdfsdfsdf23r3d2';
+            $images['logo'] = 'sdfsdfef3r13r';
+
+            return $images;
         } else {
             $this->writeLog('App/Controller/DashboardInformationController::getInformationAction Authorization Error');
             return $this->render('dashboard_authorization.twig', array(
@@ -94,10 +102,10 @@ class DashboardImagesController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function saveInformationAction(Request $request)
+    public function saveImagesAction(Request $request)
     {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $language_id = $request->request->get('language_id');
+        if ($this->checkAuthorization() == true) {
+            /*$language_id = $request->request->get('language_id');
             $information_content = $request->request->get('information_content');
 
             $information_file_path = $this->getInformationFilePath($language_id);
@@ -110,12 +118,12 @@ class DashboardImagesController extends MainDashboardController
             } catch (IOExceptionInterface $exception) {
                 $this->writeLog('App/Controller/DashboardInformationController::saveInformationAction & Error read file: ' . $exception->getPath());
                 $result['status'] = false;
-                /*return $this->render('error_request.twig', array(
+                return $this->render('error_request.twig', array(
                   'translation' => $this->getTranslation(),
-                ));*/
-            }
+                ));
+            }*/
 
-            return new JsonResponse($result);
+            return new RedirectResponse($this->generateUrl('dashboard_images'));
         } else {
             return $this->render('dashboard_authorization.twig', array(
               'translation' => $this->getTranslation(),

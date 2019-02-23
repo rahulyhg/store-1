@@ -103,7 +103,13 @@ dashboard:
 
   images:
     page_title:                   'Логотипы магазина'
-
+    back_to_settings:             'Назад в Настройки'
+    page_help_title:              'Информация'
+    page_help_text:               'Рекомендованый размер иконки сайта 16x16 пикселов. Рекомендованый размер логотипа магазина 100 пикселов высоты и 300 писелов ширины.'
+    button_select_image: 'Выбрать файл изображения'
+    input_store_icon:             'Иконка сайта'
+    input_store_logo:             'Изображение магазина'
+    button_save_images:           'Сохранить'
 
   languages:
     page_title:                   'Управление языками'

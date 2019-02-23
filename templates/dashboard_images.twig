@@ -3,24 +3,19 @@
 {% extends 'main_dashboard.twig' %}
 
 {% block init %}
-  var get_information_action_url = "{{ path('dashboard_get_information_action') }}";
-  var save_information_action_url = "{{ path('dashboard_save_information_action') }}";
-
-  var alert_create_new_file = "{{ translation.dashboard.information.alert_create_new_file }}";
-  var alert_save_information = "{{ translation.dashboard.information.alert_save_information }}";
-  var error_get_information = "{{ translation.dashboard.information.error_get_information }}";
-  var error_save_information = "{{ translation.dashboard.information.error_save_information }}";
+  var get_images_action_url = "{{ path('dashboard_get_images_action') }}";
+  var save_images_action_url = "{{ path('dashboard_save_images_action') }}";
 {% endblock %}
 
 {% block include %}
-  <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_information.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('library/javascript/random_token.js') }}"></script>
 {% endblock %}
 
 {% block header %}
-  <h5 class="center">{{ translation.dashboard.information.page_title }}</h5>
+  <h5 class="center">{{ translation.dashboard.images.page_title }}</h5>
   <div class="col s12 m12 l12 xl12">
     <div class="collection">
-      <a class="collection-item" href="{{ path('dashboard_settings_main') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.information.back_to_settings }}</a>
+      <a class="collection-item" href="{{ path('dashboard_settings_main') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.images.back_to_settings }}</a>
     </div>
   </div>
 
@@ -28,9 +23,9 @@
     <ul class="collapsible">
       <li>
         <div class="collapsible-header">
-          <i class="material-icons left">info</i>{{ translation.dashboard.information.page_help_title }}</div>
+          <i class="material-icons left">info</i>{{ translation.dashboard.images.page_help_title }}</div>
         <div class="collapsible-body">
-          <p>{{ translation.dashboard.information.page_help_text }}</p>
+          <p>{{ translation.dashboard.images.page_help_text }}</p>
         </div>
       </li>
     </ul>
@@ -38,49 +33,42 @@
 {% endblock %}
 
 {% block main %}
-  {% if languages != false %}
+  <form id="form_register_author" enctype="multipart/form-data" action="{{ path('dashboard_save_images_action') }}" method="post" accept="image/*">
     <div class="col s12 m12 l12 xl12">
-      <div class="input-field">
-        <select id="input_information_language">
-          {% for language in languages %}
-            {% if language.store_selected == true %}
-              <option value="{{ language.id }}" selected>{{ language.name }}</option>
-            {% else %}
-              <option value="{{ language.id }}">{{ language.name }}</option>
-            {% endif %}
-          {% endfor %}
-        </select>
-        <label for="input_information_language">{{ translation.dashboard.information.input_information_language }}</label>
+      <div class="card hoverable">
+        <div class="card-content center">
+          <img class="responsive-img" src="{{ images.icon }}" />
+        </div>
+        <div class="card-content">
+          <div class="file-field input-field tooltipped" data-position="top" data-delay="50" data-tooltip="{{ translation.dashboard.images.button_select_image }}">
+            <div class="btn btn-large purple white-text">
+              <span><i class="material-icons">file_upload</i></span>
+              <input type="file" name="input_store_icon_file" id="input_store_icon_file" />
+            </div>
+            <div class="file-path-wrapper">
+              <input type="text" class="file-path validate" name="input_store_icon_filename" id="input_store_icon_filename" value="" placeholder="{{ translation.dashboard.images.input_store_icon }}" />
+            </div>
+          </div>
+          <input type="hidden" name="store_icon_filehash" value="0" />
+          <input type="hidden" name="change_store_icon" value="0" />
+        </div>
       </div>
     </div>
-  {% endif %}
+    <!-- реализовать возможность предпросмотра изображения перез загрузкой -->
 
-  <div class="col s12 m12 l12 xl12">
-    <div class="input-field">
-      <textarea class="materialize-textarea" id="input_information_text"></textarea>
-      <label for="input_information_text">{{ translation.dashboard.information.input_information_text }}</text>
-    </div>
-  </div>
+  </form>
 
   <div class="col s12 m12 l12 xl12 center">
-    <a class="btn btn-large green white-text" id="button_save_information">{{ translation.dashboard.information.button_save_information }}</a>
+    <a class="btn btn-large green white-text" id="button_save_images">{{ translation.dashboard.images.button_save_images }}</a>
   </div>
 {% endblock %}
 
 {% block javascript %}
-  $('select').formSelect();
-  getInformation(Number($('#input_information_language').val()));
+  $('#input_store_icon_file').on('change', function() {
 
-  $('#input_information_language').on('change', function() {
-    $('#input_information_text').val(null);
-    M.updateTextFields();
-    M.textareaAutoResize($('#input_information_text'));
-    getInformation(Number($('#input_information_language').val()));
   });
 
-  $('#button_save_information').on('click', function() {
-    var language_id = Number($('#input_information_language').val());
-    var information_content = $('#input_information_text').val();
-    saveInformation(language_id, information_content);
+  $('#button_save_images').on('click', function() {
+
   });
 {% endblock %}
