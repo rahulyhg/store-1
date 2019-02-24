@@ -9,6 +9,7 @@
 
 {% block include %}
   <script type="text/javascript" src="{{ asset('library/javascript/random_token.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_images.js') }}"></script>
 {% endblock %}
 
 {% block header %}
@@ -33,11 +34,14 @@
 {% endblock %}
 
 {% block main %}
-  <form id="form_register_author" enctype="multipart/form-data" action="{{ path('dashboard_save_images_action') }}" method="post" accept="image/*">
+  <form id="form_store_images" enctype="multipart/form-data" action="{{ path('dashboard_save_images_action') }}" method="post" accept="image/*">
     <div class="col s12 m12 l12 xl12">
       <div class="card hoverable">
-        <div class="card-content center">
-          <img class="responsive-img" src="{{ images.icon }}" />
+        <div class="card-content">
+          <h6 class="left-align">{{ translation.dashboard.images.title_form_store_icon }}</h6>
+        </div>
+        <div class="card-content center" id="block_store_icon_preview">
+          <img class="responsive-img" src="{{ asset('images/store/') }}{{ images.icon }}" id="store_icon_preview" />
         </div>
         <div class="card-content">
           <div class="file-field input-field tooltipped" data-position="top" data-delay="50" data-tooltip="{{ translation.dashboard.images.button_select_image }}">
@@ -49,26 +53,80 @@
               <input type="text" class="file-path validate" name="input_store_icon_filename" id="input_store_icon_filename" value="" placeholder="{{ translation.dashboard.images.input_store_icon }}" />
             </div>
           </div>
-          <input type="hidden" name="store_icon_filehash" value="0" />
-          <input type="hidden" name="change_store_icon" value="0" />
+          <input type="hidden" id="original_store_icon_tokenname" value="{{ asset('images/store/') }}{{ images.icon }}" />
+          <input type="hidden" name="store_icon_tokenname" id="store_icon_tokenname" value="" />
+          <input type="hidden" name="change_store_icon" id="change_store_icon" value="0" />
+        </div>
+        <div class="card-action">
+          <a class="clickable" onclick="cancelStoreIconImage();">{{ translation.dashboard.images.button_cancel_store_icon }}</a>
         </div>
       </div>
     </div>
-    <!-- реализовать возможность предпросмотра изображения перез загрузкой -->
 
+    <div class="col s12 m12 l12 xl12">
+      <div class="card hoverable">
+        <div class="card-content">
+          <h6 class="left-align">{{ translation.dashboard.images.title_form_store_logo }}</h6>
+        </div>
+        <div class="card-content center" id="block_store_logo_preview">
+          <img class="responsive-img" src="{{ asset('images/store/') }}{{ images.logo }}" id="store_logo_preview" />
+        </div>
+        <div class="card-content">
+          <div class="file-field input-field tooltipped" data-position="top" data-delay="50" data-tooltip="{{ translation.dashboard.images.button_select_image }}">
+            <div class="btn btn-large purple white-text">
+              <span><i class="material-icons">file_upload</i></span>
+              <input type="file" name="input_store_logo_file" id="input_store_logo_file" />
+            </div>
+            <div class="file-path-wrapper">
+              <input type="text" class="file-path validate" name="input_store_logo_filename" id="input_store_logo_filename" value="" placeholder="{{ translation.dashboard.images.input_store_logo }}" />
+            </div>
+          </div>
+          <input type="hidden" id="original_store_logo_tokenname" value="{{ asset('images/store/') }}{{ images.logo }}" />
+          <input type="hidden" name="store_logo_tokenname" id="store_logo_tokenname" value="" />
+          <input type="hidden" name="change_store_logo" id="change_store_logo" value="0" />
+        </div>
+        <div class="card-action">
+          <a class="clickable" onclick="cancelStoreLogoImage();">{{ translation.dashboard.images.button_cancel_store_logo }}</a>
+        </div>
+      </div>
+    </div>
+
+    <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
   </form>
 
   <div class="col s12 m12 l12 xl12 center">
     <a class="btn btn-large green white-text" id="button_save_images">{{ translation.dashboard.images.button_save_images }}</a>
+    <a class="btn btn-large red white-text" href="{{ path('dashboard_settings_main') }}">{{ translation.dashboard.images.button_cancel }}</a>
   </div>
 {% endblock %}
 
 {% block javascript %}
   $('#input_store_icon_file').on('change', function() {
+    $('#change_store_icon').val(Number(1));
+    var random_token_name = generateToken(32);
+    $('#store_icon_tokenname').val(random_token_name);
+    previewStoreIconImage(this);
+    delete random_token_name;
+  });
 
+  $('#input_store_logo_file').on('change', function() {
+    $('#change_store_logo').val(Number(1));
+    var random_token_name = generateToken(32);
+    $('#store_logo_tokenname').val(random_token_name);
+    previewStoreLogoImage(this);
+    delete random_token_name;
   });
 
   $('#button_save_images').on('click', function() {
-
+    var images = {
+      'icon': Number($('#change_store_icon').val()),
+      'logo': Number($('#change_store_logo').val())
+    };
+    if (images.icon == 0 && images.logo == 0) {
+      elegant_alert.warning("{{ translation.dashboard.images.warning_change_images }}");
+    } else {
+      elegant_alert.waiting("{{ translation.dashboard.images.waiting_saving_images }}");
+      $('#form_store_images').submit();
+    }
   });
 {% endblock %}

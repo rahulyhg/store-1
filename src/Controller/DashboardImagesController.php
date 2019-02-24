@@ -5,7 +5,7 @@ use App\Controller\MainDashboardController;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-//use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Filesystem;
 //use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -36,58 +36,26 @@ class DashboardImagesController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    /*private function getInformationFilePath($language_id)
-    {
-      $common_languages_repository = $this->getDoctrine()->getRepository('App:CommonLanguages');
-      $common_language_object = $common_languages_repository->findOneByLanguageId($language_id);
-      $language_code = $common_language_object->getLanguageCode();
-
-      $information_file_path = $this->getAppDir() . '/public/information/information.' . $language_code . '.html';
-
-      return $information_file_path;
-    }*/
-
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
     private function getImagesAction()
     {
         if ($this->checkAuthorization() == true) {
 
-            /*$language_id = $request->request->get('language_id');
-
-            $information_file_path = $this->getInformationFilePath($language_id);
-
-            $file_system = new Filesystem();
+            $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
 
             try {
-              if (!$file_system->exists($information_file_path)) {
-                $file_system->touch($information_file_path);
-                $result['newfile'] = true;
-              }
-            } catch (IOExceptionInterface $exception) {
-                $this->writeLog('App/Controller/DashboardInformationController::getInformationAction & Error read file: ' . $exception->getPath());
-                return $this->render('error_request.twig', array(
+                $settings = Yaml::parseFile($settings_file_path);
+                $store_icon_filename = $settings['store_icon'];
+                $store_logo_filename = $settings['store_logo'];
+            } catch (ParseException $exception) {
+                $this->writeLog('App/Controller/DashboardLanguagesController::saveDefaultLanguagesAction Unable to parse the YAML string: ' . $exception->getMessage());
+                return $this->render('error_request', array(
                   'translation' => $this->getTranslation(),
+                  'authorization' => $this->checkAuthorization(),
                 ));
             }
 
-            $handle = fopen($information_file_path, "r");
-            if (filesize($information_file_path) == 0) {
-              $result['content'] = "";
-              $result['filesize'] = false;
-            } else {
-              $result['content'] = fread($handle, filesize($information_file_path));
-              $result['filesize'] = true;
-            }
-            fclose($handle);
-
-            $result['status'] = true;*/
-
-            $images_directory_path = $this->getAppDir() . '/public/images/store/';
-
-            $images['icon'] = 'sdfsdfsdf23r3d2';
-            $images['logo'] = 'sdfsdfef3r13r';
+            $images['icon'] = $store_icon_filename;
+            $images['logo'] = $store_logo_filename;
 
             return $images;
         } else {
@@ -105,23 +73,62 @@ class DashboardImagesController extends MainDashboardController
     public function saveImagesAction(Request $request)
     {
         if ($this->checkAuthorization() == true) {
-            /*$language_id = $request->request->get('language_id');
-            $information_content = $request->request->get('information_content');
+            $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
+            $images_directory_path = $this->getAppDir() . '/public/images/store/';
 
-            $information_file_path = $this->getInformationFilePath($language_id);
+            if ($request->request->get('change_store_icon') == 1 && strlen($request->request->get('store_icon_tokenname')) == 32) {
+              $store_icon_tokenname = (string) $request->request->get('store_icon_tokenname');
 
-            $file_system = new Filesystem();
+              try {
+                  $settings = Yaml::parseFile($settings_file_path);
 
-            try {
-              $file_system->dumpFile($information_file_path, $information_content);
-              $result['status'] = true;
-            } catch (IOExceptionInterface $exception) {
-                $this->writeLog('App/Controller/DashboardInformationController::saveInformationAction & Error read file: ' . $exception->getPath());
-                $result['status'] = false;
-                return $this->render('error_request.twig', array(
-                  'translation' => $this->getTranslation(),
-                ));
-            }*/
+                  $old_store_icon_filepath = $images_directory_path . $settings['store_icon'];
+                  if (file_exists($old_store_icon_filepath)) {
+                      $file_system = new Filesystem();
+                      $file_system->remove($old_store_icon_filepath);
+                  }
+
+                  $settings['store_icon'] = $store_icon_tokenname;
+                  $yaml = Yaml::dump($settings);
+                  file_put_contents($settings_file_path, $yaml);
+              } catch (ParseException $exception) {
+                  $this->writeLog('App/Controller/DashboardImagesController::saveDefaultLanguagesAction Unable to parse the YAML string: ' . $exception->getMessage());
+                  return $this->render('error_request', array(
+                    'translation' => $this->getTranslation(),
+                    'authorization' => $this->checkAuthorization(),
+                  ));
+              }
+
+              $store_icon_file = $request->files->get('input_store_icon_file');
+              $store_icon_file->move($images_directory_path, $store_icon_tokenname);
+            }
+
+            if ($request->request->get('change_store_logo') == 1 && strlen($request->request->get('store_logo_tokenname')) == 32) {
+              $store_logo_tokenname = (string) $request->request->get('store_logo_tokenname');
+
+              try {
+                  $settings = Yaml::parseFile($settings_file_path);
+
+                  $old_store_logo_filepath = $images_directory_path . $settings['store_logo'];
+                  if (file_exists($old_store_logo_filepath)) {
+                      $file_system = new Filesystem();
+                      $file_system->remove($old_store_logo_filepath);
+                  }
+
+                  $settings['store_logo'] = $store_logo_tokenname;
+                  $yaml = Yaml::dump($settings);
+                  file_put_contents($settings_file_path, $yaml);
+              } catch (ParseException $exception) {
+                  $this->writeLog('App/Controller/DashboardImagesController::saveDefaultLanguagesAction Unable to parse the YAML string: ' . $exception->getMessage());
+                  return $this->render('error_request', array(
+                    'translation' => $this->getTranslation(),
+                    'authorization' => $this->checkAuthorization(),
+                  ));
+              }
+
+              $store_logo_file = $request->files->get('input_store_logo_file');
+              $store_logo_file->move($images_directory_path, $store_logo_tokenname);
+            }
 
             return new RedirectResponse($this->generateUrl('dashboard_images'));
         } else {
