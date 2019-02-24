@@ -42,6 +42,13 @@ var elegant_alert = {
       classes: 'rounded',
       displayLength: 25000
     });
+  },
+  'waiting': function(alert_data) {
+    M.toast({
+      html: '<span class="text-select-none"><i class="left material-icons purple-text text-accent-3 notranslate">timer</i>' + alert_data + '</span>',
+      classes: 'rounded',
+      displayLength: 25000
+    });
   }
 };
 
