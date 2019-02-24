@@ -19,7 +19,7 @@
 ###< symfony/web-server-bundle ###
 
 ###> Config Settings ###
-#/config/settings.yaml
+/config/settings.yaml
 ###< Config Settings ###
 
 ###> Images cache ###
