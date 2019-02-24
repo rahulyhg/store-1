@@ -18,6 +18,10 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
+###> Config Settings ###
+/config/settings.yaml
+###< Config Settings ###
+
 ###> Images cache ###
 /public/images/products/*
 !/public/images/products/.gitignore
