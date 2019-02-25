@@ -58,12 +58,6 @@ dashboard_orders:
 dashboard_public:
   path: /dashboard/public
   controller: App\Controller\DashboardPublicController::renderDashboardPublicAction
-dashboard_get_public_meta_data_action:
-  path: /dashboard/public/get_public_meta_data_action
-  controller: App\Controller\DashboardPublicController::getPublicMetaDataAction
-dashboard_set_public_meta_data_action:
-  path: /dashboard/public/set_public_meta_data_action
-  controller: App\Controller\DashboardPublicController::setPublicMetaDataAction
 
 ### RECOMMENDATIONS
 dashboard_recommendations:
@@ -105,7 +99,7 @@ dashboard_save_general_settings_action:
   path: /dashboard/settings/general/save_general_settings_action
   controller: App\Controller\DashboardSettingsController::saveGeneralSettingsAction
 
-### STORE IMAGES
+### DASHBOARD IMAGES
 dashboard_images:
   path: /dashboard/settings/images
   controller: App\Controller\DashboardImagesController::renderDashboardImagesTemplateAction
@@ -116,7 +110,7 @@ dashboard_save_images_action:
   path: /dashboard/settings/images/save_images_action
   controller: App\Controller\DashboardImagesController::saveImagesAction
 
-### LANGUAGES
+### DASHBOARD LANGUAGES
 dashboard_languages:
   path: /dashboard/settings/languages
   controller: App\Controller\DashboardLanguagesController::renderDashboardLanguagesTemplateAction
@@ -139,7 +133,18 @@ dashboard_save_default_languages_action:
   path: /dashboard/settings/languages/save_default_languages_action_url
   controller: App\Controller\DashboardLanguagesController::saveDefaultLanguagesAction
 
-### INFORMATION
+### DASHBOARD META
+dashboard_meta:
+  path: /dashboard/settings/meta
+  controller: App\Controller\DashboardMetaController::renderDashboardMetaTemplateAction
+dashboard_get_meta_action:
+  path: /dashboard/settings/meta/get_meta_action
+  controller: App\Controller\DashboardMetaController::getMetaAction
+dashboard_save_meta_action:
+  path: /dashboard/settings/meta/save_meta_action
+  controller: App\Controller\DashboardMetaController::saveMetaAction
+
+### DASHBOARD INFORMATION
 dashboard_information:
   path: /dashboard/settings/information
   controller: App\Controller\DashboardInformationController::renderDashboardInformationTemplateAction

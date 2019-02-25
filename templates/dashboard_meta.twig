@@ -1,0 +1,90 @@
+{# DASHBOARD INFORMATION TEMPLATE #}
+
+{% extends 'main_dashboard.twig' %}
+
+{% block init %}
+  var get_meta_action_url = "{{ path('dashboard_get_meta_action') }}";
+  var save_meta_action_url = "{{ path('dashboard_save_meta_action') }}";
+
+  var alert_save_meta = "{{ translation.dashboard.meta.alert_save_meta }}";
+  var alert_create_new_file = "{{ translation.dashboard.meta.alert_create_new_file }}";
+  var error_get_meta = "{{ translation.dashboard.meta.error_get_meta }}";
+  var error_save_meta = "{{ translation.dashboard.meta.error_save_meta }}";
+{% endblock %}
+
+{% block include %}
+  <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_meta.js') }}"></script>
+{% endblock %}
+
+{% block header %}
+  <h5 class="center">{{ translation.dashboard.meta.page_title }}</h5>
+  <div class="col s12 m12 l12 xl12">
+    <div class="collection">
+      <a class="collection-item" href="{{ path('dashboard_settings_main') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.meta.back_to_settings }}</a>
+    </div>
+  </div>
+
+  <div class="col s12 m12 l12">
+    <ul class="collapsible">
+      <li>
+        <div class="collapsible-header">
+          <i class="material-icons left">info</i>{{ translation.dashboard.meta.page_help_title }}</div>
+        <div class="collapsible-body">
+          <p>{{ translation.dashboard.meta.page_help_text }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
+
+{% block main %}
+  {% if languages != false %}
+    <div class="col s12 m12 l12 xl12">
+      <div class="input-field">
+        <select id="input_meta_language">
+          {% for language in languages %}
+            {% if language.store_selected == true %}
+              <option value="{{ language.id }}" selected>{{ language.name }}</option>
+            {% else %}
+              <option value="{{ language.id }}">{{ language.name }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <label for="input_meta_language">{{ translation.dashboard.meta.input_meta_language }}</label>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="col s12 m12 l12 xl12">
+    <div class="card hoverable">
+      <div class="card-content">
+        <div class="input-field">
+          <textarea class="materialize-textarea" id="input_meta_title"></textarea>
+          <label for="input_meta_title">{{ translation.dashboard.meta.input_meta_title }}</label>
+        </div>
+      </div>
+      <div class="card-action">
+        <a class="clickable" id="button_save_meta">{{ translation.dashboard.meta.button_save_meta }}</a>
+      </div>
+    </div>
+  </div>
+  <!-- Убрать карточку и сделать всё без карточки, так красивее -->
+{% endblock %}
+
+{% block javascript %}
+  $('select').formSelect();
+  getInformation(Number($('#input_meta_language').val()));
+
+  $('#input_meta_language').on('change', function() {
+    $('#input_meta_text').val(null);
+    M.updateTextFields();
+    M.textareaAutoResize($('#input_meta_text'));
+    getInformation(Number($('#input_meta_language').val()));
+  });
+
+  $('#button_save_meta').on('click', function() {
+    var language_id = Number($('#input_meta_language').val());
+    var meta_content = $('#input_meta_text').val();
+    saveInformation(language_id, meta_content);
+  });
+{% endblock %}
