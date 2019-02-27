@@ -47,6 +47,7 @@ class MainController extends Controller
     public function getStoreSettings()
     {
         // устанавливать все настройки в куки
+        // сделать try catch если не получится парсить файл настроек, то использовать settings.dist.yaml
         return $settings;
     }
 

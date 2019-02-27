@@ -56,18 +56,16 @@
   {% endif %}
 
   <div class="col s12 m12 l12 xl12">
-    <div class="card hoverable">
-      <div class="card-content">
-        <div class="input-field">
-          <textarea class="materialize-textarea" id="input_meta_title"></textarea>
-          <label for="input_meta_title">{{ translation.dashboard.meta.input_meta_title }}</label>
-        </div>
-      </div>
-      <div class="card-action">
-        <a class="clickable" id="button_save_meta">{{ translation.dashboard.meta.button_save_meta }}</a>
-      </div>
+    <div class="input-field">
+      <input type="text" id="input_meta_title" value="" />
+      <label for="input_meta_title">{{ translation.dashboard.meta.input_meta_title }}</label>
     </div>
   </div>
+
+  <div class="col s12 m12 l12 xl12 center">
+    <a class="btn btn-large green white-text clickable" id="button_save_meta">{{ translation.dashboard.meta.button_save_meta }}</a>
+  </div>
+
   <!-- Убрать карточку и сделать всё без карточки, так красивее -->
 {% endblock %}
 
