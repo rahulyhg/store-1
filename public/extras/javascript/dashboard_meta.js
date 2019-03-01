@@ -1,9 +1,9 @@
 /* ##################################################################################### */
 //
 /* ##################################################################################### */
-function getInformation(language_id) {
+function getMeta(language_id) {
   $.ajax({
-    url: get_information_action_url,
+    url: get_meta_action_url,
     type: "POST",
     cache: true,
     async: true,
@@ -46,9 +46,9 @@ function getInformation(language_id) {
 /* ##################################################################################### */
 //
 /* ##################################################################################### */
-function saveInformation(language_id, information_content) {
+function saveMeta(language_id, meta_content) {
   $.ajax({
-    url: save_information_action_url,
+    url: save_meta_action_url,
     type: "POST",
     cache: true,
     async: true,
