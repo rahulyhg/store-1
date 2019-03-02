@@ -80,30 +80,25 @@
     </div>
   </div>
 
-
   <div class="col s12 m12 l12 xl12 center">
     <a class="btn btn-large green white-text clickable" id="button_save_meta">{{ translation.dashboard.meta.button_save_meta }}</a>
   </div>
-
-  <!-- Убрать карточку и сделать всё без карточки, так красивее -->
 {% endblock %}
 
 {% block javascript %}
   $('select').formSelect();
   $('#input_meta_title').characterCounter();
   $('#input_meta_description').characterCounter();
-  getInformation(Number($('#input_meta_language').val()));
+  getMeta(Number($('#input_meta_language').val()));
 
   $('#input_meta_language').on('change', function() {
-    $('#input_meta_text').val(null);
-    M.updateTextFields();
-    M.textareaAutoResize($('#input_meta_text'));
-    getInformation(Number($('#input_meta_language').val()));
+    clearForm();
+    getMeta(Number($('#input_meta_language').val()));
   });
 
   $('#button_save_meta').on('click', function() {
     var language_id = Number($('#input_meta_language').val());
     var meta_content = $('#input_meta_text').val();
-    saveInformation(language_id, meta_content);
+    saveMeta(language_id, meta_content);
   });
 {% endblock %}
