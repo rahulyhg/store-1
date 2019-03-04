@@ -75,6 +75,18 @@
   </div>
   <div class="col s12 m12 l12 xl12">
     <div class="input-field">
+      <textarea class="materialize-textarea" id="input_meta_aboutus" data-length="150"></textarea>
+      <label for="input_meta_aboutus">{{ translation.dashboard.meta.input_meta_aboutus }}</label>
+    </div>
+  </div>
+  <div class="col s12 m12 l12 xl12">
+    <div class="input-field">
+      <input type="text" length="3" id="input_meta_copyright" data-length="50" value="" />
+      <label for="input_meta_copyright">{{ translation.dashboard.meta.input_meta_copyright }}</label>
+    </div>
+  </div>
+  <div class="col s12 m12 l12 xl12">
+    <div class="input-field">
       <input type="number" length="3" id="input_meta_revisit" value="" />
       <label for="input_meta_revisit">{{ translation.dashboard.meta.input_meta_revisit }}</label>
     </div>
@@ -87,8 +99,8 @@
 
 {% block javascript %}
   $('select').formSelect();
-  $('#input_meta_title').characterCounter();
-  $('#input_meta_description').characterCounter();
+  $('#input_meta_title, #input_meta_description, #input_meta_aboutus, #input_meta_copyright').characterCounter();
+  //$('#input_meta_description').characterCounter();
   getMeta(Number($('#input_meta_language').val()));
 
   $('#input_meta_language').on('change', function() {

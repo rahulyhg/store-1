@@ -43,6 +43,7 @@ function getMeta(language_id) {
     },
     success: function(response) {
       if (response.status == true) {
+        clearForm();
         if (response.newfile == true) {
           elegant_alert.success(alert_create_new_file);
           clearForm();
@@ -51,6 +52,7 @@ function getMeta(language_id) {
         }
       } else {
         elegant_alert.error(error_get_information);
+        clearForm();
       }
     },
     complete: function() {
@@ -59,6 +61,7 @@ function getMeta(language_id) {
     error: function(xhr) {
       elegant_alert.error(error_get_information);
       writeLog('App/Javascript/DashboardInformation::getInformation');
+      $('#preloader').hide();
     }
   });
 }
@@ -94,6 +97,7 @@ function saveMeta(language_id, meta_content) {
     error: function(xhr) {
       elegant_alert.error(error_save_information);
       writeLog('App/Javascript/DashboardInformation::saveInformation');
+      $('#preloader').hide();
     }
   });
 }

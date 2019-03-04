@@ -33,18 +33,32 @@ class DashboardMetaController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function getMetaAction()
+    private function getMetaFilePath($language_id)
+    {
+      $common_languages_repository = $this->getDoctrine()->getRepository('App:CommonLanguages');
+      $common_language_object = $common_languages_repository->findOneByLanguageId($language_id);
+      $language_code = $common_language_object->getLanguageCode();
+
+      $meta_file_path = $this->getAppDir() . '/public/meta/meta.' . $language_code . '.yaml';
+
+      return $meta_file_path;
+    }
+
+    /* ##################################################################################### */
+    //
+    /* ##################################################################################### */
+    public function getMetaAction(Request $request)
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
             $language_id = $request->request->get('language_id');
 
-            $information_file_path = $this->getInformationFilePath($language_id);
+            $meta_file_path = $this->getMetaFilePath($language_id);
 
             $file_system = new Filesystem();
 
             try {
-                if (!$file_system->exists($information_file_path)) {
-                    $file_system->touch($information_file_path);
+                if (!$file_system->exists($meta_file_path)) {
+                    $file_system->touch($meta_file_path);
                     $result['newfile'] = true;
                 }
             } catch (IOExceptionInterface $exception) {
@@ -54,12 +68,12 @@ class DashboardMetaController extends MainDashboardController
               ));
             }
 
-            $handle = fopen($information_file_path, "r");
-            if (filesize($information_file_path) == 0) {
+            $handle = fopen($meta_file_path, "r");
+            if (filesize($meta_file_path) == 0) {
                 $result['content'] = "";
                 $result['filesize'] = false;
             } else {
-                $result['content'] = fread($handle, filesize($information_file_path));
+                $result['content'] = fread($handle, filesize($meta_file_path));
                 $result['filesize'] = true;
             }
             fclose($handle);
@@ -79,18 +93,18 @@ class DashboardMetaController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function saveMetaAction()
+    public function saveMetaAction(Request $request)
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
             $language_id = $request->request->get('language_id');
-            $information_content = $request->request->get('information_content');
+            $meta_content = $request->request->get('meta_content');
 
-            $information_file_path = $this->getInformationFilePath($language_id);
+            $meta_file_path = $this->getInformationFilePath($language_id);
 
             $file_system = new Filesystem();
 
             try {
-                $file_system->dumpFile($information_file_path, $information_content);
+                $file_system->dumpFile($meta_file_path, $meta_content);
                 $result['status'] = true;
             } catch (IOExceptionInterface $exception) {
                 $this->writeLog('App/Controller/DashboardInformationController::saveInformationAction & Error read file: ' . $exception->getPath());

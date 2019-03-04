@@ -165,6 +165,8 @@ dashboard:
     input_meta_title: 'Заголовок магазина'
     input_meta_description: 'Описание'
     input_meta_keywords: 'Теги (через запятую)'
+    input_meta_aboutus: 'О нас'
+    input_meta_copyright: 'Авторские права'
     input_meta_revisit: 'Частота сканирования (дней)'
     button_save_meta: 'Сохранить'
     alert_save_meta: 'Изменения meta-данных успешно сохранены'
