@@ -63,6 +63,12 @@
   </div>
   <div class="col s12 m12 l12 xl12">
     <div class="input-field">
+      <input type="text" id="input_meta_name" data-length="30" value="" />
+      <label for="input_meta_name">{{ translation.dashboard.meta.input_meta_name }}</label>
+    </div>
+  </div>
+  <div class="col s12 m12 l12 xl12">
+    <div class="input-field">
       <textarea class="materialize-textarea" id="input_meta_description" data-length="130"></textarea>
       <label for="input_meta_description">{{ translation.dashboard.meta.input_meta_description }}</label>
     </div>
@@ -99,8 +105,8 @@
 
 {% block javascript %}
   $('select').formSelect();
-  $('#input_meta_title, #input_meta_description, #input_meta_aboutus, #input_meta_copyright').characterCounter();
-  //$('#input_meta_description').characterCounter();
+  $('#input_meta_title, #input_meta_name, #input_meta_description, #input_meta_aboutus, #input_meta_copyright').characterCounter();
+
   getMeta(Number($('#input_meta_language').val()));
 
   $('#input_meta_language').on('change', function() {
@@ -110,7 +116,8 @@
 
   $('#button_save_meta').on('click', function() {
     var language_id = Number($('#input_meta_language').val());
-    var meta_content = $('#input_meta_text').val();
-    saveMeta(language_id, meta_content);
+    var form = serializeForm();
+    saveMeta(language_id, form);
+    delete form;
   });
 {% endblock %}
