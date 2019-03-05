@@ -174,7 +174,7 @@ class DashboardLanguagesController extends MainDashboardController
     }
 
     /* ##################################################################################### */
-    //
+    // Подумать над тем, чтоб удалять соответствующие файлы языка и meta-данных
     /* ##################################################################################### */
     public function deleteLanguageAction(Request $request)
     {
