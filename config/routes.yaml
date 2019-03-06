@@ -133,6 +133,11 @@ dashboard_save_default_languages_action:
   path: /dashboard/settings/languages/save_default_languages_action_url
   controller: App\Controller\DashboardLanguagesController::saveDefaultLanguagesAction
 
+### DASHBOARD CURRENCIES
+dashboard_currencies:
+  path: /dashboard/settings/currencies
+  controller: App\Controller\DashboardCurrenciesController::renderDashboardCurrenciesTemplateAction
+
 ### DASHBOARD META
 dashboard_meta:
   path: /dashboard/settings/meta

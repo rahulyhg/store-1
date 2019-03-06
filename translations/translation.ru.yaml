@@ -93,6 +93,7 @@ dashboard:
     link_dashboard_meta:          'Meta-данные магазина'
     link_dashboard_information:   'Информация для покупателей'
     link_dashboard_languages:     'Управление языками'
+    link_dashboard_currencies: 'Валюта'
     link_dashboard_users:         'Администраторы'
     link_dashboard_scripts:       'Скрипты'
     link_dashboard_modules:       'Модули'
