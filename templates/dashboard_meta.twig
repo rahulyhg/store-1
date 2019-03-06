@@ -118,6 +118,7 @@
     var language_id = Number($('#input_meta_language').val());
     var form = serializeForm();
     saveMeta(language_id, form);
+    delete language_id;
     delete form;
   });
 {% endblock %}

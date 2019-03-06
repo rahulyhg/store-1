@@ -4,8 +4,6 @@ namespace App\Controller;
 use App\Controller\MainDashboardController;
 
 use Symfony\Component\HttpFoundation\Request;
-//use Symfony\Component\HttpFoundation\Response;
-//use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -66,8 +64,8 @@ class DashboardMetaController extends MainDashboardController
                     $file_system->touch($meta_file_path);
 
                     $new_meta = array(
-                      'title' => 'Seandle Store',   // Заголовок страницы
-                      'name' => 'Seandle Store',    // Название магазина в шапке сайта
+                      'title' => 'Seandle Store',
+                      'name' => 'Seandle Store',
                       'description' => 'Description for this store',
                       'keywords' => 'some, keywords, for, this, store',
                       'aboutus' => 'Text About Us in the footer of the site.',
@@ -81,23 +79,21 @@ class DashboardMetaController extends MainDashboardController
                     $result['newfile'] = true;
                 }
             } catch (IOExceptionInterface $exception) {
-                $this->writeLog('App/Controller/DashboardInformationController::getInformationAction & Error read file: ' . $exception->getPath());
+                $this->writeLog('App/Controller/DashboardMetaController::getMetaAction & Ошибка записи файла, проверьте права доступа к конечной директории: ' . $exception->getPath());
                 $result['status'] = false;
                 return new JsonResponse($result);
             }
 
             try {
                 $result['form'] = Yaml::parseFile($meta_file_path);
+                $result['status'] = true;
             } catch (ParseException $exception) {
-                $this->writeLog('Ошибка получения языкового пакета. Возможно пакет отсутствует. Текст ошибки: %s', $exception->getMessage());
-                //$translation = Yaml::parseFile($this->getAppDir() . 'translations/translation.ru.yaml');
+                $this->writeLog('App/Controller/DashboardMetaController::getMetaAction Ошибка парсинга Yaml. Возможно файл отсутствует. Текст ошибки: %s', $exception->getMessage());
             }
-
-            $result['status'] = true;
 
             return new JsonResponse($result);
         } else {
-            $this->writeLog('App/Controller/DashboardInformationController::getInformationAction Authorization Error');
+            $this->writeLog('App/Controller/DashboardMetaController::getMetaAction Ошибка авторизации');
             return $this->render('dashboard_authorization.twig', array(
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),
@@ -121,13 +117,14 @@ class DashboardMetaController extends MainDashboardController
                 file_put_contents($meta_file_path, $yaml);
                 $result['status'] = true;
             } catch (ParseException $exception) {
-                $this->writeLog('App/Controller/DashboardMetaController::saveDefaultLanguagesAction Unable to parse the YAML string: ' . $exception->getMessage());
-                $result['error'] = 'Unable to parse the YAML string: ' . $exception->getMessage();
+                $this->writeLog('App/Controller/DashboardMetaController::saveMetaAction Ошибка дампа Yaml: ' . $exception->getMessage());
+                //$result['error'] = 'Unable to parse the YAML string: ' . $exception->getMessage();
                 $result['result'] = false;
             }
 
             return new JsonResponse($result);
         } else {
+        	$this->writeLog('App/Controller/DashboardMetaController::saveMetaAction Ошибка авторизации');
             return $this->render('dashboard_authorization.twig', array(
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),

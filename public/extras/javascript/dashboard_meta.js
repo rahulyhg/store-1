@@ -83,7 +83,7 @@ function getMeta(language_id) {
     },
     error: function(xhr) {
       elegant_alert.error(error_get_meta);
-      writeLog('App/Javascript/DashboardInformation::getInformation');
+      writeLog('App/Javascript/DashboardMeta::getMeta Ошибка запроса или ответа');
       $('#preloader').hide();
     }
   });
@@ -119,7 +119,7 @@ function saveMeta(language_id, form) {
     },
     error: function(xhr) {
       elegant_alert.error(error_save_meta);
-      writeLog('App/Javascript/DashboardInformation::saveInformation');
+      writeLog('App/Javascript/DashboardMeta::saveMeta Ошибка запроса или ответа');
       $('#preloader').hide();
     }
   });
