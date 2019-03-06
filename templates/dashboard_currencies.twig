@@ -1,0 +1,218 @@
+{# DASHBOARD SCRIPTS TEMPLATE #}
+{% extends 'main_dashboard.twig' %}
+
+{% block init %}
+  var get_currencies_action_url = "{{ path('dashboard_get_currencies_action') }}";
+  var get_currency_action_url = "{{ path('dashboard_get_currency_action') }}";
+  var add_currency_action_url = "{{ path('dashboard_add_currency_action') }}";
+  var edit_currency_action_url = "{{ path('dashboard_edit_currency_action') }}";
+  var delete_currency_action_url = "{{ path('dashboard_delete_currency_action') }}";
+  var save_default_currencies_action_url = "{{ path('dashboard_save_default_currencies_action') }}";
+  var html = new String;
+  var text_currency_code = "{{ translation.dashboard.currencies.text_currency_code }}";
+  var button_edit_currency = "{{ translation.dashboard.currencies.button_edit_currency }}";
+  var button_delete_currency = "{{ translation.dashboard.currencies.button_delete_currency }}";
+  var alert_add_currency = "{{ translation.dashboard.currencies.alert_add_currency }}";
+  var alert_edit_currency = "{{ translation.dashboard.currencies.alert_edit_currency }}";
+  var alert_delete_currency = "{{ translation.dashboard.currencies.alert_delete_currency }}";
+  var warning_currencies_missing = "{{ translation.dashboard.currencies.warning_currencies_missing }}";
+  var error_get_currencies = "{{ translation.dashboard.currencies.error_get_currencies }}";
+  var error_get_currency = "{{ translation.dashboard.currencies.error_get_currency }}";
+  var error_add_currency = "{{ translation.dashboard.currencies.error_add_currency }}";
+  var error_edit_currency = "{{ translation.dashboard.currencies.error_edit_currency }}";
+  var error_delete_currency = "{{ translation.dashboard.currencies.error_delete_currency }}";
+
+  var alert_save_default_currencies = "{{ translation.dashboard.currencies.alert_save_default_currencies }}";
+  var error_save_default_currencies = "{{ translation.dashboard.currencies.error_save_default_currencies }}";
+{% endblock %}
+
+{% block include %}
+  <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_currencies.js') }}"></script>
+{% endblock %}
+
+{% block header %}
+  <h5 class="center">{{ translation.dashboard.currencies.page_title }}</h5>
+  <div class="col s12 m12 l12 xl12">
+		<div class="collection">
+			<a class="collection-item" href="{{ path('dashboard_settings_main') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.currencies.back_to_settings }}</a>
+		</div>
+	</div>
+{% endblock %}
+
+{% block main %}
+  <div class="col s12 m12 l12">
+    <ul class="tabs" id="currencies_tabs">
+      {% if currencies != false %}
+        <li class="tab col s4 m4 l4">
+          <a class="active" href="#tab_currencies">{{ translation.dashboard.currencies.tab_currencies }}</a>
+        </li>
+        <li class="tab col s4 m4 l4">
+          <a href="#tab_form">{{ translation.dashboard.currencies.tab_form }}</a>
+        </li>
+        <li class="tab col s4 m4 l4">
+          <a href="#tab_defaults">{{ translation.dashboard.currencies.tab_defaults }}</a>
+        </li>
+      {% else %}
+        <li class="tab col s6 m6 l6">
+          <a class="active" href="#tab_currencies">{{ translation.dashboard.currencies.tab_currencies }}</a>
+        </li>
+        <li class="tab col s6 m6 l6">
+          <a href="#tab_form">{{ translation.dashboard.currencies.tab_form }}</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+
+  <div id="tab_form">
+    <div class="col s12 m12 l12">
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons left">info</i>{{ translation.dashboard.currencies.page_help_title }}</div>
+          <div class="collapsible-body">
+            <p>{{ translation.dashboard.currencies.page_form_help_text }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col s12 m12 l12">
+      <div class="card hoverable">
+        <div class="card-content">
+          <span class="card-title" id="form_title_add_currency">{{ translation.dashboard.currencies.form_title_add_currency }}</span>
+          <span class="card-title" id="form_title_edit_currency">{{ translation.dashboard.currencies.form_title_edit_currency }}</span>
+
+          <div class="input-field">
+            <input type="text" id="input_currency_name" value=""/>
+            <label for="input_currency_name">{{ translation.dashboard.currencies.input_currency_name }}</label>
+          </div>
+          <div class="input-field">
+            <textarea class="materialize-textarea" id="input_currency_code"></textarea>
+            <label for="input_currency_code">{{ translation.dashboard.currencies.input_currency_code }}</label>
+          </div>
+
+          <input type="hidden" id="input_currency_id" value=""/>
+
+        </div>
+        <div class="card-action">
+          <a class="clickable" id="button_add_currency">{{ translation.dashboard.currencies.button_add_currency }}</a>
+          <a class="clickable display-none" id="button_save_currency">{{ translation.dashboard.currencies.button_save_currency }}</a>
+          <a class="clickable" id="button_clear_form">{{ translation.dashboard.currencies.button_clear_form }}</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="tab_currencies">
+    <div class="col s12 m12 l12 display-none" id="card_currencies_missing">
+      <div class="card hoverable">
+        <div class="card-content">
+          <p>
+            <i class="material-icons left">info</i>
+            {{ translation.dashboard.currencies.text_currencies_missing }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="center display-none" id="preloader_circle">
+      {% include 'preloader_circle.html' %}
+    </div>
+
+    <div id="currencies_content"></div>
+  </div>
+
+  {% if currencies != false %}
+    <div id="tab_defaults">
+      <div class="col s12 m12 l12">
+        <ul class="collapsible">
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons left">info</i>{{ translation.dashboard.currencies.page_help_title }}</div>
+            <div class="collapsible-body">
+              <p>{{ translation.dashboard.currencies.page_defaults_help_text }}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col s12 m12 l12 xl12">
+        <div class="input-field">
+          <select id="input_default_store_currency" name="input_store_currency">
+            {% for currency in currencies %}
+              {% if currency.store_selected == true %}
+                <option value="{{ currency.id }}" selected>{{ currency.name }}</option>
+              {% else %}
+                <option value="{{ currency.id }}">{{ currency.name }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          <label>{{ translation.dashboard.currencies.input_store_currency }}</label>
+        </div>
+      </div>
+
+      <div class="col s12 m12 l12 xl12">
+        <div class="input-field">
+          <select id="input_default_dashboard_currency" name="input_dashboard_currency">
+            {% for currency in currencies %}
+              {% if currency.dashboard_selected == true %}
+                <option value="{{ currency.id }}" selected>{{ currency.name }}</option>
+              {% else %}
+                <option value="{{ currency.id }}">{{ currency.name }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          <label>{{ translation.dashboard.currencies.input_dashboard_currency }}</label>
+        </div>
+      </div>
+
+      <div class="col s12 m12 l12 xl12 center">
+        <div class="input-field">
+          <a class="btn btn-large green white-text clickable" id="button_save_default_currencies">{{ translation.dashboard.currencies.button_save_defaults }}</a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+  $('#form_title_edit_currency').hide();
+  $('select').formSelect();
+  getCurrencies();
+
+  $('#button_clear_form').on('click', function() {
+    clearForm();
+    elegant_alert.success("{{ translation.dashboard.currencies.alert_clear_form }}");
+  });
+
+  $('#button_add_currency').on('click', function() {
+    var form = serializeForm();
+    if (form.name.length >= 2 && form.code.length == 2) {
+      addCurrency(form);
+    } else {
+      elegant_alert.warning("{{ translation.dashboard.currencies.warning_input_form }}");
+    }
+  });
+
+  $('#button_save_default_currencies').on('click', function() {
+    var form = {
+      'store': $('#input_default_store_currency').val(),
+      'dashboard': $('#input_default_dashboard_currency').val()
+    };
+
+    saveDefaultCurrencies(form);
+
+    delete form;
+  });
+
+  $('#button_save_currency').on('click', function() {
+    var form = serializeForm();
+    if (form.name.length >= 2 && form.code.length == 2) {
+      editCurrency(form);
+    } else {
+      elegant_alert.warning("{{ translation.dashboard.currencies.warning_input_form }}");
+    }
+  });
+{% endblock %}

@@ -1,0 +1,36 @@
+App\Entity\CommonCurrencies:
+    type: entity
+    table: common_currencies
+    id:
+        currencyId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: currency_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        currencyName:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: currency_name
+        currencyCode:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: currency_code
+        currencySymbol:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: currency_symbol
+    lifecycleCallbacks: {  }
