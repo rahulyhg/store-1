@@ -43,24 +43,23 @@ class DashboardCurrenciesController extends MainDashboardController
     private function checkCurrencyDependence($currency_id)
     {
       $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
-
-      try {
-          $settings = Yaml::parseFile($settings_file_path);
-          $store_currency = (int) $settings['store_currency'];
-          $dashboard_currency = (int) $settings['dashboard_currency'];
-
-          if ($currency_id == $store_currency) {
-            return true;
-          }
-
-          if ($currency_id == $dashboard_currency) {
-            return true;
-          }
-
-          return false;
+      try
+        $settings = Yaml::parseFile($settings_file_path);
       } catch (ParseException $exception) {
-          $this->writeLog('App/Controller/DashboardCurrenciesController::checkCurrencyDependence Unable to parse the YAML string: ' . $exception->getMessage());
+        $this->writeLog('App/Controller/DashboardCurrenciesController::checkCurrencyDependence Unable to parse the YAML string: ' . $exception->getMessage());
+        return $this->render('error_parse.twig', array(
+          'translation' => $this->getTranslation(),
+          'authorization' => $this->checkAuthorization(),
+        ));
       }
+
+      $store_currency = (int) $settings['store_currency'];
+
+      if ($currency_id == $store_currency) {
+        return true;
+      }
+
+      return false;
     }
 
     /* ##################################################################################### */
@@ -91,7 +90,8 @@ class DashboardCurrenciesController extends MainDashboardController
         } else {
             $this->writeLog("App/Controller/DashboardCurrenciesController::getCurrenciesAction Authorization Error");
             return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation()
+              'translation' => $this->getTranslation(),
+              'authorization' => $this->checkAuthorization(),
           ));
         }
     }
@@ -116,7 +116,8 @@ class DashboardCurrenciesController extends MainDashboardController
         } else {
             $this->writeLog("App/Controller/DashboardCurrenciesController::getCurrencyAction Authorization Error");
             return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation()
+              'translation' => $this->getTranslation(),
+              'authorization' => $this->checkAuthorization(),
             ));
         }
     }
@@ -133,6 +134,7 @@ class DashboardCurrenciesController extends MainDashboardController
 
             $common_currencies->setCurrencyName($form['name']);
             $common_currencies->setCurrencyCode($form['code']);
+            $common_currencies->setCurrencyCode($form['symbol']);
 
             $em->persist($common_currencies);
             $em->flush();
@@ -143,7 +145,8 @@ class DashboardCurrenciesController extends MainDashboardController
         } else {
             $this->writeLog("App/Controller/DashboardCurrenciesController::addCurrencyAction Authorization Error");
             return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation()
+              'translation' => $this->getTranslation(),
+              'authorization' => $this->checkAuthorization(),
             ));
         }
     }

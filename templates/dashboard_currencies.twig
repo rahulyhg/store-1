@@ -180,7 +180,7 @@
 {% block javascript %}
   $('#form_title_edit_currency').hide();
   $('select').formSelect();
-  getCurrencies();
+  //getCurrencies();
 
   $('#button_clear_form').on('click', function() {
     clearForm();
@@ -189,7 +189,7 @@
 
   $('#button_add_currency').on('click', function() {
     var form = serializeForm();
-    if (form.name.length >= 2 && form.code.length == 2) {
+    if (form.name.length >= 2 && form.code.length >= 1 2 && form.symbol.length >= 1) {
       addCurrency(form);
     } else {
       elegant_alert.warning("{{ translation.dashboard.currencies.warning_input_form }}");
