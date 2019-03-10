@@ -137,6 +137,24 @@ dashboard_save_default_languages_action:
 dashboard_currencies:
   path: /dashboard/settings/currencies
   controller: App\Controller\DashboardCurrenciesController::renderDashboardCurrenciesTemplateAction
+dashboard_get_currencies_action:
+  path: /dashboard/settings/currencies/get_currencies_action
+  controller: App\Controller\DashboardCurrenciesController::getCurrenciesAction
+dashboard_get_currency_action:
+  path: /dashboard/settings/currencies/get_currency_action
+  controller: App\Controller\DashboardCurrenciesController::getCurrencyAction
+dashboard_add_currency_action:
+  path: /dashboard/settings/currencies/add_currency_action
+  controller: App\Controller\DashboardCurrenciesController::addCurrencyAction
+dashboard_edit_currency_action:
+  path: /dashboard/settings/currencies/edit_currency_action
+  controller: App\Controller\DashboardCurrenciesController::editCurrencyAction
+dashboard_delete_currency_action:
+  path: /dashboard/settings/currencies/delete_currency_action
+  controller: App\Controller\DashboardCurrenciesController::deleteCurrencyAction
+dashboard_save_default_currencies_action:
+  path: /dashboard/settings/currencies/save_default_currencies_action_url
+  controller: App\Controller\DashboardCurrenciesController::saveDefaultCurrenciesAction
 
 ### DASHBOARD META
 dashboard_meta:

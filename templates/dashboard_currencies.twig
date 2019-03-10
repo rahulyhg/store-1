@@ -87,8 +87,12 @@
             <label for="input_currency_name">{{ translation.dashboard.currencies.input_currency_name }}</label>
           </div>
           <div class="input-field">
-            <textarea class="materialize-textarea" id="input_currency_code"></textarea>
+            <input type="text" id="input_currency_code" value=""/>
             <label for="input_currency_code">{{ translation.dashboard.currencies.input_currency_code }}</label>
+          </div>
+          <div class="input-field">
+            <input type="text" id="input_currency_symbol" value=""/>
+            <label for="input_currency_symbol">{{ translation.dashboard.currencies.input_currency_symbol }}</label>
           </div>
 
           <input type="hidden" id="input_currency_id" value=""/>
@@ -180,7 +184,7 @@
 {% block javascript %}
   $('#form_title_edit_currency').hide();
   $('select').formSelect();
-  //getCurrencies();
+  getCurrencies();
 
   $('#button_clear_form').on('click', function() {
     clearForm();
@@ -189,7 +193,7 @@
 
   $('#button_add_currency').on('click', function() {
     var form = serializeForm();
-    if (form.name.length >= 2 && form.code.length >= 1 2 && form.symbol.length >= 1) {
+    if (form.name.length >= 2 && form.code.length >= 1 && form.symbol.length >= 1) {
       addCurrency(form);
     } else {
       elegant_alert.warning("{{ translation.dashboard.currencies.warning_input_form }}");

@@ -42,16 +42,7 @@ class DashboardCurrenciesController extends MainDashboardController
     /* ##################################################################################### */
     private function checkCurrencyDependence($currency_id)
     {
-      $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
-      try
-        $settings = Yaml::parseFile($settings_file_path);
-      } catch (ParseException $exception) {
-        $this->writeLog('App/Controller/DashboardCurrenciesController::checkCurrencyDependence Unable to parse the YAML string: ' . $exception->getMessage());
-        return $this->render('error_parse.twig', array(
-          'translation' => $this->getTranslation(),
-          'authorization' => $this->checkAuthorization(),
-        ));
-      }
+      $settings = $this->getSettings();
 
       $store_currency = (int) $settings['store_currency'];
 
@@ -92,7 +83,7 @@ class DashboardCurrenciesController extends MainDashboardController
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),
-          ));
+            ));
         }
     }
 
@@ -208,6 +199,8 @@ class DashboardCurrenciesController extends MainDashboardController
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
             $form = $request->request->get('form');
+
+            // Написать метод сохранения настроек и использовать его тут
 
             $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
 

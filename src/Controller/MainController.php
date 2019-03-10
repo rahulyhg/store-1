@@ -18,7 +18,7 @@ use App\Entity\CommonLogs;
 class MainController extends Controller
 {
     /* ##################################################################################### */
-    // Получение рабочей директории "/var/www/html/store/"
+    // Получение рабочей директории типа "/var/www/html/store/"
     /* ##################################################################################### */
     protected function getAppDir()
     {
@@ -42,13 +42,54 @@ class MainController extends Controller
     }
 
     /* ##################################################################################### */
+    //
+    /* ##################################################################################### */
+    private function getSettingsFilePath ()
+    {
+      $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
+
+      return $settings_file_path;
+    }
+
+    /* ##################################################################################### */
     // Метод получает дефолтные значения: шаг пагинации, имена файлов изображений и т.п.
     /* ##################################################################################### */
-    public function getStoreSettings()
+    protected function getSettings()
     {
-        // устанавливать все настройки в куки
-        // сделать try catch если не получится парсить файл настроек, то использовать settings.dist.yaml
+        $settings_file_path = $this->getSettingsFilePath();
+
+        try {
+            $settings = Yaml::parseFile($settings_file_path);
+        } catch (ParseException $exception) {
+            $this->writeLog('App/Controller/MainController::getSettings [' . 'Unable to parse the YAML string: ' . $exception->getMessage() . ']');
+        }
+
         return $settings;
+    }
+
+    /* ##################################################################################### */
+    //
+    /* ##################################################################################### */
+    protected function saveSettings($settings)
+    {
+      if ($this->checkAuthorization() == true) {
+        $settings_file_path = $this->getSettingsFilePath();
+
+        try {
+          $yaml = Yaml::dump($settings);
+          file_put_contents($settings_file_path, $yaml);
+        } catch (ParseException $exception) {
+          $this->writeLog('App/Controller/MainController::saveSettings Unable to parse the YAML string: ' . $exception->getMessage());
+          return false;
+        }
+
+        return true;
+      } else {
+          $this->writeLog("App/Controller/MainController::saveSettings Authorization Error");
+          return $this->render('error_access.twig', array(
+            'translation' => $this->getTranslation()
+          ));
+      }
     }
 
     /* ##################################################################################### */
@@ -93,57 +134,80 @@ class MainController extends Controller
     }
 
     /* ##################################################################################### */
-    // Получает список всех языков для рендеринга в шаблонах
+    // Получает список всех языков с флагом использования в панели управления или в магазине
     /* ##################################################################################### */
     protected function getAllLanguages()
     {
-        if ($this->checkAuthorization() == true) {
-            $common_languages_repository = $this->getDoctrine()->getRepository('App:CommonLanguages');
-            $common_languages_object = $common_languages_repository->findAll();
+        $common_languages_repository = $this->getDoctrine()->getRepository('App:CommonLanguages');
+        $common_languages_object = $common_languages_repository->findAll();
 
-            if (count($common_languages_object) < 1) {
-                return false;
-            }
-
-            $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
-
-            try {
-                $settings = Yaml::parseFile($settings_file_path);
-                $store_language = (int) $settings['store_language'];
-                $dashboard_language = (int) $settings['dashboard_language'];
-            } catch (ParseException $exception) {
-                $this->writeLog('App/Controller/MainController::getAllLanguages [' . 'Unable to parse the YAML string: ' . $exception->getMessage() . ']');
-            }
-
-            foreach ($common_languages_object as $language) {
-                $language_id = $language->getLanguageId();
-
-                $languages[$language_id] = array(
-                  'id' => $language->getLanguageId(),
-                  'name' => $language->getLanguageName(),
-                  'code' => $language->getLanguageCode(),
-                );
-
-                if ($language->getLanguageId() == $store_language) {
-                  $languages[$language_id]['store_selected'] = true;
-                } else {
-                  $languages[$language_id]['store_selected'] = false;
-                }
-
-                if ($language->getLanguageId() == $dashboard_language) {
-                  $languages[$language_id]['dashboard_selected'] = true;
-                } else {
-                  $languages[$language_id]['dashboard_selected'] = false;
-                }
-            }
-
-            return $languages;
-        } else {
-            $this->writeLog("App/Controller/MainController::getAllLanguages Authorization Error");
-            return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation()
-          ));
+        if (count($common_languages_object) < 1) {
+            return false;
         }
+
+        $settings = $this->getSettings();
+        $store_language = (int) $settings['store_language'];
+        $dashboard_language = (int) $settings['dashboard_language'];
+
+        foreach ($common_languages_object as $language) {
+            $language_id = $language->getLanguageId();
+
+            $languages[$language_id] = array(
+              'id' => $language->getLanguageId(),
+              'name' => $language->getLanguageName(),
+              'code' => $language->getLanguageCode(),
+            );
+
+            if ($language->getLanguageId() == $store_language) {
+              $languages[$language_id]['store_selected'] = true;
+            } else {
+              $languages[$language_id]['store_selected'] = false;
+            }
+
+            if ($language->getLanguageId() == $dashboard_language) {
+              $languages[$language_id]['dashboard_selected'] = true;
+            } else {
+              $languages[$language_id]['dashboard_selected'] = false;
+            }
+        }
+
+        return $languages;
+    }
+
+    /* ##################################################################################### */
+    // Получает список всех валют из БД с флагом использования валюты в магазине
+    /* ##################################################################################### */
+    protected function getAllCurrencies()
+    {
+      $common_currencies_repository = $this->getDoctrine()->getRepository('App:CommonCurrencies');
+      $common_currencies_object = $common_currencies_repository->findAll();
+
+      if (count($common_currencies_object) < 1) {
+          return false;
+      }
+
+      $settings = $this->getSettings();
+
+      $store_currency = (int) $settings['store_currency'];
+
+      foreach ($common_currencies_object as $currency) {
+          $currency_id = $currency->getCurrencyId();
+
+          $currencies[$currency_id] = array(
+            'id' => $currency->getLanguageId(),
+            'name' => $currency->getLanguageName(),
+            'code' => $currency->getLanguageCode(),
+            'symbol' => $currency->getCurrencySymbol()
+          );
+
+          if ($currency->getCurrencyId() == $store_currency) {
+            $currencies[$currency_id]['store_selected'] = true;
+          } else {
+            $currencies[$currency_id]['store_selected'] = false;
+          }
+      }
+
+      return $currencies;
     }
 
     /* ##################################################################################### */
