@@ -101,6 +101,8 @@ dashboard:
 
   settings_general:
     page_title:                    'Основные настройки'
+    back_to_settings: 'Назад в Настройки'
+    
 
   images:
     page_title:                    'Логотипы магазина'

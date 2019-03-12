@@ -70,10 +70,10 @@ class DashboardSettingsController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function saveStorePaginationStepAction(Reqest $request)
+    public function saveStorePaginationStepAction(Request $request)
     {
       if ($this->checkAuthorization() == true) {
-        
+
 
       } else {
           $this->writeLog('App/Controller/DashboardSettingsController::saveStorePaginationStepAction > Authorization Error');
