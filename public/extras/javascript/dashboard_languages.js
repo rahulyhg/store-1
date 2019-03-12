@@ -16,9 +16,8 @@ function renderContent(languages) {
 
     if (languages[language]['dependence'] == false) {
       html += '<a class="red-text clickable" onclick="deleteLanguage(' + languages[language]['id'] + ')">' + button_delete_language + '</a>';
-    } /*else {
-      html += '<a class="grey-text clickable">' + button_delete_language + '</a>';
-    }*/
+    }
+    
     html += '</div>';
     html += '</div>';
     html += '</div>';
@@ -93,7 +92,7 @@ function getLanguages() {
     },
     error: function(xhr) {
       elegant_alert.error(error_get_languages);
-      writeLog('Dashboard/JS/Language: Error Get Languages');
+      writeLog('App/Javascript/DashboardLanguages::getLanguages > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
@@ -139,7 +138,7 @@ function getLanguage(language_id) {
     },
     error: function(xhr) {
       elegant_alert.error(error_get_language);
-      writeLog('Dashboard/JS/Language: Error Get Language');
+      writeLog('App/Javascript/DashboardLanguages::getLanguage > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
@@ -181,7 +180,7 @@ function addLanguage(form) {
     },
     error: function(xhr) {
       elegant_alert.error(error_add_language);
-      writeLog('Dashboard/JS/Language: Error Add Language');
+      writeLog('App/Javascript/DashboardLanguages::addLanguage > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
@@ -221,9 +220,8 @@ function editLanguage(form) {
       $('#preloader').hide();
     },
     error: function(xhr) {
-      console.log(xhr);
       elegant_alert.error(error_edit_language);
-      writeLog('Dashboard/JS/Language: Error Edit Language');
+      writeLog('App/Javascript/DashboardLanguages::editLanguage > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
@@ -257,9 +255,8 @@ function deleteLanguage(language_id) {
       $('#preloader').hide();
     },
     error: function(xhr) {
-      console.log(xhr);
       elegant_alert.error(error_delete_language);
-      writeLog('Dashboard/JS/Language: Error Delete Language');
+      writeLog('App/Javascript/DashboardLanguages::deleteLanguage > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
@@ -294,9 +291,8 @@ function saveDefaultLanguages(form) {
       $('#preloader').hide();
     },
     error: function(response) {
-      elegant_alert.error(response.error);
       elegant_alert.error(error_save_default_languages);
-      writeLog('Dashboard/JS/Language: Error Add Language');
+      writeLog('App/Javascript/DashboardLanguages::saveDefaultLanguages > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
