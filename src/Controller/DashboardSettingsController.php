@@ -66,4 +66,21 @@ class DashboardSettingsController extends MainDashboardController
             ]);
         }
     }
+
+    /* ##################################################################################### */
+    //
+    /* ##################################################################################### */
+    public function saveStorePaginationStepAction(Reqest $request)
+    {
+      if ($this->checkAuthorization() == true) {
+        
+
+      } else {
+          $this->writeLog('App/Controller/DashboardSettingsController::saveStorePaginationStepAction > Authorization Error');
+          return $this->render('dashboard_authorization.twig', [
+            'translation' => $this->getTranslation(),
+          ]);
+      }
+    }
+
 }
