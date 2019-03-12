@@ -9,6 +9,7 @@ function renderContent(currencies) {
     html += '<span class="card-title">' + currencies[currency]['id'] + '. ' + currencies[currency]['name'] + '</span>';
 
     html += '<p>' + text_currency_code + '<b>' + currencies[currency]['code'] + '</b></p>';
+    html += '<p>' + text_currency_symbol + '<b>' + currencies[currency]['symbol'] + '</b></p>';
 
     html += '</div>';
     html += '<div class="card-action">';
@@ -126,10 +127,9 @@ function getCurrency(currency_id) {
       $('#form_title_edit_currency').show();
 
       $('#input_currency_id').val(response.id);
-
       $('#input_currency_name').val(response.name);
-
       $('#input_currency_code').val(response.code);
+      $('#input_currency_symbol').val(response.symbol);
 
       M.updateTextFields();
 
@@ -141,7 +141,7 @@ function getCurrency(currency_id) {
     },
     error: function(xhr) {
       elegant_alert.error(error_get_currency);
-      writeLog('Dashboard/JS/Currency: Error Get Currency');
+      writeLog('App/Javascript/DashboardCurrency::getCurrency > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
@@ -167,7 +167,7 @@ function addCurrency(form) {
       if (response.result == true) {
         elegant_alert.success(alert_add_currency);
         location.reload(false);
-        
+
         /*clearForm();
 
         var el = document.getElementById("currencies_tabs");
@@ -224,9 +224,8 @@ function editCurrency(form) {
       $('#preloader').hide();
     },
     error: function(xhr) {
-      console.log(xhr);
       elegant_alert.error(error_edit_currency);
-      writeLog('Dashboard/JS/Currency: Error Edit Currency');
+      writeLog('App/Javascript/DashboardCurrencies::editCurrency > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
@@ -250,8 +249,9 @@ function deleteCurrency(currency_id) {
     },
     success: function(response) {
       if (response.result == true) {
-        getCurrencies();
         elegant_alert.success(alert_delete_currency);
+        location.reload(false);
+        //getCurrencies();
       } else {
         elegant_alert.error(error_delete_currency);
       }
@@ -260,9 +260,8 @@ function deleteCurrency(currency_id) {
       $('#preloader').hide();
     },
     error: function(xhr) {
-      console.log(xhr);
       elegant_alert.error(error_delete_currency);
-      writeLog('Dashboard/JS/Currency: Error Delete Currency');
+      writeLog('App/Javascript/DashboardCurrencies::deleteCurrency > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
@@ -296,10 +295,9 @@ function saveDefaultCurrencies(form) {
     complete: function() {
       $('#preloader').hide();
     },
-    error: function(response) {
-      elegant_alert.error(response.error);
+    error: function(xhr) {
       elegant_alert.error(error_save_default_currencies);
-      writeLog('Dashboard/JS/Currency: Error Add Currency');
+      writeLog('App/Javascript/DashboardCurrencies::saveDefaultCurrencies > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }

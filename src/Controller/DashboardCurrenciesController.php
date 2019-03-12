@@ -101,6 +101,7 @@ class DashboardCurrenciesController extends MainDashboardController
               'id' => $store_currency_object->getCurrencyId(),
               'name' => $store_currency_object->getCurrencyName(),
               'code' => $store_currency_object->getCurrencyCode(),
+              'symbol' => $store_currency_object->getCurrencySymbol(),
             );
 
             return new JsonResponse($currency);
@@ -108,7 +109,6 @@ class DashboardCurrenciesController extends MainDashboardController
             $this->writeLog("App/Controller/DashboardCurrenciesController::getCurrencyAction Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation(),
-              'authorization' => $this->checkAuthorization(),
             ));
         }
     }
@@ -125,7 +125,7 @@ class DashboardCurrenciesController extends MainDashboardController
 
             $common_currencies->setCurrencyName($form['name']);
             $common_currencies->setCurrencyCode($form['code']);
-            $common_currencies->setCurrencyCode($form['symbol']);
+            $common_currencies->setCurrencySymbol($form['symbol']);
 
             $em->persist($common_currencies);
             $em->flush();
@@ -137,7 +137,6 @@ class DashboardCurrenciesController extends MainDashboardController
             $this->writeLog("App/Controller/DashboardCurrenciesController::addCurrencyAction Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation(),
-              'authorization' => $this->checkAuthorization(),
             ));
         }
     }
@@ -154,6 +153,7 @@ class DashboardCurrenciesController extends MainDashboardController
 
             $currency_object->setCurrencyName($form['name']);
             $currency_object->setCurrencyCode($form['code']);
+            $currency_object->setCurrencySymbol($form['symbol']);
 
             $em->flush();
 
@@ -161,7 +161,7 @@ class DashboardCurrenciesController extends MainDashboardController
 
             return new JsonResponse($result);
         } else {
-            $this->writeLog("App/Controller/DashboardCurrenciesController::editCurrencyAction Authorization Error");
+            $this->writeLog("App/Controller/DashboardCurrenciesController::editCurrencyAction > Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation()
             ));
@@ -169,7 +169,7 @@ class DashboardCurrenciesController extends MainDashboardController
     }
 
     /* ##################################################################################### */
-    // Подумать над тем, чтоб удалять соответствующие файлы языка и meta-данных
+    //
     /* ##################################################################################### */
     public function deleteCurrencyAction(Request $request)
     {
@@ -202,7 +202,7 @@ class DashboardCurrenciesController extends MainDashboardController
 
             // Написать метод сохранения настроек и использовать его тут
 
-            $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
+            /*$settings_file_path = $this->getAppDir() . '/config/settings.yaml';
 
             try {
                 $settings = Yaml::parseFile($settings_file_path);
@@ -217,13 +217,18 @@ class DashboardCurrenciesController extends MainDashboardController
                 $this->writeLog('App/Controller/DashboardCurrenciesController::saveDefaultCurrenciesAction Unable to parse the YAML string: ' . $exception->getMessage());
                 $result['error'] = 'Unable to parse the YAML string: ' . $exception->getMessage();
                 $result['result'] = false;
-            }
+            }*/
+
+            $settings = $this->getSettings();
+            $settings['store_currency'] = (int) $form['store'];
+            $this->saveSettings($settings);
+
 
             $result['result'] = true;
 
             return new JsonResponse($result);
         } else {
-            $this->writeLog("App/Controller/DashboardCurrenciesController::saveDefaultCurrenciesAction Authorization Error");
+            $this->writeLog("App/Controller/DashboardCurrenciesController::saveDefaultCurrenciesAction > Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation()
             ));

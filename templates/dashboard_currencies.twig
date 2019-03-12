@@ -10,6 +10,7 @@
   var save_default_currencies_action_url = "{{ path('dashboard_save_default_currencies_action') }}";
   var html = new String;
   var text_currency_code = "{{ translation.dashboard.currencies.text_currency_code }}";
+  var text_currency_symbol = "{{ translation.dashboard.currencies.text_currency_symbol }}";
   var button_edit_currency = "{{ translation.dashboard.currencies.button_edit_currency }}";
   var button_delete_currency = "{{ translation.dashboard.currencies.button_delete_currency }}";
   var alert_add_currency = "{{ translation.dashboard.currencies.alert_add_currency }}";
@@ -156,21 +157,6 @@
         </div>
       </div>
 
-      <div class="col s12 m12 l12 xl12">
-        <div class="input-field">
-          <select id="input_default_dashboard_currency" name="input_dashboard_currency">
-            {% for currency in currencies %}
-              {% if currency.dashboard_selected == true %}
-                <option value="{{ currency.id }}" selected>{{ currency.name }}</option>
-              {% else %}
-                <option value="{{ currency.id }}">{{ currency.name }}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
-          <label>{{ translation.dashboard.currencies.input_dashboard_currency }}</label>
-        </div>
-      </div>
-
       <div class="col s12 m12 l12 xl12 center">
         <div class="input-field">
           <a class="btn btn-large green white-text clickable" id="button_save_default_currencies">{{ translation.dashboard.currencies.button_save_defaults }}</a>
@@ -200,23 +186,22 @@
     }
   });
 
+  $('#button_save_currency').on('click', function() {
+    var form = serializeForm();
+    if (form.name.length >= 2 && form.code.length >= 2 && form.symbol.length >= 1) {
+      editCurrency(form);
+    } else {
+      elegant_alert.warning("{{ translation.dashboard.currencies.warning_input_form }}");
+    }
+  });
+
   $('#button_save_default_currencies').on('click', function() {
     var form = {
-      'store': $('#input_default_store_currency').val(),
-      'dashboard': $('#input_default_dashboard_currency').val()
+      'store': $('#input_default_store_currency').val()
     };
 
     saveDefaultCurrencies(form);
 
     delete form;
-  });
-
-  $('#button_save_currency').on('click', function() {
-    var form = serializeForm();
-    if (form.name.length >= 2 && form.code.length == 2) {
-      editCurrency(form);
-    } else {
-      elegant_alert.warning("{{ translation.dashboard.currencies.warning_input_form }}");
-    }
   });
 {% endblock %}

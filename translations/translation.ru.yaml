@@ -168,7 +168,7 @@ dashboard:
     tab_defaults:                  'Настройки'
     text_currencies_missing:       'В базе данных отсутствуют валюты. Обязательно создайте хоть одну новую и выберите её в настройках. Для добавления новых воспользуйтесь формой.'
     text_currency_code:            'Код валюты: '
-    text_currency_symbol:          'Символ'
+    text_currency_symbol:          'Символ: '
     form_title_add_currency:       'Добавить новую валюту'
     form_title_edit_currency:      'Изменить валюту'
     input_currency_name:           'Название'
