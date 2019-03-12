@@ -3,13 +3,14 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-/* ============= Запросы и ответы =============== */
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/* =============== Локализация ====================== */
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
+
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 
 /* ==================== Include entities ================== */
@@ -58,10 +59,23 @@ class MainController extends Controller
     {
         $settings_file_path = $this->getSettingsFilePath();
 
+        // проверка наличия файла настроек и копирование dist файла
+        $fileSystem = new Filesystem();
+        $dist_settings_file_path = $this->getAppDir() . '/config/settings.dist.yaml';
+        if (!$fileSystem->exists($settings_file_path)) {
+          try {
+            $fileSystem->copy($dist_settings_file_path, $settings_file_path, true);
+          } catch (IOExceptionInterface $exception) {
+            $this->writeLog('App/Controller/MainController::getSettings > Error copy file > ' . $exception->getPath());
+            return false;
+          }
+        }
+
         try {
             $settings = Yaml::parseFile($settings_file_path);
         } catch (ParseException $exception) {
             $this->writeLog('App/Controller/MainController::getSettings [' . 'Unable to parse the YAML string: ' . $exception->getMessage() . ']');
+            return false;
         }
 
         return $settings;
@@ -85,7 +99,7 @@ class MainController extends Controller
 
         return true;
       } else {
-          $this->writeLog("App/Controller/MainController::saveSettings Authorization Error");
+          $this->writeLog("App/Controller/MainController::saveSettings > Authorization Error");
           return $this->render('error_access.twig', array(
             'translation' => $this->getTranslation()
           ));
@@ -194,9 +208,9 @@ class MainController extends Controller
           $currency_id = $currency->getCurrencyId();
 
           $currencies[$currency_id] = array(
-            'id' => $currency->getLanguageId(),
-            'name' => $currency->getLanguageName(),
-            'code' => $currency->getLanguageCode(),
+            'id' => $currency->getCurrencyId(),
+            'name' => $currency->getCurrencyName(),
+            'code' => $currency->getCurrencyCode(),
             'symbol' => $currency->getCurrencySymbol()
           );
 
