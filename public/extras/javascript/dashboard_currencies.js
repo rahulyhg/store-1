@@ -35,6 +35,7 @@ function serializeForm() {
     'id': $('#input_currency_id').val(),
     'name': $('#input_currency_name').val(),
     'code': $('#input_currency_code').val(),
+    'symbol': $('#input_currency_symbol').val()
   };
   return form;
 }
@@ -49,6 +50,7 @@ function clearForm() {
   $('#input_currency_id').val(null);
   $('#input_currency_name').val(null);
   $('#input_currency_code').val(null);
+  $('#input_currency_symbol').val(null);
 
   M.updateTextFields();
 
@@ -93,7 +95,7 @@ function getCurrencies() {
     },
     error: function(xhr) {
       elegant_alert.error(error_get_currencies);
-      writeLog('Dashboard/JS/Currency: Error Get Currencies');
+      writeLog('App/Javascript/DasboardCurrencies::getCurrencies Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
@@ -163,7 +165,9 @@ function addCurrency(form) {
     },
     success: function(response) {
       if (response.result == true) {
+        elegant_alert.success(alert_add_currency);
         location.reload(false);
+        
         /*clearForm();
 
         var el = document.getElementById("currencies_tabs");
@@ -171,7 +175,6 @@ function addCurrency(form) {
         instance.select('tab_currencies');
 
         getCurrencies();*/
-        elegant_alert.success(alert_add_currency);
       } else {
         elegant_alert.error(error_add_currency);
       }
@@ -181,7 +184,7 @@ function addCurrency(form) {
     },
     error: function(xhr) {
       elegant_alert.error(error_add_currency);
-      writeLog('Dashboard/JS/Currency: Error Add Currency');
+      writeLog('App/Javascript/DashboardCurrencies::addCurrency > Ajax Error > ' + JSON.stringify(xhr));
     }
   });
 }
