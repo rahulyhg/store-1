@@ -200,25 +200,6 @@ class DashboardCurrenciesController extends MainDashboardController
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
             $form = $request->request->get('form');
 
-            // Написать метод сохранения настроек и использовать его тут
-
-            /*$settings_file_path = $this->getAppDir() . '/config/settings.yaml';
-
-            try {
-                $settings = Yaml::parseFile($settings_file_path);
-                $old_currency = (int) $settings['dashboard_currency'];
-
-                $settings['dashboard_currency'] = (int) $form['dashboard'];
-                $settings['store_currency'] = (int) $form['store'];
-
-                $yaml = Yaml::dump($settings);
-                file_put_contents($settings_file_path, $yaml);
-            } catch (ParseException $exception) {
-                $this->writeLog('App/Controller/DashboardCurrenciesController::saveDefaultCurrenciesAction Unable to parse the YAML string: ' . $exception->getMessage());
-                $result['error'] = 'Unable to parse the YAML string: ' . $exception->getMessage();
-                $result['result'] = false;
-            }*/
-
             $settings = $this->getSettings();
             $settings['store_currency'] = (int) $form['store'];
             $this->saveSettings($settings);
