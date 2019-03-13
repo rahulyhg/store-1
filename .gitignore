@@ -18,9 +18,10 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-###> Config Settings ###
+###> Config Settings and Styles ###
 /config/settings.yaml
-###< Config Settings ###
+/config/styles.yaml
+###< Config Settings and Styles ###
 
 ###> Images cache ###
 /public/images/products/*

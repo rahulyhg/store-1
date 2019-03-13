@@ -107,6 +107,12 @@ dashboard_save_images_action:
   path: /dashboard/settings/images/save_images_action
   controller: App\Controller\DashboardImagesController::saveImagesAction
 
+### DASHBOARD STYLES
+dashboard_styles:
+  path: /dashboard/settings/styles
+  controller: App\Controller\DashboardStylesController::renderDashboardStylesTemplateAction
+
+
 ### DASHBOARD LANGUAGES
 dashboard_languages:
   path: /dashboard/settings/languages

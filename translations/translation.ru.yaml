@@ -91,6 +91,7 @@ dashboard:
     page_title:                    'Настройки магазина'
     link_general_settings:         'Основные настройки'
     link_dashboard_images:         'Логотипы магазина'
+    link_dashboard_styles:         'Стиль магазина'
     link_dashboard_meta:           'Meta-данные магазина'
     link_dashboard_information:    'Информация для покупателей'
     link_dashboard_languages:      'Управление языками'
@@ -118,6 +119,19 @@ dashboard:
     button_cancel:                 'Отмена'
     waiting_saving_images:         'Сохранение изменений...'
     warning_change_images:         'Изменений не было, сохранять нечего'
+
+  styles:
+    page_title:                    'Стили магазина'
+    back_to_settings:              'Назад в Настройки'
+    page_info_title:               'Информация'
+    page_info:                     'Для того, чтоб изменить цветовую схему магазина вам достаточно всего лишь выбрать нужные цвета элементов сайта. Все цвета должны быть введены в hex формате вида #a4ff58, но при клике на область ввода цвета Вам будут предложена палитра цветов Material Design.'
+    input_header_background:       'Цвет шапки'
+    input_header_text:             'Цвет текста шапки'
+    input_footer_background:       'Цвет футера'
+    input_footer_text:             'Цвет текста футера'
+    title_select_color:            'Выберите цвет'
+    button_select_color:           'Выбрать'
+    button_cancel_color:           'Отмена'
 
   languages:
     page_title:                    'Управление языками'

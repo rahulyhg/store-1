@@ -1,0 +1,73 @@
+{# DASHBOARD STYLES TEMPLATE #}
+
+{% extends 'main_dashboard.twig' %}
+
+{% block init %}
+  var input;
+{% endblock %}
+
+{% block include %}
+  <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_styles.js') }}"></script>
+{% endblock %}
+
+{% block header %}
+  <h5 class="center">{{ translation.dashboard.styles.page_title }}</h5>
+  <div class="col s12 m12 l12 xl12">
+    <div class="collection">
+      <a class="collection-item" href="{{ path('dashboard_settings') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.styles.back_to_settings }}</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block main %}
+  <div class="col s12 m12 l12 xl12">
+    <ul class="collapsible">
+      <li>
+        <div class="collapsible-header"><i class="material-icons left">info</i>{{ translation.dashboard.styles.page_info_title }}</div>
+        <div class="collapsible-body"><p>{{ translation.dashboard.styles.page_info }}</p></div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col s12 m12 l12 xl12">
+    <div class="input-field">
+      <input type="text" id="input_header_background" onclick="openColorsPalette($(this));" value="" />
+      <label for="input_header_background">{{ translation.dashboard.styles.input_header_background }}</label>
+    </div>
+  </div>
+  <div class="col s12 m12 l12 xl12">
+    <div class="input-field">
+      <input type="text" id="input_header_text" value="" />
+      <label for="input_header_text">{{ translation.dashboard.styles.input_header_text }}</label>
+    </div>
+  </div>
+  <div class="col s12 m12 l12 xl12">
+    <div class="input-field">
+      <input type="text" id="input_footer_background" value="" />
+      <label for="input_footer_background">{{ translation.dashboard.styles.input_footer_background }}</label>
+    </div>
+  </div>
+  <div class="col s12 m12 l12 xl12">
+    <div class="input-field">
+      <input type="text" id="input_footer_text" value="" />
+      <label for="input_footer_text">{{ translation.dashboard.styles.input_footer_text }}</label>
+    </div>
+  </div>
+{% endblock %}
+
+{% block modules %}
+  <div id="modal_colors_palette" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h5 class="center">{{ translation.dashboard.styles.title_select_color }}</h5>
+      <div class="valign-wrapper red white-text" style="margin-bottom: 5px; padding-left: 5px; height: 40px;" color="#swe2dsdf" onclick="preselectColor($(this));">Red text</div>
+    </div>
+    <div class="modal-footer">
+      <a class="clickable waves-effect waves-green btn-flat">{{ translation.dashboard.styles.button_select_color }}</a>
+      <a class="clickable modal-close waves-effect waves-red btn-flat">{{ translation.dashboard.styles.button_cancel_color }}</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
