@@ -22,9 +22,16 @@
 	<script type="text/javascript" src="{{ asset ('extras/javascript/dashboard_users.js') }}"></script>
 {% endblock %}
 
-{% block main %}
+{% block header %}
 	<h5 class="center">{{ translation.dashboard.users.page_title }}</h5>
+	<div class="col s12 m12 l12 xl12">
+		<div class="collection">
+			<a class="collection-item" href="{{ path('dashboard_settings') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.users.back_to_settings }}</a>
+		</div>
+	</div>
+{% endblock %}
 
+{% block main %}
 	<div id="users_content"></div>
 {% endblock %}
 

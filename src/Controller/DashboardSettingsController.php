@@ -14,11 +14,11 @@ class DashboardSettingsController extends MainDashboardController
     /* ##################################################################################### */
     // SETTINGS MAIN TEMPLATE
     /* ##################################################################################### */
-    public function renderDashboardSettingsMainTemplateAction()
+    public function renderDashboardSettingsTemplateAction()
     {
         if ($this->checkAuthorization() == true) {
           $request = Request::createFromGlobals();
-          return $this->render('dashboard_settings_main.twig', array(
+          return $this->render('dashboard_settings.twig', array(
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),
               'profile' => $this->getProfile($request->cookies->get('user_id')),
@@ -32,55 +32,18 @@ class DashboardSettingsController extends MainDashboardController
     }
 
     /* ##################################################################################### */
-    // SETTINGS GENERAL TEMPLATE
+    // Возвращает количество логов в БД для отображения в бадже collection
     /* ##################################################################################### */
-    public function renderDashboardSettingsGeneralTemplateAction()
+    public function getLogsCountAction(Request $request)
     {
         if ($this->checkAuthorization() == true) {
-          $request = Request::createFromGlobals();
-          return $this->render('dashboard_settings_general.twig', array(
-              'translation' => $this->getTranslation(),
-              'authorization' => $this->checkAuthorization(),
-              'profile' => $this->getProfile($request->cookies->get('user_id')),
-          ));
-        } else {
-            return $this->render('dashboard_authorization.twig', array(
-              'translation' => $this->getTranslation(),
-              'authorization' => $this->checkAuthorization(),
-          ));
-        }
-    }
 
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    public function saveSettingsAction(Request $request)
-    {
-        if ($this->checkAuthorization() == true) {
-          // yaml
 
         } else {
             return $this->render('dashboard_authorization.twig', [
               'translation' => $this->getTranslation(),
-              'authorization' => $this->checkAuthorization(),
             ]);
         }
-    }
-
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    public function saveStorePaginationStepAction(Request $request)
-    {
-      if ($this->checkAuthorization() == true) {
-
-
-      } else {
-          $this->writeLog('App/Controller/DashboardSettingsController::saveStorePaginationStepAction > Authorization Error');
-          return $this->render('dashboard_authorization.twig', [
-            'translation' => $this->getTranslation(),
-          ]);
-      }
     }
 
 }

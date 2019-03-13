@@ -33,14 +33,18 @@
 
 {% block header %}
   <h5 class="center">{{ translation.dashboard.scripts.page_title }}</h5>
-
+  <div class="col s12 m12 l12 xl12">
+		<div class="collection">
+			<a class="collection-item" href="{{ path('dashboard_settings') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.scripts.back_to_settings }}</a>
+		</div>
+	</div>
 {% endblock %}
 
 {% block main %}
   <div class="col s12 m12 l12">
     <ul class="tabs" id="scripts_tabs">
-      <li class="tab col s6 m6 l6"><a href="#tab_form">{{ translation.dashboard.scripts.tab_form }}</a></li>
       <li class="tab col s6 m6 l6"><a class="active" href="#tab_scripts">{{ translation.dashboard.scripts.tab_scripts }}</a></li>
+      <li class="tab col s6 m6 l6"><a href="#tab_form">{{ translation.dashboard.scripts.tab_form }}</a></li>
     </ul>
   </div>
 

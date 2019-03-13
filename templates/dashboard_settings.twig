@@ -1,0 +1,27 @@
+{# DASHBOARD SETTINGS TEMPLATE #}
+
+{% extends 'main_dashboard.twig' %}
+
+{% block include %}
+  <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_settings.js') }}"></script>
+{% endblock %}
+
+{% block header %}
+  <div class="col s12 m12 l12 xl12">
+    <h5 class="center">{{ translation.dashboard.settings.page_title }}</h5>
+  </div>
+{% endblock %}
+
+{% block main %}
+  <div class="collection">
+    <a class="collection-item" href="{{ path('dashboard_images') }}"><i class="material-icons left">photo_library</i>{{ translation.dashboard.settings.link_dashboard_images }}</a>
+    <a class="collection-item" href="{{ path('dashboard_languages') }}"><i class="material-icons left">language</i>{{ translation.dashboard.settings.link_dashboard_languages }}</a>
+    <a class="collection-item" href="{{ path('dashboard_currencies') }}"><i class="material-icons left">attach_money</i>{{ translation.dashboard.settings.link_dashboard_currencies }}</a>
+    <a class="collection-item" href="{{ path('dashboard_meta') }}"><i class="material-icons left">code</i>{{ translation.dashboard.settings.link_dashboard_meta }}</a>
+    <a class="collection-item" href="{{ path('dashboard_information') }}"><i class="material-icons left">info</i>{{ translation.dashboard.settings.link_dashboard_information }}</a>
+    <a class="collection-item" href="{{ path('dashboard_users') }}"><i class="material-icons left">supervisor_account</i>{{ translation.dashboard.settings.link_dashboard_users }}</a>
+    <a class="collection-item" href="{{ path('dashboard_scripts') }}"><i class="material-icons left">assessment</i>{{ translation.dashboard.settings.link_dashboard_scripts }}</a>
+    <a class="collection-item" href="{{ path('dashboard_modules') }}"><i class="material-icons left">extension</i>{{ translation.dashboard.settings.link_dashboard_modules }}</a>
+    <a class="collection-item" href="{{ path('dashboard_logs') }}"><i class="material-icons left">list</i>{{ translation.dashboard.settings.link_dashboard_logs }}</a>
+  </div>
+{% endblock %}

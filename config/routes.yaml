@@ -89,15 +89,9 @@ dashboard_delete_user_action:
   controller: App\Controller\DashboardUsersController::deleteUserAction
 
 ### SETTINGS
-dashboard_settings_main:
+dashboard_settings:
   path: /dashboard/settings
-  controller: App\Controller\DashboardSettingsController::renderDashboardSettingsMainTemplateAction
-dashboard_settings_general:
-  path: /dashboard/settings/general
-  controller: App\Controller\DashboardSettingsController::renderDashboardSettingsGeneralTemplateAction
-dashboard_save_general_settings_action:
-  path: /dashboard/settings/general/save_general_settings_action
-  controller: App\Controller\DashboardSettingsController::saveGeneralSettingsAction
+  controller: App\Controller\DashboardSettingsController::renderDashboardSettingsTemplateAction
 
 ### DASHBOARD IMAGES
 dashboard_images:
