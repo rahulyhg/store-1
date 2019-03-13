@@ -99,11 +99,8 @@ dashboard:
     link_dashboard_scripts:        'Скрипты'
     link_dashboard_modules:        'Модули'
     link_dashboard_logs:           'Логирование ошибок'
-
-  settings_general:
-    page_title:                    'Основные настройки'
-    back_to_settings:              'Назад в Настройки'
-
+    warning_check_logs:            'Проверьте логи'
+    error_get_logs_count:          'Ошибка получения количества записей логов'
 
   images:
     page_title:                    'Логотипы магазина'

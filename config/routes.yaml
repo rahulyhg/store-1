@@ -92,6 +92,9 @@ dashboard_delete_user_action:
 dashboard_settings:
   path: /dashboard/settings
   controller: App\Controller\DashboardSettingsController::renderDashboardSettingsTemplateAction
+dashboard_get_logs_count_action:
+  path: /dashboard/settings/get_logs_count_action
+  controller: App\Controller\DashboardSettingsController::getLogsCountAction
 
 ### DASHBOARD IMAGES
 dashboard_images:

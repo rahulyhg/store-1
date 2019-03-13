@@ -4,10 +4,8 @@ namespace App\Controller;
 use App\Controller\MainDashboardController;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
-use App\Entity\CommonSettings;
+use Symfony\Component\HttpFoundation\JsonResponse;
+//use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class DashboardSettingsController extends MainDashboardController
 {
@@ -37,7 +35,12 @@ class DashboardSettingsController extends MainDashboardController
     public function getLogsCountAction(Request $request)
     {
         if ($this->checkAuthorization() == true) {
+          $logs_repository = $this->getDoctrine()->getRepository('App:CommonLogs');
+          $logs_object = $logs_repository->findAll();
 
+          $result['count'] = count($logs_object);
+
+          return new JsonResponse($result);
 
         } else {
             return $this->render('dashboard_authorization.twig', [
