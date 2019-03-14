@@ -4,10 +4,13 @@
 
 {% block init %}
   var input;
+  var preview;
+  var selected_color;
 {% endblock %}
 
 {% block include %}
   <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_styles.js') }}"></script>
+  <link rel="stylesheet" href="{{ asset('extras/stylesheet/dashboard_styles.css') }}"/>
 {% endblock %}
 
 {% block header %}
@@ -17,9 +20,6 @@
       <a class="collection-item" href="{{ path('dashboard_settings') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.styles.back_to_settings }}</a>
     </div>
   </div>
-{% endblock %}
-
-{% block main %}
   <div class="col s12 m12 l12 xl12">
     <ul class="collapsible">
       <li>
@@ -28,13 +28,26 @@
       </li>
     </ul>
   </div>
+{% endblock %}
 
-  <div class="col s12 m12 l12 xl12">
-    <div class="input-field">
-      <input type="text" id="input_header_background" onclick="openColorsPalette($(this));" value="" />
-      <label for="input_header_background">{{ translation.dashboard.styles.input_header_background }}</label>
+{% block main %}
+  <div class="col s12 m12 l12 xl12" id="card_header_background">
+    <div class="card hoverable">
+      <div class="card-content">
+        <h6>{{ translation.dashboard.styles.title_header_background }}</h6>
+        <div class="input-field">
+          <input type="text" id="input_header_background" value="" />
+          <label for="input_header_background">{{ translation.dashboard.styles.input_header_background }}</label>
+        </div>
+        <div class="input-field preview-selected-color valign-wrapper z-depth-5" id="preview_background_color" style="background-color: #aaff55;"></div>
+      </div>
+      <div class="card-action">
+        <a class="clickable button-colors-palette" element="card_header_background"><i class="material-icons left">color_lens</i>{{ translation.dashboard.styles.button_colors_palette }}</a>
+      </div>
     </div>
   </div>
+
+
   <div class="col s12 m12 l12 xl12">
     <div class="input-field">
       <input type="text" id="input_header_text" value="" />
@@ -58,16 +71,96 @@
 {% block modules %}
   <div id="modal_colors_palette" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <h5 class="center">{{ translation.dashboard.styles.title_select_color }}</h5>
-      <div class="valign-wrapper red white-text" style="margin-bottom: 5px; padding-left: 5px; height: 40px;" color="#swe2dsdf" onclick="preselectColor($(this));">Red text</div>
+      <div class="valign-wrapper color-palette red lighten-5 white-text" onclick="preselectColor('#ffebee'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red lighten-4 white-text" onclick="preselectColor('#ffcdd2'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red lighten-3 white-text" onclick="preselectColor('#ef9a9a'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red lighten-2 white-text" onclick="preselectColor('#e57373'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red lighten-1 white-text" onclick="preselectColor('#ef5350'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red white-text" onclick="preselectColor('#f44336'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red darken-1 white-text" onclick="preselectColor('#e53935'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red darken-2 white-text" onclick="preselectColor('#d32f2f'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red darken-3 white-text" onclick="preselectColor('#c62828'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red darken-4 white-text" onclick="preselectColor('#b71c1c'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red accent-1 white-text" onclick="preselectColor('#ff8a80'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red accent-2 white-text" onclick="preselectColor('#ff5252'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red accent-3 white-text" onclick="preselectColor('#ff1744'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette red accent-4 white-text" onclick="preselectColor('#d50000'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+
+      <div class="valign-wrapper color-palette pink lighten-5 white-text" onclick="preselectColor('#fce4ec'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink lighten-4 white-text" onclick="preselectColor('#f8bbd0'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink lighten-3 white-text" onclick="preselectColor('#f48fb1'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink lighten-2 white-text" onclick="preselectColor('#e57373'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink lighten-1 white-text" onclick="preselectColor('#ec407a'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink white-text" onclick="preselectColor('#e91e63'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink darken-1 white-text" onclick="preselectColor('#d81b60'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink darken-2 white-text" onclick="preselectColor('#c2185b'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink darken-3 white-text" onclick="preselectColor('#ad1457'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink darken-4 white-text" onclick="preselectColor('#880e4f'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink accent-1 white-text" onclick="preselectColor('#ff80ab'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink accent-2 white-text" onclick="preselectColor('#ff4081'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink accent-3 white-text" onclick="preselectColor('#f50057'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette pink accent-4 white-text" onclick="preselectColor('#c51162'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+
+      <div class="valign-wrapper color-palette purple lighten-5 white-text" onclick="preselectColor('#f3e5f5'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple lighten-4 white-text" onclick="preselectColor('#e1bee7'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple lighten-3 white-text" onclick="preselectColor('#ce93d8'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple lighten-2 white-text" onclick="preselectColor('#ba68c8'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple lighten-1 white-text" onclick="preselectColor('#ab47bc'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple white-text" onclick="preselectColor('#9c27b0'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple darken-1 white-text" onclick="preselectColor('#8e24aa'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple darken-2 white-text" onclick="preselectColor('#7b1fa2'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple darken-3 white-text" onclick="preselectColor('#6a1b9a'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple darken-4 white-text" onclick="preselectColor('#4a148c'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple accent-1 white-text" onclick="preselectColor('#ea80fc'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple accent-2 white-text" onclick="preselectColor('#e040fb'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple accent-3 white-text" onclick="preselectColor('#d500f9'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette purple accent-4 white-text" onclick="preselectColor('#aa00ff'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+
+      <div class="valign-wrapper color-palette deep-purple lighten-5 white-text" onclick="preselectColor('#ede7f6'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple lighten-4 white-text" onclick="preselectColor('#d1c4e9'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple lighten-3 white-text" onclick="preselectColor('#b39ddb'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple lighten-2 white-text" onclick="preselectColor('#9575cd'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple lighten-1 white-text" onclick="preselectColor('#7e57c2'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple white-text" onclick="preselectColor('#673ab7'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple darken-1 white-text" onclick="preselectColor('#5e35b1'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple darken-2 white-text" onclick="preselectColor('#512da8'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple darken-3 white-text" onclick="preselectColor('#4527a0'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple darken-4 white-text" onclick="preselectColor('#311b92'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple accent-1 white-text" onclick="preselectColor('#b388ff'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple accent-2 white-text" onclick="preselectColor('#7c4dff'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple accent-3 white-text" onclick="preselectColor('#651fff'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+      <div class="valign-wrapper color-palette deep-purple accent-4 white-text" onclick="preselectColor('#6200ea'); unselectColors(); $(this).addClass('z-depth-5');"></div>
+
     </div>
     <div class="modal-footer">
-      <a class="clickable waves-effect waves-green btn-flat">{{ translation.dashboard.styles.button_select_color }}</a>
-      <a class="clickable modal-close waves-effect waves-red btn-flat">{{ translation.dashboard.styles.button_cancel_color }}</a>
+      <a class="clickable waves-effect waves-green btn-flat" id="button_select_color">{{ translation.dashboard.styles.button_select_color }}</a>
+      <a class="clickable modal-close waves-effect waves-red btn-flat">{{ translation.dashboard.styles.button_close }}</a>
     </div>
   </div>
 {% endblock %}
 
 {% block javascript %}
+  $('#button_select_color').on('click', function(){
+    input.value = selected_color;
+    preview.style.backgroundColor = selected_color;
+    M.updateTextFields();
+  });
 
+  /*$('.button-colors-palette').on('click', function() {
+    var element = $(this).attr('element');
+    $('#' + element).find('input').val('test');
+    M.updateTextFields();
+    //elegant_alert.success(qwer);
+  });*/
+
+  $('#card_header_background').find('.button-colors-palette').on('click', function() {
+    input = $('#card_header_background').find('input')[0];
+    preview = $('#card_header_background').find('.preview-selected-color')[0];
+    openColorsPalette();
+  });
+  $('#input_header_background').on('change', function() {
+    preview = $('#card_header_background').find('.preview-selected-color')[0];
+    var input_value = $(this).val();
+    preview.style.backgroundColor = input_value;
+  });
 {% endblock %}
