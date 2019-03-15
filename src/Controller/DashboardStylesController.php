@@ -27,6 +27,7 @@ class DashboardStylesController extends MainDashboardController
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),
               'profile' => $this->getProfile($user_id),
+              'colors' => $this->getStyleColors(),
             ));
         } else {
             return $this->render('dashboard_authorization.twig', array(
@@ -34,6 +35,30 @@ class DashboardStylesController extends MainDashboardController
               'authorization' => $this->checkAuthorization(),
             ));
         }
+    }
+
+    /* ##################################################################################### */
+    //
+    /* ##################################################################################### */
+    private function getStyleColors()
+    {
+      $colors_file_path = $this->getAppDir() . 'config/colors.yaml';
+      try {
+          $colors = Yaml::parseFile($colors_file_path);
+      } catch (ParseException $exception) {
+          $this->writeLog('App/Controller/DashboardStylesController::getStyleColors > ParseException > ' . $exception->getMessage());
+          return false;
+      }
+
+      foreach ($colors as $color_code => $color_name) {
+        $palette[] = [
+          'name' => $color_name,
+          'code' => $color_code
+        ];
+      }
+
+      return $palette;
+
     }
 
     /* ##################################################################################### */
