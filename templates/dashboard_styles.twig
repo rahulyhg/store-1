@@ -11,6 +11,8 @@
 {% block include %}
   <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_styles.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('extras/stylesheet/dashboard_styles.css') }}"/>
+
+  <script type="text/javascript" src="{{ asset('library/javascript/clipboard.js') }}"></script>
 {% endblock %}
 
 {% block header %}
@@ -31,72 +33,24 @@
 {% endblock %}
 
 {% block main %}
-  <div class="col s12 m12 l12 xl12" id="card_header_background">
-    <div class="card hoverable">
-      <div class="card-content">
-        <h6>{{ translation.dashboard.styles.title_header_background }}</h6>
-        <div class="input-field preview-selected-color valign-wrapper z-depth-5" style="background-color: #aaff55;"></div>
-        <div class="input-field">
-          <input type="text" id="input_header_background" value="" />
-          <label for="input_header_background">{{ translation.dashboard.styles.input_header_background }}</label>
-        </div>
-      </div>
-      <div class="card-action">
-        <a class="clickable button-colors-palette"><i class="material-icons left">color_lens</i>{{ translation.dashboard.styles.button_colors_palette }}</a>
+  <div id="header_background">
+    <div class="col s10 push-s2">
+      <div class="input-field">
+        <input type="text" id="input_header_background" value="" />
+        <label fore="input_header_background">Header background</label>
       </div>
     </div>
-  </div>
-
-  <div class="col s12 m12 l12 xl12" id="card_header_text">
-    <div class="card hoverable">
-      <div class="card-content">
-        <h6>{{ translation.dashboard.styles.title_header_text }}</h6>
-        <div class="input-field preview-selected-color valign-wrapper z-depth-5" style="background-color: #aaff55;"></div>
-        <div class="input-field">
-          <input type="text" id="input_header_text" value="" />
-          <label for="input_header_text">{{ translation.dashboard.styles.input_header_text }}</label>
-        </div>
-      </div>
-      <div class="card-action">
-        <a class="clickable button-colors-palette"><i class="material-icons left">color_lens</i>{{ translation.dashboard.styles.button_colors_palette }}</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="col s12 m12 l12 xl12" id="card_footer_background">
-    <div class="card hoverable">
-      <div class="card-content">
-        <h6>{{ translation.dashboard.styles.title_footer_background }}</h6>
-        <div class="input-field preview-selected-color valign-wrapper z-depth-5" style="background-color: #aaff55;"></div>
-        <div class="input-field">
-          <input type="text" id="input_footer_background" value="" />
-          <label for="input_footer_background">{{ translation.dashboard.styles.input_footer_background }}</label>
-        </div>
-      </div>
-      <div class="card-action">
-        <a class="clickable button-colors-palette"><i class="material-icons left">color_lens</i>{{ translation.dashboard.styles.button_colors_palette }}</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="col s12 m12 l12 xl12" id="card_footer_text">
-    <div class="card hoverable">
-      <div class="card-content">
-        <h6>{{ translation.dashboard.styles.title_footer_text }}</h6>
-        <div class="input-field preview-selected-color valign-wrapper z-depth-5" style="background-color: #aaff55;"></div>
-        <div class="input-field">
-          <input type="text" id="input_footer_text" value="" />
-          <label for="input_footer_text">{{ translation.dashboard.styles.input_footer_text }}</label>
-        </div>
-      </div>
-      <div class="card-action">
-        <a class="clickable button-colors-palette"><i class="material-icons left">color_lens</i>{{ translation.dashboard.styles.button_colors_palette }}</a>
+    <div class="col s2 pull-s10">
+      <div class="input-field">
+        <a class="btn btn-large clickable white-text"><i class="material-icons">done_all</i></a>
       </div>
     </div>
   </div>
 {% endblock %}
 
 {% block modules %}
+  <input type="hidden" id="input_clipboard" value="" />
+
   <div id="modal_colors_palette" class="modal modal-fixed-footer">
     <div class="modal-content">
       {% for color in colors %}
@@ -104,21 +58,54 @@
       {% endfor %}
     </div>
     <div class="modal-footer">
-      <a class="clickable waves-effect waves-green btn-flat" id="button_select_color">{{ translation.dashboard.styles.button_select_color }}</a>
+      <a class="clickable waves-effect waves-blue btn-flat left" id="button_copy_to_clipboard"><i class="material-icons left">file_copy</i><span id="field_color_code">#000000</span></a>
       <a class="clickable modal-close waves-effect waves-red btn-flat">{{ translation.dashboard.styles.button_close }}</a>
     </div>
+  </div>
+
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large cyan accent-4" id="button_colors_palette">
+      <i class="large material-icons">palette</i>
+    </a>
   </div>
 {% endblock %}
 
 {% block javascript %}
-  $('#button_select_color').on('click', function(){
+  /* ========== INIT CLIPBOARD ========= */
+  var clipboard = new ClipboardJS('#button_copy_to_clipboard', {
+    text: function() {
+        //console.log(document.getElementById('input_clipboard').value);
+        return document.getElementById('input_clipboard').value;
+    }
+  });
+
+  clipboard.on('success', function(e) {
+    console.log('Success');
+    console.log(e);
+  });
+  clipboard.on('error', function(e) {
+    console.log('Error');
+    console.log(e);
+  });
+
+  /* ========== PALETTE ========= */
+  $('.fixed-action-btn').floatingActionButton();
+
+  $('#button_colors_palette').on('click', function() {
+    var elem = $('#modal_colors_palette');
+    var instance = M.Modal.getInstance(elem);
+    instance.open();
+  });
+
+  /* ============================== */
+  /*$('#button_select_color').on('click', function(){
     input.value = selected_color;
     preview.style.backgroundColor = selected_color;
     M.updateTextFields();
-  });
+  });*/
 
   /* ========== HEADER BACKGROUND ========== */
-  $('#card_header_background').find('.button-colors-palette').on('click', function() {
+  /*$('#card_header_background').find('.button-colors-palette').on('click', function() {
     input = $('#card_header_background').find('input')[0];
     preview = $('#card_header_background').find('.preview-selected-color')[0];
     openColorsPalette();
@@ -127,41 +114,6 @@
     preview = $('#card_header_background').find('.preview-selected-color')[0];
     var input_value = $(this).val();
     preview.style.backgroundColor = input_value;
-  });
+  });*/
 
-  /* ========== HEADER TEXT ========== */
-  $('#card_header_text').find('.button-colors-palette').on('click', function() {
-    input = $('#card_header_text').find('input')[0];
-    preview = $('#card_header_text').find('.preview-selected-color')[0];
-    openColorsPalette();
-  });
-  $('#input_header_text').on('change', function() {
-    preview = $('#card_header_text').find('.preview-selected-color')[0];
-    var input_value = $(this).val();
-    preview.style.backgroundColor = input_value;
-  });
-
-  /* ========== FOOTER BACKGROUND ========== */
-  $('#card_footer_background').find('.button-colors-palette').on('click', function() {
-    input = $('#card_footer_background').find('input')[0];
-    preview = $('#card_footer_background').find('.preview-selected-color')[0];
-    openColorsPalette();
-  });
-  $('#input_footer_background').on('change', function() {
-    preview = $('#card_footer_background').find('.preview-selected-color')[0];
-    var input_value = $(this).val();
-    preview.style.backgroundColor = input_value;
-  });
-
-  /* ========== FOOTER TEXT ========== */
-  $('#card_footer_text').find('.button-colors-palette').on('click', function() {
-    input = $('#card_footer_text').find('input')[0];
-    preview = $('#card_footer_text').find('.preview-selected-color')[0];
-    openColorsPalette();
-  });
-  $('#input_footer_text').on('change', function() {
-    preview = $('#card_footer_text').find('.preview-selected-color')[0];
-    var input_value = $(this).val();
-    preview.style.backgroundColor = input_value;
-  });
 {% endblock %}

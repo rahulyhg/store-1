@@ -1,14 +1,10 @@
 /* ##################################################################################### */
 //
 /* ##################################################################################### */
-function openColorsPalette() {
-  var elem = $('#modal_colors_palette');
-  var instance = M.Modal.getInstance(elem);
-  instance.open();
-}
-
 function preselectColor(color) {
-  selected_color = color;
+  //selected_color = color;
+  $('#input_clipboard').val(color);
+  $('#field_color_code').text(color);
 }
 
 function unselectColors() {
