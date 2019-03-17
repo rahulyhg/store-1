@@ -6,13 +6,14 @@
   var input;
   var preview;
   var selected_color;
+  var colors_palette;
 {% endblock %}
 
 {% block include %}
   <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_styles.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('extras/stylesheet/dashboard_styles.css') }}"/>
 
-  <script type="text/javascript" src="{{ asset('library/javascript/clipboard.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('library/javascript/clipboard.min.js') }}"></script>
 {% endblock %}
 
 {% block header %}
@@ -33,24 +34,23 @@
 {% endblock %}
 
 {% block main %}
-  <div id="header_background">
-    <div class="col s10 push-s2">
-      <div class="input-field">
-        <input type="text" id="input_header_background" value="" />
-        <label fore="input_header_background">Header background</label>
-      </div>
-    </div>
-    <div class="col s2 pull-s10">
-      <div class="input-field">
-        <a class="btn btn-large clickable white-text"><i class="material-icons">done_all</i></a>
+  <div class="col s12 l12 s12 xl12">
+    <div class="card hoverable">
+      <div class="card-content">
+        <div class="input-field">
+          <input type="text" id="input_header_background" value="" />
+          <label fore="input_header_background">Header background</label>
+        </div>
+        <div class="input-field inline">
+          <a class="btn btn-large clickable white-text" onclick="$('#preview_header_background').attr('style', 'background-color: ' + $('#input_header_background').val() + ';');"><i class="material-icons">done_all</i></a>
+          <div class="preview-selected-color" id="preview_header_background"></div>
+        </div>
       </div>
     </div>
   </div>
 {% endblock %}
 
 {% block modules %}
-  <input type="hidden" id="input_clipboard" value="" />
-
   <div id="modal_colors_palette" class="modal modal-fixed-footer">
     <div class="modal-content">
       {% for color in colors %}
@@ -71,38 +71,25 @@
 {% endblock %}
 
 {% block javascript %}
-  /* ========== INIT CLIPBOARD ========= */
-  var clipboard = new ClipboardJS('#button_copy_to_clipboard', {
-    text: function() {
-        //console.log(document.getElementById('input_clipboard').value);
-        return document.getElementById('input_clipboard').value;
-    }
-  });
-
-  clipboard.on('success', function(e) {
-    console.log('Success');
-    console.log(e);
-  });
-  clipboard.on('error', function(e) {
-    console.log('Error');
-    console.log(e);
-  });
-
-  /* ========== PALETTE ========= */
+  /* ========== COLORS PALETTE AND INIT CLIPBOARD ========= */
   $('.fixed-action-btn').floatingActionButton();
+
+  $('#button_copy_to_clipboard').on('click', function() {
+    colors_palette.close();
+    elegant_alert.success('Clipboard');
+  });
 
   $('#button_colors_palette').on('click', function() {
     var elem = $('#modal_colors_palette');
-    var instance = M.Modal.getInstance(elem);
-    instance.open();
-  });
+    colors_palette = M.Modal.getInstance(elem);
+    colors_palette.open();
 
-  /* ============================== */
-  /*$('#button_select_color').on('click', function(){
-    input.value = selected_color;
-    preview.style.backgroundColor = selected_color;
-    M.updateTextFields();
-  });*/
+    new ClipboardJS('#button_copy_to_clipboard', {
+      text: function() {
+          return selected_color;
+      }
+    });
+  });
 
   /* ========== HEADER BACKGROUND ========== */
   /*$('#card_header_background').find('.button-colors-palette').on('click', function() {

@@ -1,9 +1,8 @@
 /* ##################################################################################### */
-//
+// COLORS PALETTE AND INIT CLIPBOARD
 /* ##################################################################################### */
 function preselectColor(color) {
-  //selected_color = color;
-  $('#input_clipboard').val(color);
+  selected_color = color;
   $('#field_color_code').text(color);
 }
 

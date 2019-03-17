@@ -19,8 +19,8 @@
 ###< symfony/web-server-bundle ###
 
 ###> Config Settings and Styles ###
-/config/settings.yaml
-/config/styles.yaml
+/public/settings/settings.yaml
+/public/styles/styles.yaml
 ###< Config Settings and Styles ###
 
 ###> Images cache ###

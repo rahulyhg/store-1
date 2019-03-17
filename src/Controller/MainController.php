@@ -47,7 +47,7 @@ class MainController extends Controller
     /* ##################################################################################### */
     private function getSettingsFilePath ()
     {
-      $settings_file_path = $this->getAppDir() . '/config/settings.yaml';
+      $settings_file_path = $this->getAppDir() . '/public/settings/settings.yaml';
 
       return $settings_file_path;
     }
@@ -61,7 +61,7 @@ class MainController extends Controller
 
         // проверка наличия файла настроек и копирование dist файла
         $fileSystem = new Filesystem();
-        $dist_settings_file_path = $this->getAppDir() . '/config/settings.dist.yaml';
+        $dist_settings_file_path = $this->getAppDir() . '/public/settings/settings.dist.yaml';
         if (!$fileSystem->exists($settings_file_path)) {
           try {
             $fileSystem->copy($dist_settings_file_path, $settings_file_path, true);

@@ -42,7 +42,7 @@ class DashboardStylesController extends MainDashboardController
     /* ##################################################################################### */
     private function getStyleColors()
     {
-      $colors_file_path = $this->getAppDir() . 'config/colors.yaml';
+      $colors_file_path = $this->getAppDir() . 'public/styles/colors.yaml';
       try {
           $colors = Yaml::parseFile($colors_file_path);
       } catch (ParseException $exception) {
