@@ -4,14 +4,13 @@ namespace App\Controller;
 use App\Controller\MainDashboardController;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Cookie;
+
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
-
-use App\Entity\CommonCurrencies;
 
 class DashboardStylesController extends MainDashboardController
 {
@@ -37,8 +36,15 @@ class DashboardStylesController extends MainDashboardController
         }
     }
 
+    private function getStylesFilePath()
+    {
+      $styles_file_path = $this->getAppDir() . 'public/styles/styles.yaml';
+
+      return $styles_file_path;
+    }
+
     /* ##################################################################################### */
-    //
+    // Возвращает список кодов цветов и их названий для рендера палетки цветов
     /* ##################################################################################### */
     private function getStyleColors()
     {
@@ -64,179 +70,91 @@ class DashboardStylesController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    private function checkCurrencyDependence($currency_id)
+    private function getStyles()
     {
-      $settings = $this->getSettings();
+      $styles_file_path = $this->getStylesFilePath();
+      $dist_styles_file_path = $this->getAppDir() . 'public/styles/styles.dist.yaml';
 
-      $store_currency = (int) $settings['store_currency'];
+      $fileSystem = new Filesystem();
 
-      if ($currency_id == $store_currency) {
-        return true;
+      if (!$fileSystem->exists($styles_file_path)) {
+        try {
+          $fileSystem->copy($dist_styles_file_path, $styles_file_path, true);
+        } catch (IOExceptionInterface $exception) {
+          $this->writeLog('App/Controller/DashboardStylesController::getStyles > Error copy file > ' . $exception->getPath());
+          return false;
+        }
       }
 
-      return false;
+      try {
+          $styles = Yaml::parseFile($styles_file_path);
+      } catch (ParseException $exception) {
+          $this->writeLog('App/Controller/DashboardStylesController::getStyles > ParseException > ' . $exception->getMessage());
+          return false;
+      }
+
+      return $styles;
+    }
+
+    public function getStylesAction(Request $request)
+    {
+      if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
+        $styles = $this->getStyles();
+
+        return new JsonResponse($styles);
+      } else {
+          $this->writeLog("App/Controller/DashboardStylesController::getStylesAction > Authorization Error");
+          return $this->render('error_access.twig', array(
+            'translation' => $this->getTranslation(),
+          ));
+      }
     }
 
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function getCurrenciesAction(Request $request)
+    private function saveStyles($styles)
     {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $common_currencies_repository = $this->getDoctrine()->getRepository('App:CommonCurrencies');
-            $common_currencies_object = $common_currencies_repository->findAll();
+      $styles_file_path = $this->getStylesFilePath();
 
-            if (count($common_currencies_object) < 1) {
-                $currencies['status'] = false;
-                return new JsonResponse($currencies);
-            }
+      try {
+        $yaml = Yaml::dump($styles);
+        file_put_contents($styles_file_path, $yaml);
+      } catch (ParseException $exception) {
+        $this->writeLog('App/Controller/DashboardStylesController::saveStyles > Unable to parse the YAML string: ' . $exception->getMessage());
+        return false;
+      }
 
-            foreach ($common_currencies_object as $currency) {
-                $currencies[] = array(
-                  'id' => $currency->getCurrencyId(),
-                  'name' => $currency->getCurrencyName(),
-                  'code' => $currency->getCurrencyCode(),
-                  'symbol' => $currency->getCurrencySymbol(),
-                  'dependence' => $this->checkCurrencyDependence($currency->getCurrencyId()),
-                );
-            }
-
-            return new JsonResponse($currencies);
-        } else {
-            $this->writeLog("App/Controller/DashboardCurrenciesController::getCurrenciesAction Authorization Error");
-            return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation(),
-              'authorization' => $this->checkAuthorization(),
-            ));
-        }
+      return true;
     }
 
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    public function getCurrencyAction(Request $request)
+    public function saveStylesAction(Request $request)
     {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $currency_id = $request->request->get('currency_id');
-            $common_currencies_repository = $this->getDoctrine()->getRepository('App:CommonCurrencies');
-            $store_currency_object = $common_currencies_repository->findOneByCurrencyId($currency_id);
+      if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
+          $styles = $this->getStyles();
+          $form = $request->request->get('form');
 
-            $currency = array(
-              'id' => $store_currency_object->getCurrencyId(),
-              'name' => $store_currency_object->getCurrencyName(),
-              'code' => $store_currency_object->getCurrencyCode(),
-              'symbol' => $store_currency_object->getCurrencySymbol(),
-            );
+          if (strlen($form['header_background']) == 7) {
+            $styles['header_background'] = $form['header_background'];
+          }
+          if (strlen($form['header_text']) == 7) {
+            $styles['header_text'] = $form['header_text'];
+          }
+          if (strlen($form['footer_background']) == 7) {
+            $styles['footer_background'] = $form['footer_background'];
+          }
+          if (strlen($form['footer_text']) == 7) {
+            $styles['footer_text'] = $form['footer_text'];
+          }
 
-            return new JsonResponse($currency);
-        } else {
-            $this->writeLog("App/Controller/DashboardCurrenciesController::getCurrencyAction Authorization Error");
-            return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation(),
-            ));
-        }
-    }
+          $result['status'] = $this->saveStyles($styles);
 
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    public function addCurrencyAction(Request $request)
-    {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $form = $request->request->get('form');
-            $common_currencies = new CommonCurrencies();
-            $em = $this->getDoctrine()->getManager();
-
-            $common_currencies->setCurrencyName($form['name']);
-            $common_currencies->setCurrencyCode($form['code']);
-            $common_currencies->setCurrencySymbol($form['symbol']);
-
-            $em->persist($common_currencies);
-            $em->flush();
-
-            $result['result'] = true;
-
-            return new JsonResponse($result);
-        } else {
-            $this->writeLog("App/Controller/DashboardCurrenciesController::addCurrencyAction Authorization Error");
-            return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation(),
-            ));
-        }
-    }
-
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    public function editCurrencyAction(Request $request)
-    {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $form = $request->request->get('form');
-            $em = $this->getDoctrine()->getManager();
-            $currency_object = $em->getRepository('App:CommonCurrencies')->findOneByCurrencyId($form['id']);
-
-            $currency_object->setCurrencyName($form['name']);
-            $currency_object->setCurrencyCode($form['code']);
-            $currency_object->setCurrencySymbol($form['symbol']);
-
-            $em->flush();
-
-            $result['result'] = true;
-
-            return new JsonResponse($result);
-        } else {
-            $this->writeLog("App/Controller/DashboardCurrenciesController::editCurrencyAction > Authorization Error");
-            return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation()
-            ));
-        }
-    }
-
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    public function deleteCurrencyAction(Request $request)
-    {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $currency_id = $request->request->get('currency_id');
-            $em = $this->getDoctrine()->getManager();
-            $currency_object = $em->getRepository('App:CommonCurrencies')->findOneByCurrencyId($currency_id);
-
-            $em->remove($currency_object);
-            $em->flush();
-
-            $result['result'] = true;
-
-            return new JsonResponse($result);
-        } else {
-            $this->writeLog("App/Controller/DashboardCurrenciesController::deleteCurrencyAction Authorization Error");
-            return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation()
-            ));
-        }
-    }
-
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    public function saveDefaultCurrenciesAction(Request $request)
-    {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $form = $request->request->get('form');
-
-            $settings = $this->getSettings();
-            $settings['store_currency'] = (int) $form['store'];
-            $this->saveSettings($settings);
-
-
-            $result['result'] = true;
-
-            return new JsonResponse($result);
-        } else {
-            $this->writeLog("App/Controller/DashboardCurrenciesController::saveDefaultCurrenciesAction > Authorization Error");
-            return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation()
-            ));
-        }
+          return new JsonResponse($result);
+      } else {
+          $this->writeLog("App/Controller/DashboardStylesController::getStylesAction > Authorization Error");
+          return $this->render('error_access.twig', array(
+            'translation' => $this->getTranslation(),
+          ));
+      }
     }
 }

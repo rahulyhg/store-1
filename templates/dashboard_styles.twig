@@ -3,8 +3,13 @@
 {% extends 'main_dashboard.twig' %}
 
 {% block init %}
-  var input;
-  var preview;
+  var get_styles_action_url = "{{ path('dashboard_get_styles_action') }}";
+  var save_styles_action_url = "{{ path('dashboard_save_styles_action') }}";
+
+  var error_get_styles = "{{ translation.dashboard.styles.error_get_styles }}";
+  var alert_save_styles = "{{ translation.dashboard.styles.alert_save_styles }}";
+  var error_save_styles = "{{ translation.dashboard.styles.error_save_styles }}";
+
   var selected_color;
   var colors_palette;
 {% endblock %}
@@ -34,18 +39,57 @@
 {% endblock %}
 
 {% block main %}
-  <div class="col s12 l12 s12 xl12">
-    <div class="card hoverable">
-      <div class="card-content">
-        <div class="input-field">
-          <input type="text" id="input_header_background" value="" />
-          <label fore="input_header_background">Header background</label>
-        </div>
-        <div class="input-field inline">
-          <a class="btn btn-large clickable white-text" onclick="$('#preview_header_background').attr('style', 'background-color: ' + $('#input_header_background').val() + ';');"><i class="material-icons">done_all</i></a>
-          <div class="preview-selected-color" id="preview_header_background"></div>
-        </div>
+  <div class="col s12 m12 l12 xl12">
+    <div class="file-field input-field">
+      <div class="btn btn-large tooltipped button-preview" id="button_preview_header_background" data-position="right" data-tooltip="{{ translation.dashboard.styles.button_check_color }}" onclick="$(this).attr('style', 'background-color: ' + $('#input_header_background').val() + ';');">
+        <span><i class="material-icons">done_all</i></span>
       </div>
+      <div class="file-path-wrapper">
+        <input class="file-path" type="text" id="input_header_background" value="">
+        <label for="input_header_background">{{ translation.dashboard.styles.input_header_background }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 m12 l12 xl12">
+    <div class="file-field input-field">
+      <div class="btn btn-large tooltipped button-preview" id="button_preview_header_text" data-position="right" data-tooltip="{{ translation.dashboard.styles.button_check_color }}" onclick="$(this).attr('style', 'background-color: ' + $('#input_header_text').val() + ';');">
+        <span><i class="material-icons">done_all</i></span>
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path" type="text" id="input_header_text" value="">
+        <label for="input_header_text">{{ translation.dashboard.styles.input_header_text }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 m12 l12 xl12">
+    <div class="file-field input-field">
+      <div class="btn btn-large tooltipped button-preview" id="button_preview_footer_background" data-position="right" data-tooltip="{{ translation.dashboard.styles.button_check_color }}" onclick="$(this).attr('style', 'background-color: ' + $('#input_footer_background').val() + ';');">
+        <span><i class="material-icons">done_all</i></span>
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path" type="text" id="input_footer_background" value="">
+        <label for="input_footer_background">{{ translation.dashboard.styles.input_footer_background }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 m12 l12 xl12">
+    <div class="file-field input-field">
+      <div class="btn btn-large tooltipped button-preview" id="button_preview_footer_text" data-position="right" data-tooltip="{{ translation.dashboard.styles.button_check_color }}" onclick="$(this).attr('style', 'background-color: ' + $('#input_footer_text').val() + ';');">
+        <span><i class="material-icons">done_all</i></span>
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path" type="text" id="input_footer_text" value="">
+        <label for="input_footer_text">{{ translation.dashboard.styles.input_footer_text }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 m12 l12 xl12 center">
+    <div class="input-field">
+      <a class="btn btn-large green white-text" id="button_save_styles">{{ translation.dashboard.styles.button_save_styles }}</a>
     </div>
   </div>
 {% endblock %}
@@ -54,29 +98,31 @@
   <div id="modal_colors_palette" class="modal modal-fixed-footer">
     <div class="modal-content">
       {% for color in colors %}
-        <div class="valign-wrapper color-palette black-text" style="background-color: #{{ color.code }};" onclick="preselectColor('#{{ color.code }}'); unselectColors(); $(this).addClass('z-depth-5');">{{ color.name }}</div>
+        <div class="valign-wrapper color-palette black-text clickable" style="background-color: #{{ color.code }};" onclick="preselectColor('#{{ color.code }}'); unselectColors(); $(this).addClass('z-depth-5');">#{{ color.code }} [{{ color.name }}]</div>
       {% endfor %}
     </div>
     <div class="modal-footer">
-      <a class="clickable waves-effect waves-blue btn-flat left" id="button_copy_to_clipboard"><i class="material-icons left">file_copy</i><span id="field_color_code">#000000</span></a>
+      <a class="clickable waves-effect waves-blue btn-flat tooltipped left" id="button_copy_to_clipboard" data-position="right" data-tooltip="{{ translation.dashboard.styles.button_clipboard }}"><i class="material-icons left">file_copy</i><span id="field_color_code">#000000</span></a>
       <a class="clickable modal-close waves-effect waves-red btn-flat">{{ translation.dashboard.styles.button_close }}</a>
     </div>
   </div>
 
   <div class="fixed-action-btn">
-    <a class="btn-floating btn-large cyan accent-4" id="button_colors_palette">
+    <a class="btn-floating btn-large orange accent-4" id="button_colors_palette">
       <i class="large material-icons">palette</i>
     </a>
   </div>
 {% endblock %}
 
 {% block javascript %}
+  getStyles();
+
   /* ========== COLORS PALETTE AND INIT CLIPBOARD ========= */
   $('.fixed-action-btn').floatingActionButton();
 
   $('#button_copy_to_clipboard').on('click', function() {
     colors_palette.close();
-    elegant_alert.success('Clipboard');
+    elegant_alert.success("{{ translation.dashboard.styles.alert_copy_clipboard }}");
   });
 
   $('#button_colors_palette').on('click', function() {
@@ -91,16 +137,14 @@
     });
   });
 
-  /* ========== HEADER BACKGROUND ========== */
-  /*$('#card_header_background').find('.button-colors-palette').on('click', function() {
-    input = $('#card_header_background').find('input')[0];
-    preview = $('#card_header_background').find('.preview-selected-color')[0];
-    openColorsPalette();
+  /* ============= SAVE STYLES ============= */
+  $('#button_save_styles').on('click', function() {
+    var form = serializeForm();
+    if (form.header_background.length == 7 && form.header_text.length == 7 && form.footer_background.length == 7 && form.footer_text.length == 7) {
+      saveStyles(form);
+    } else {
+      elegant_alert.warning("{{ translation.dashboard.styles.warning_input_form }}");
+    }
   });
-  $('#input_header_background').on('change', function() {
-    preview = $('#card_header_background').find('.preview-selected-color')[0];
-    var input_value = $(this).val();
-    preview.style.backgroundColor = input_value;
-  });*/
 
 {% endblock %}
