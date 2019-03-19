@@ -1,0 +1,16 @@
+{# DASHBOARD BRANDS TEMPLATE #}
+{% extends 'main_dashboard.twig' %}
+
+{% block init %}{% endblock %}
+
+{% block include %}
+  <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_brands.js') }}"></script>
+{% endblock %}
+
+{% block header %}
+  <h5 class="center">{{ translation.dashboard.brands.page_title }}</h5>
+{% endblock %}
+
+{% block main %}{% endblock %}
+
+{% block javascript %}{% endblock %}

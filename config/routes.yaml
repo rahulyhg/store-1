@@ -69,6 +69,12 @@ dashboard_categories:
   path: /dashboard/categories
   controller: App\Controller\DashboardCategoriesController::renderDashboardCategoriesTemplateAction
 
+### BRANDS
+dashboard_brands:
+  path: /dashboard/brands
+  controller: App\Controller\DashboardBrandsController::renderDashboardBrandsTemplateAction
+
+
 ### PRODUCTS
 dashboard_products:
   path: /dashboard/products

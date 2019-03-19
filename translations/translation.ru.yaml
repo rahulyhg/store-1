@@ -71,6 +71,11 @@ dashboard:
     warning_input_password:        'Неправильно введен пароль. Должен быть больше 6 символов.'
     warning_input_form:            'Неправильно введены Имя или E-mail'
 
+  brands:
+    page_title:                    'Бренды магазина'
+    tab_brands:                    'Бренды'
+    tab_form:                      'Форма'
+
   users:
     page_title:                    'Администраторы магазина'
     back_to_settings:              'Назад в Настройки'
