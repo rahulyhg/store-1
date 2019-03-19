@@ -4,16 +4,31 @@
 {% block header %}
   <h5 class="center">{{ translation.dashboard.dashboard.page_title }}</h5>
 
-  <!-- Сделать скрипт для получения количества логов из БД, если >= 1 лога, то выводить сообщение типа "Проверьте логи, возможно есть ошибки" и ссылку для перехода в логи. Если нет, то ничего не выводить -->
+  <!-- Придумать график активности магазина по датам -->
 {% endblock %}
 
 {% block main %}
   <ul class="tabs">
-    <li class="tab col s6 m6 l6 xl6"><a class="active" href="#test1">Заказы</a></li>
-    <li class="tab col s6 m6 l6 xl6"><a href="#test2">Сообщения</a></li>
+    <li class="tab col s6 m6 l6 xl6"><a class="active" href="#tab_orders">{{ translation.dashboard.dashboard.tab_orders }}</a></li>
+    <li class="tab col s6 m6 l6 xl6"><a href="#tab_inbox">{{ translation.dashboard.dashboard.tab_inbox }}</a></li>
   </ul>
 
-  <div id="test1" class="col s12">Test 1</div>
-  <div id="test2" class="col s12">Test 2</div>
+  <div id="tab_orders" class="col s12 m12 l12 xl12">
+    <div class="card hoverable">
+      <div class="card-content">
+        <p>К сожалению новых заказов нет</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab_inbox" class="col s12">
+    <div class="card hoverable">
+      <div class="card-content">
+        <p>К сожалению новых сообщений нет</p>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
+
+{% block javascript %}{% endblock %}

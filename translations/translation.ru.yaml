@@ -23,17 +23,11 @@ dashboard:
     link_dashboard:                'Панель управления'
     link_store:                    'В магазин'
     link_profile:                  'Мой профиль'
-    link_metadata:                 'Meta-данные'
-    link_orders:                   'Заказы'
-    link_recommendations:          'Рекомендации'
     link_categories:               'Категории'
+    link_brands:                   'Бренды'
     link_products:                 'Товары'
-    link_users:                    'Администраторы'
+    link_recommendations:          'Рекомендации'
     link_settings:                 'Настройки'
-    link_languages:                'Языки'
-    link_scripts:                  'Скрипты'
-    link_modules:                  'Модули'
-    link_logs:                     'Просмотр логов'
 
   registration:
     page_title:                    'Регистрация'
@@ -62,6 +56,8 @@ dashboard:
 
   dashboard:
     page_title:                    'Панель управления'
+    tab_orders:                    'Заказы'
+    tab_inbox:                     'Сообщения'
 
   profile:
     page_title:                    'Мой профиль'
@@ -89,7 +85,6 @@ dashboard:
 
   settings:
     page_title:                    'Настройки магазина'
-    link_general_settings:         'Основные настройки'
     link_dashboard_images:         'Логотипы магазина'
     link_dashboard_styles:         'Стиль магазина'
     link_dashboard_meta:           'Meta-данные магазина'
