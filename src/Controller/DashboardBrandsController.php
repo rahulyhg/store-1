@@ -27,6 +27,7 @@ class DashboardBrandsController extends MainDashboardController
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),
               'profile' => $this->getProfile($user_id),
+              'brands' => $this->getBrandsAction()
             ));
         } else {
             return $this->render('dashboard_authorization.twig', array(
@@ -41,13 +42,13 @@ class DashboardBrandsController extends MainDashboardController
     /* ##################################################################################### */
     private function checkBrandDependence($brand_id)
     {
-      $settings = $this->getSettings();
+      /*$settings = $this->getSettings();
 
       $store_currency = (int) $settings['store_currency'];
 
       if ($currency_id == $store_currency) {
         return true;
-      }
+      }*/
 
       return false;
     }
@@ -57,36 +58,38 @@ class DashboardBrandsController extends MainDashboardController
     /* ##################################################################################### */
     private function getBrandsImagesDirectoryPath()
     {
-      
+      $brands_images_directory = $this->getAppDir() . 'public/images/brands/';
+
+      return $brands_images_directory;
     }
 
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function getCurrenciesAction(Request $request)
+    public function getBrandsAction()
     {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $common_currencies_repository = $this->getDoctrine()->getRepository('App:CommonCurrencies');
-            $common_currencies_object = $common_currencies_repository->findAll();
+        if ($this->checkAuthorization() == true) {
+            $store_brands_repository = $this->getDoctrine()->getRepository('App:StoreBrands');
+            $store_brands_object = $store_brands_repository->findAll();
 
-            if (count($common_currencies_object) < 1) {
-                $currencies['status'] = false;
-                return new JsonResponse($currencies);
+            if (count($store_brands_object) < 1) {
+                return false;
             }
 
-            foreach ($common_currencies_object as $currency) {
-                $currencies[] = array(
-                  'id' => $currency->getCurrencyId(),
-                  'name' => $currency->getCurrencyName(),
-                  'code' => $currency->getCurrencyCode(),
-                  'symbol' => $currency->getCurrencySymbol(),
-                  'dependence' => $this->checkCurrencyDependence($currency->getCurrencyId()),
+            foreach ($store_brands_object as $brand) {
+                $brands[] = array(
+                  'id' => $brand->getBrandId(),
+                  'name' => $brand->getBrandName(),
+                  'description' => $brand->getBrandDescription(),
+                  'image' => $brand->getBrandImage(),
+                  'link' => $brand->getBrandLink(),
+                  'dependence' => $this->checkBrandDependence($brand->getBrandId()),
                 );
             }
 
-            return new JsonResponse($currencies);
+            return $brands;
         } else {
-            $this->writeLog("App/Controller/DashboardCurrenciesController::getCurrenciesAction Authorization Error");
+            $this->writeLog("App/Controller/DashboardBrandsController::getBrandsAction > Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation(),
               'authorization' => $this->checkAuthorization(),

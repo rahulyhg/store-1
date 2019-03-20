@@ -9,8 +9,97 @@
 
 {% block header %}
   <h5 class="center">{{ translation.dashboard.brands.page_title }}</h5>
+  <div class="col s12 m12 l12 xl12">
+		<div class="collection">
+			<a class="collection-item" href="{{ path('dashboard_dashboard') }}"><i class="material-icons left">arrow_back</i>{{ translation.dashboard.brands.back_to_dashboard }}</a>
+		</div>
+	</div>
 {% endblock %}
 
-{% block main %}{% endblock %}
+{% block main %}
+  <div class="col s12 m12 l12">
+    <ul class="tabs" id="scripts_tabs">
+      <li class="tab col s6 m6 l6"><a class="active" href="#tab_brands">{{ translation.dashboard.brands.tab_brands }}</a></li>
+      <li class="tab col s6 m6 l6"><a href="#tab_form">{{ translation.dashboard.brands.tab_form }}</a></li>
+    </ul>
+  </div>
 
-{% block javascript %}{% endblock %}
+  <div id="tab_brands">
+    {% if brands == false %}
+      <div class="col s12 m12 l12 xl12">
+        <div class="card hoverable">
+          <div class="card-content">
+            <p>{{ translation.dashboard.brands.text_brands_missing }}</p>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      {% for brand in brands %}
+        <div class="col s12 m12 l12 xl12">
+          <div class="card hoveable">
+            <div class="card-content">
+              <span class="card-title">{{ brand.name }}</span>
+              <p>{{ brand.description }}</p>
+              
+            </div>
+            <div class="card-action">
+              <a class="clickable" onclick="getBrand({{ brand.id }});">{{ translation.dashboard.brands.button_edit_brand }}</a>
+              {% if brand.dependence == false %}
+                <a class="clickable" onclick="deleteBrand({{ brand.id }});">{{ translation.dashboard.brands.button_delete_brand }}</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div id="tab_form">
+    <div class="col s12 m12 l12">
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons left">info</i>{{ translation.dashboard.brands.title_form_help }}</div>
+          <div class="collapsible-body">
+            <p>{{ translation.dashboard.brands.text_form_help }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <form id="form_store_images" enctype="multipart/form-data" action="{{ path('dashboard_save_images_action') }}" method="post" accept="image/*">
+      <div class="col s12 m12 l12 xl12">
+        <div class="card hoverable">
+          <div class="card-content">
+            <span class="card-title" id="form_title_add_brand">{{ translation.dashboard.brands.form_title_add_brand }}</span>
+            <span class="card-title" id="form_title_edit_brand">{{ translation.dashboard.brands.form_title_edit_brand }}</span>
+            <div class="input-field">
+              <input type="text" name="input_brand_name" id="input_brand_name" data-length="50" value="" />
+              <label for="input_brand_name">{{ translation.dashboard.brands.input_brand_name }}</label>
+            </div>
+            <div class="input-field">
+              <textarea class="materialize-textarea" name="input_brand_description" id="input_brand_description" data-length="120"></textarea>
+              <label for="input_brand_description">{{ translation.dashboard.brands.input_brand_description }}</label>
+            </div>
+            <div class="input-field">
+              <input type="text" name="input_brand_link" id="input_brand_link" value="" />
+              <label for="input_brand_link">{{ translation.dashboard.brands.input_brand_link }}</label>
+            </div>
+
+
+          </div>
+          <div class="card-action">
+            <a class="clickable" id="button_add_brand">{{ translation.dashboard.brands.button_add_brand }}</a>
+            <a class="clickable" id="button_save_brand">{{ translation.dashboard.brands.button_save_brand }}</a>
+            <a class="clickable" id="button_clear_form">{{ translation.dashboard.brands.button_clear_form }}</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
+{% block javascript %}
+  $('#form_title_edit_brand, #button_save_brand').hide();
+  $('#input_brand_name, #input_brand_description').characterCounter();
+{% endblock %}
