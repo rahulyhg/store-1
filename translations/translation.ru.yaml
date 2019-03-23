@@ -84,9 +84,12 @@ dashboard:
     input_brand_name:              'Название бренда'
     input_brand_description:       'Краткое описание'
     input_brand_link:              'Ссылка на сайт'
+    text_brand_image:              'Изображение бренда'
+    input_brand_image:             'Выберите файл изображения'
     button_add_brand:              'Добавить'
     button_save_brand:             'Сохранить'
     button_clear_form:             'Очистить'
+    alert_clear_form:              'Форма очищена'
 
   users:
     page_title:                    'Администраторы магазина'

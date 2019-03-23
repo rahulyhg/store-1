@@ -73,7 +73,18 @@ dashboard_categories:
 dashboard_brands:
   path: /dashboard/brands
   controller: App\Controller\DashboardBrandsController::renderDashboardBrandsTemplateAction
-
+dashboard_get_brand_action:
+  path: /dashboard/brands/get_brand_action
+  controller: App\Controller\DashboardBrandsController::getBrandAction
+dashboard_add_brand_action:
+  path: /dashboard/brands/add_brand_action
+  controller: App\Controller\DashboardBrandsController::addBrandAction
+dashboard_edit_brand_action:
+  path: /dashboard/brands/edit_brand_action
+  controller: App\Controller\DashboardBrandsController::editBrandAction
+dashboard_delete_brand_action:
+  path: /dashboard/brands/delete_brand_action
+  controller: App\Controller\DashboardBrandsController::deleteBrandAction
 
 ### PRODUCTS
 dashboard_products:

@@ -83,7 +83,8 @@ class DashboardBrandsController extends MainDashboardController
                   'description' => $brand->getBrandDescription(),
                   'image' => $brand->getBrandImage(),
                   'link' => $brand->getBrandLink(),
-                  'dependence' => $this->checkBrandDependence($brand->getBrandId()),
+                  // Зависимость сделать только после создания управления продуктами
+                  //'dependence' => $this->checkBrandDependence($brand->getBrandId()),
                 );
             }
 
@@ -100,10 +101,10 @@ class DashboardBrandsController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function getCurrencyAction(Request $request)
+    public function getBrandAction(Request $request)
     {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $currency_id = $request->request->get('currency_id');
+        if ($this->checkAuthorization() == true) {
+            $brand_id = $request->request->get('brand_id');
             $common_currencies_repository = $this->getDoctrine()->getRepository('App:CommonCurrencies');
             $store_currency_object = $common_currencies_repository->findOneByCurrencyId($currency_id);
 
@@ -126,7 +127,7 @@ class DashboardBrandsController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function addCurrencyAction(Request $request)
+    public function addBrandAction(Request $request)
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
             $form = $request->request->get('form');
@@ -154,7 +155,7 @@ class DashboardBrandsController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function editCurrencyAction(Request $request)
+    public function editBrandAction(Request $request)
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
             $form = $request->request->get('form');
@@ -181,7 +182,7 @@ class DashboardBrandsController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
-    public function deleteCurrencyAction(Request $request)
+    public function deleteBrandAction(Request $request)
     {
         if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
             $currency_id = $request->request->get('currency_id');
@@ -196,30 +197,6 @@ class DashboardBrandsController extends MainDashboardController
             return new JsonResponse($result);
         } else {
             $this->writeLog("App/Controller/DashboardCurrenciesController::deleteCurrencyAction Authorization Error");
-            return $this->render('error_access.twig', array(
-              'translation' => $this->getTranslation()
-            ));
-        }
-    }
-
-    /* ##################################################################################### */
-    //
-    /* ##################################################################################### */
-    public function saveDefaultCurrenciesAction(Request $request)
-    {
-        if ($this->checkAuthorization() == true && $request->request->get('request') == true) {
-            $form = $request->request->get('form');
-
-            $settings = $this->getSettings();
-            $settings['store_currency'] = (int) $form['store'];
-            $this->saveSettings($settings);
-
-
-            $result['result'] = true;
-
-            return new JsonResponse($result);
-        } else {
-            $this->writeLog("App/Controller/DashboardCurrenciesController::saveDefaultCurrenciesAction > Authorization Error");
             return $this->render('error_access.twig', array(
               'translation' => $this->getTranslation()
             ));
