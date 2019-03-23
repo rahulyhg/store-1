@@ -8,7 +8,12 @@
 {% endblock %}
 
 {% block include %}
+  <script type="text/javascript" src="{{ asset('library/javascript/jquery.Jcrop.js') }}"></script>
+  <link rel="stylesheet" href="{{ asset('library/stylesheet/jquery.Jcrop.css') }}"/>
+  <link rel="stylesheet" href="{{ asset('library/stylesheet/crop.css') }}"/>
+
   <script type="text/javascript" src="{{ asset('library/javascript/random_token.js') }}"></script>
+
   <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_images.js') }}"></script>
 {% endblock %}
 
