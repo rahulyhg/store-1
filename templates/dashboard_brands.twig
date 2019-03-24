@@ -7,11 +7,19 @@
 
   var brands_images_directory_path = "{{ asset('images/brands/') }}";
   var image_not_found_path = "{{ asset('images/defaults/image-not-found.jpg') }}";
+
+  var jcrop_api;
+	var origin_image_width;
+	var origin_image_height;
 {% endblock %}
 
 {% block include %}
+  <script type="text/javascript" src="{{ asset('library/javascript/jquery.Jcrop.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('library/javascript/random_token.js') }}"></script>
   <script type="text/javascript" src="{{ asset('extras/javascript/dashboard_brands.js') }}"></script>
+
+  <link rel="stylesheet" href="{{ asset('library/stylesheet/jquery.Jcrop.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('library/stylesheet/crop.css') }}" type="text/css" />
 {% endblock %}
 
 {% block header %}
@@ -109,6 +117,13 @@
             <input type="hidden" id="original_brand_image_tokenname" value="" />
             <input type="hidden" name="brand_image_tokenname" id="brand_image_tokenname" value="" />
             <input type="hidden" name="change_brand_image" id="change_brand_image" value="0" />
+
+            <input type="hidden" name="image_x1" id="image_x1" value="" />
+  					<input type="hidden" name="image_y1" id="image_y1" value="" />
+  					<input type="hidden" name="image_x2" id="image_x2" value="" />
+  					<input type="hidden" name="image_y2" id="image_y2" value="" />
+  					<input type="hidden" name="image_w" id="image_w" value="" />
+  					<input type="hidden" name="image_h" id="image_h" value="" />
           </div>
           <div class="card-content center" id="block_brand_image_preview">
             <img class="responsive-img circle" style="max-width: 200px;" src="" id="brand_image_preview" />
@@ -126,13 +141,14 @@
 {% endblock %}
 
 {% block modules %}
-  <div id="modal1" class="modal modal-fixed-footer">
+  <div id="modal_crop_image" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
+      <div class="input-field center" id="origin_image_field"></div>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      <a class="clickable waves-effect waves-green btn-flat left" id="button_save_crop">{{ translation.dashboard.brands.button_save_crop }}</a>
+      <a class="clickable waves-effect waves-orange btn-flat" id="button_crop_disable">{{ translation.dashboard.brands.button_crop_disable }}</a>
+      <a class="clickable modal-close waves-effect waves-red btn-flat">{{ translation.dashboard.brands.button_close }}</a>
     </div>
   </div>
 {% endblock %}
@@ -141,6 +157,37 @@
   $('#form_title_edit_brand, #button_save_brand').hide();
   $('#input_brand_name, #input_brand_description').characterCounter();
   $('#brand_image_preview').prop('src', image_not_found_path);
+
+  $('#input_brand_image_file').on('change', function() {
+    var elem = $('#modal_crop_image');
+    var instance = M.Modal.getInstance(elem);
+    instance.open();
+    previewImage(this);
+  });
+
+  $('#button_save_crop').on('click', function() {
+    $('#brand_image_tokenname').val(generateToken(32));
+
+		var image_x1 = Number($('#image_x1').val());
+		var image_y1 = Number($('#image_y1').val());
+		var image_w = Number($('#image_w').val());
+		var image_h = Number($('#image_h').val());
+
+		var image_scale = origin_image_width / Number($('#origin_image').width());
+
+		var image_real_x1 = Math.floor(image_x1 * image_scale);
+		$('#image_x1').val(image_real_x1);
+		var image_real_y1 = Math.floor(image_y1 * image_scale);
+		$('#image_y1').val(image_real_y1);
+		var image_real_width = Math.ceil(image_w * image_scale);
+		$('#image_w').val(image_real_width);
+		var image_real_height = Math.ceil(image_h * image_scale);
+		$('#image_h').val(image_real_height);
+  });
+
+  $('#button_crop_disable').click(function(e) {
+		releaseCrop();
+	});
 
   $('#button_clear_form').on('click', function() {
     clearForm();

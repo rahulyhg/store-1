@@ -89,6 +89,9 @@ dashboard:
     button_add_brand:              'Добавить'
     button_save_brand:             'Сохранить'
     button_clear_form:             'Очистить'
+    button_save_crop:              'Применить'
+    button_crop_disable:           'Сброс'
+    button_close:                  'Закрыть'
     alert_clear_form:              'Форма очищена'
 
   users:
