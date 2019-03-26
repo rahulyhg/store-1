@@ -100,9 +100,9 @@ function previewImage(input) {
 /* ##################################################################################### */
 //
 /* ##################################################################################### */
-function getModule(module_id) {
+function getBrand(brand_id) {
   $.ajax({
-    url: get_module_action_url,
+    url: get_brand_action_url,
     type: "POST",
     cache: true,
     async: true,

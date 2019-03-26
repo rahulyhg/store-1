@@ -126,7 +126,7 @@
   					<input type="hidden" name="image_h" id="image_h" value="" />
           </div>
           <div class="card-content center" id="block_brand_image_preview">
-            <img class="responsive-img circle" style="max-width: 200px;" src="" id="brand_image_preview" />
+            <img class="responsive-img" style="max-width: 200px;" src="" id="brand_image_preview" />
           </div>
 
           <div class="card-action">
@@ -183,6 +183,17 @@
 		$('#image_w').val(image_real_width);
 		var image_real_height = Math.ceil(image_h * image_scale);
 		$('#image_h').val(image_real_height);
+
+    var elem = $('#modal_crop_image');
+    var instance = M.Modal.getInstance(elem);
+    instance.close();
+
+    var image_file = document.getElementById('input_brand_image_file');
+    var file_reader = new FileReader();
+    file_reader.onload = function(e) {
+      $('#brand_image_preview').prop('src', e.target.result);
+    };
+    file_reader.readAsDataURL(image_file.files[0]);
   });
 
   $('#button_crop_disable').click(function(e) {
