@@ -126,7 +126,7 @@
   					<input type="hidden" name="image_h" id="image_h" value="" />
           </div>
           <div class="card-content center" id="block_brand_image_preview">
-            <img class="responsive-img" style="max-width: 200px;" src="" id="brand_image_preview" />
+            <img class="responsive-img" src="" id="brand_image_preview" />
           </div>
 
           <div class="card-action">
@@ -194,6 +194,10 @@
       $('#brand_image_preview').prop('src', e.target.result);
     };
     file_reader.readAsDataURL(image_file.files[0]);
+
+    var tmp_img = $('#brand_image_preview');
+    console.log(tmp_img[0]);
+
   });
 
   $('#button_crop_disable').click(function(e) {

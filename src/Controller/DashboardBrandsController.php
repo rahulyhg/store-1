@@ -56,6 +56,44 @@ class DashboardBrandsController extends MainDashboardController
     /* ##################################################################################### */
     //
     /* ##################################################################################### */
+    private function cropImage($image, $x_o, $y_o, $w_o, $h_o)
+    {
+        if (($x_o < 0) || ($y_o < 0) || ($w_o <= 0) || ($h_o <= 0)) {
+            //echo "Некорректные входные параметры";
+            return false;
+        }
+
+        list($w_i, $h_i, $type) = getimagesize($image);
+        $types = array('', 'gif', 'jpeg', 'png');
+        $ext = $types[$type];
+
+        if ($ext) {
+            $func = 'imagecreatefrom' . $ext;
+            $img_i = $func($image);
+        } else {
+            //echo 'Некорректное изображение';
+            return false;
+        }
+
+        if ($x_o + $w_o > $w_i) {
+            $w_o = $w_i - $x_o;
+        }
+        if ($y_o + $h_o > $h_i) {
+            $h_o = $h_i - $y_o;
+        }
+
+        $img_o = imagecreatetruecolor($w_o, $h_o);
+
+        imagecopy($img_o, $img_i, 0, 0, $x_o, $y_o, $w_o, $h_o);
+
+        $func = 'image'.$ext;
+
+        $func($img_o, $image);
+    }
+
+    /* ##################################################################################### */
+    //
+    /* ##################################################################################### */
     private function getBrandsImagesDirectoryPath()
     {
       $brands_images_directory = $this->getAppDir() . 'public/images/brands/';
@@ -140,6 +178,20 @@ class DashboardBrandsController extends MainDashboardController
 
             $em->persist($common_currencies);
             $em->flush();
+
+            // Image CROP
+            if (strcmp($image_token_name, '0') !== 0 && strlen($image_token_name) == 32) {
+                $x_o = $request->request->get('image_x1');
+                $y_o = $request->request->get('image_y1');
+                $w_o = $request->request->get('image_w');
+                $h_o = $request->request->get('image_h');
+
+                $author_image_file = $request->files->get('input_author_image_file');
+                $author_image_file->move($path_authors_images, $image_token_name);
+                $this->cropImage($path_authors_images . $image_token_name, $x_o, $y_o, $w_o, $h_o);
+            } else {
+                $image_token_name = 0;
+            }
 
             $result['result'] = true;
 
