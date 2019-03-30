@@ -156,7 +156,7 @@
 {% block javascript %}
   $('#form_title_edit_brand, #button_save_brand').hide();
   $('#input_brand_name, #input_brand_description').characterCounter();
-  $('#brand_image_preview').prop('src', image_not_found_path);
+  //$('#brand_image_preview').prop('src', image_not_found_path);
 
   $('#input_brand_image_file').on('change', function() {
     var elem = $('#modal_crop_image');
@@ -197,6 +197,8 @@
 
     var tmp_img = $('#brand_image_preview');
     console.log(tmp_img[0]);
+
+    //$('#brand_image_preview').prop('style', 'margin:-41px -156px -40px -30px;');
 
   });
 
