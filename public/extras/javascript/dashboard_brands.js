@@ -33,11 +33,13 @@ function clearForm() {
 }
 
 /* ##################################################################################### */
-// Снятие выделения на обрезаемом изображении
+// Снятие выделения на обрезаемом изображении и очистка координатов
 /* ##################################################################################### */
 function releaseCrop() {
   jcrop_api.release();
   $('#crop').hide();
+
+  $('#brand_image_preview').hide();
 }
 
 /* ##################################################################################### */
@@ -45,6 +47,34 @@ function releaseCrop() {
 // и вставка значение в input hidden
 /* ##################################################################################### */
 function showCoords(c) {
+  $('#image_x1').val(c.x);
+  $('#image_y1').val(c.y);
+  $('#image_x2').val(c.x2);
+  $('#image_y2').val(c.y2);
+
+  $('#image_w').val(c.w);
+  $('#image_h').val(c.h);
+  if (c.w > 0 && c.h > 0) {
+    $('#crop').show();
+  } else {
+    $('#crop').hide();
+  }
+}
+
+/* ##################################################################################### */
+//
+/* ##################################################################################### */
+function showPreview(c) {
+	var rx = 100 / c.w;
+	var ry = 100 / c.h;
+
+	$('#brand_image_preview').css({
+		width: Math.round(rx * 500) + 'px',
+		height: Math.round(ry * 370) + 'px',
+		marginLeft: '-' + Math.round(rx * c.x) + 'px',
+		marginTop: '-' + Math.round(ry * c.y) + 'px'
+	});
+
   $('#image_x1').val(c.x);
   $('#image_y1').val(c.y);
   $('#image_x2').val(c.x2);
@@ -81,10 +111,14 @@ function previewImage(input) {
     var file_reader = new FileReader();
     file_reader.onload = function(e) {
       $('#origin_image').attr('src', e.target.result).show();
+
+      // вывод изображения в превью
+      $('#brand_image_preview').prop('src', e.target.result);
+
       getImageOriginSize(e.target.result);
       $('#origin_image').Jcrop({
-        onChange: showCoords,
-        onSelect: showCoords
+        onChange: showPreview,
+        onSelect: showPreview
       }, function() {
         jcrop_api = this;
         jcrop_api.setOptions({
@@ -95,6 +129,44 @@ function previewImage(input) {
     };
     file_reader.readAsDataURL(input.files[0]);
   }
+}
+
+/* ##################################################################################### */
+//
+/* ##################################################################################### */
+function saveCrop() {
+  var image_x1 = Number($('#image_x1').val());
+  var image_y1 = Number($('#image_y1').val());
+  var image_w = Number($('#image_w').val());
+  var image_h = Number($('#image_h').val());
+
+  var image_scale = origin_image_width / Number($('#origin_image').width());
+
+  var image_real_x1 = Math.floor(image_x1 * image_scale);
+  $('#image_x1').val(image_real_x1);
+  var image_real_y1 = Math.floor(image_y1 * image_scale);
+  $('#image_y1').val(image_real_y1);
+  var image_real_width = Math.ceil(image_w * image_scale);
+  $('#image_w').val(image_real_width);
+  var image_real_height = Math.ceil(image_h * image_scale);
+  $('#image_h').val(image_real_height);
+
+  var elem = $('#modal_crop_image');
+  var instance = M.Modal.getInstance(elem);
+  instance.close();
+
+  var image_file = document.getElementById('input_brand_image_file');
+  var file_reader = new FileReader();
+  file_reader.onload = function(e) {
+    $('#brand_image_preview').prop('src', e.target.result);
+    /*var preview_image_object = new Image();
+    preview_image_object.src = e.target.result;
+    console.log(preview_image_object);
+    preview_image_object.vspace = image_real_x1;
+    preview_image_object.hspace = image_real_y1;
+    $('#brand_image_preview').prop('src', preview_image_object.src);*/
+  };
+  file_reader.readAsDataURL(image_file.files[0]);
 }
 
 /* ##################################################################################### */

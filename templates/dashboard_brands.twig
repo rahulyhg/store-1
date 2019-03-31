@@ -125,7 +125,7 @@
   					<input type="hidden" name="image_w" id="image_w" value="" />
   					<input type="hidden" name="image_h" id="image_h" value="" />
           </div>
-          <div class="card-content center" id="block_brand_image_preview">
+          <div class="card-content center" id="block_brand_image_preview" style="width:100px;height:100px;">
             <img class="responsive-img" src="" id="brand_image_preview" />
           </div>
 
@@ -167,39 +167,7 @@
 
   $('#button_save_crop').on('click', function() {
     $('#brand_image_tokenname').val(generateToken(32));
-
-		var image_x1 = Number($('#image_x1').val());
-		var image_y1 = Number($('#image_y1').val());
-		var image_w = Number($('#image_w').val());
-		var image_h = Number($('#image_h').val());
-
-		var image_scale = origin_image_width / Number($('#origin_image').width());
-
-		var image_real_x1 = Math.floor(image_x1 * image_scale);
-		$('#image_x1').val(image_real_x1);
-		var image_real_y1 = Math.floor(image_y1 * image_scale);
-		$('#image_y1').val(image_real_y1);
-		var image_real_width = Math.ceil(image_w * image_scale);
-		$('#image_w').val(image_real_width);
-		var image_real_height = Math.ceil(image_h * image_scale);
-		$('#image_h').val(image_real_height);
-
-    var elem = $('#modal_crop_image');
-    var instance = M.Modal.getInstance(elem);
-    instance.close();
-
-    var image_file = document.getElementById('input_brand_image_file');
-    var file_reader = new FileReader();
-    file_reader.onload = function(e) {
-      $('#brand_image_preview').prop('src', e.target.result);
-    };
-    file_reader.readAsDataURL(image_file.files[0]);
-
-    var tmp_img = $('#brand_image_preview');
-    console.log(tmp_img[0]);
-
-    //$('#brand_image_preview').prop('style', 'margin:-41px -156px -40px -30px;');
-
+		saveCrop();
   });
 
   $('#button_crop_disable').click(function(e) {
