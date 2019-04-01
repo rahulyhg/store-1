@@ -65,12 +65,14 @@ function showCoords(c) {
 //
 /* ##################################################################################### */
 function showPreview(c) {
-	var rx = 100 / c.w;
-	var ry = 100 / c.h;
+  $('#brand_image_preview').show();
+
+	var rx = 200 / c.w;
+	var ry = 200 / c.h;
 
 	$('#brand_image_preview').css({
-		width: Math.round(rx * 500) + 'px',
-		height: Math.round(ry * 370) + 'px',
+		width: Math.round(rx * origin_image_width) + 'px',
+		height: Math.round(ry * origin_image_height) + 'px',
 		marginLeft: '-' + Math.round(rx * c.x) + 'px',
 		marginTop: '-' + Math.round(ry * c.y) + 'px'
 	});
