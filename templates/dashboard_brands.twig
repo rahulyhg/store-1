@@ -125,8 +125,11 @@
   					<input type="hidden" name="image_w" id="image_w" value="" />
   					<input type="hidden" name="image_h" id="image_h" value="" />
           </div>
-          <div class="card-content center" id="block_brand_image_preview" style="overflow:hidden;">
-            <img class="responsive-img" src="" id="brand_image_preview" />
+          <div class="card-content center" id="block_brand_image_preview">
+            <div style="width:200px; height:200px; overflow:hidden;">
+              <img class="responsive-img" src="" id="brand_image_preview" />
+            </div>
+            <a class="btn" id="show_crop_modal">sdfsdfds</a>
           </div>
 
           <div class="card-action">
@@ -163,6 +166,12 @@
     var instance = M.Modal.getInstance(elem);
     instance.open();
     previewImage(this);
+  });
+
+  $('#show_crop_modal').on('click', function() {
+    var elem = $('#modal_crop_image');
+    var instance = M.Modal.getInstance(elem);
+    instance.open();
   });
 
   $('#button_save_crop').on('click', function() {

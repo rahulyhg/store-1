@@ -39,7 +39,7 @@ function releaseCrop() {
   jcrop_api.release();
   $('#crop').hide();
 
-  $('#brand_image_preview').hide();
+  $('#block_brand_image_preview').hide();
 }
 
 /* ##################################################################################### */
@@ -65,10 +65,10 @@ function showCoords(c) {
 //
 /* ##################################################################################### */
 function showPreview(c) {
-  $('#brand_image_preview').show();
+  $('#block_brand_image_preview').show();
 
-	var rx = 200 / c.w;
-	var ry = 200 / c.h;
+	var rx = c.x / c.w;
+	var ry = c.y / c.h;
 
 	$('#brand_image_preview').css({
 		width: Math.round(rx * origin_image_width) + 'px',
