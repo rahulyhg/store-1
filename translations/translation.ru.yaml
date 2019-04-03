@@ -51,7 +51,7 @@ dashboard:
     input_user_password:           'Пароль'
     button_login_user:             'Войти'
     alert_allow_authorization:     'Авторизация успешна'
-    alert_deny_authorization:      'Неверны email или пароль'
+    alert_deny_authorization:      'Неверный email или пароль'
     error_login_author:            'Ошибка авторизации на сервере.'
 
   dashboard:
