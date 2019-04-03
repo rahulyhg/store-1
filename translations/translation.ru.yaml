@@ -92,6 +92,7 @@ dashboard:
     button_save_crop:              'Применить'
     button_crop_disable:           'Сброс'
     button_close:                  'Закрыть'
+    button_show_crop_modal:        'Изменить'
     alert_clear_form:              'Форма очищена'
 
   users:

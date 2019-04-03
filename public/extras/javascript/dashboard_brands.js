@@ -67,14 +67,23 @@ function showCoords(c) {
 function showPreview(c) {
   $('#block_brand_image_preview').show();
 
-	var rx = c.x / c.w;
-	var ry = c.y / c.h;
+  var image_scale = origin_image_width / Number(c.w);
+
+  var image_real_x1 = Math.floor(c.x * image_scale);
+  var image_real_y1 = Math.floor(c.y * image_scale);
+  var image_real_x2 = Math.floor(c.x2 * image_scale);
+  var image_real_y2 = Math.floor(c.y2 * image_scale);
+  var image_real_width = Math.ceil(c.w * image_scale);
+  var image_real_height = Math.ceil(c.h * image_scale);
+
+	var rx = 200 / image_real_width;
+	var ry = 200 / image_real_height;
 
 	$('#brand_image_preview').css({
 		width: Math.round(rx * origin_image_width) + 'px',
 		height: Math.round(ry * origin_image_height) + 'px',
-		marginLeft: '-' + Math.round(rx * c.x) + 'px',
-		marginTop: '-' + Math.round(ry * c.y) + 'px'
+		marginLeft: '-' + Math.round(rx * image_real_x1) + 'px',
+		marginTop: '-' + Math.round(ry * image_real_y1) + 'px'
 	});
 
   $('#image_x1').val(c.x);
@@ -124,7 +133,7 @@ function previewImage(input) {
       }, function() {
         jcrop_api = this;
         jcrop_api.setOptions({
-          aspectRatio: 1 / 1
+          aspectRatio: 1
         });
         jcrop_api.focus();
       });

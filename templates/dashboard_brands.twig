@@ -125,11 +125,19 @@
   					<input type="hidden" name="image_w" id="image_w" value="" />
   					<input type="hidden" name="image_h" id="image_h" value="" />
           </div>
-          <div class="card-content center" id="block_brand_image_preview">
-            <div style="width:200px; height:200px; overflow:hidden;">
-              <img class="responsive-img" src="" id="brand_image_preview" />
+          <div class="card-content" id="block_brand_image_preview" hidden>
+            <div style="width: 200px; height: 200px; overflow:hidden; background-color: #ffaa77;">
+              <img src="" id="brand_image_preview" />
             </div>
-            <a class="btn" id="show_crop_modal">sdfsdfds</a>
+            <a class="btn blue white-text" id="show_crop_modal">{{ translation.dashboard.brands.button_show_crop_modal }}</a>
+          </div>
+
+
+          <div class="card-content">
+
+
+
+            <div class=""></div>
           </div>
 
           <div class="card-action">
@@ -149,8 +157,8 @@
       <div class="input-field center" id="origin_image_field"></div>
     </div>
     <div class="modal-footer">
-      <a class="clickable waves-effect waves-green btn-flat left" id="button_save_crop">{{ translation.dashboard.brands.button_save_crop }}</a>
-      <a class="clickable waves-effect waves-orange btn-flat" id="button_crop_disable">{{ translation.dashboard.brands.button_crop_disable }}</a>
+      <a class="clickable waves-effect waves-green btn-flat left" id="button_save_crop"><i class="material-icons">done_all</i></a>
+      <a class="clickable waves-effect waves-orange btn-flat" id="button_crop_disable"><i class="material-icons">close</i></a>
       <a class="clickable modal-close waves-effect waves-red btn-flat">{{ translation.dashboard.brands.button_close }}</a>
     </div>
   </div>
