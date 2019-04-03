@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('.slider').slider();
+/*  $('.slider').slider();
   $('.sidenav').sidenav({
     menuWidth: 240,
     edge: 'left'
@@ -9,13 +9,13 @@ $(document).ready(function() {
     delay: 50
   });
   $('.modal').modal();
-  $('.collapsible').collapsible();
+  $('.collapsible').collapsible();*/
 });
 
 /* ##################################################################################### */
 //
 /* ##################################################################################### */
-var elegant_alert = {
+/*var elegant_alert = {
   'success': function(alert_data) {
     M.toast({
       html: '<span class="text-select-none"><i class="left material-icons light-green-text text-accent-3 notranslate">done_all</i>' + alert_data + '</span>',
@@ -37,7 +37,7 @@ var elegant_alert = {
       html: '<span class="text-select-none"><i class="left material-icons red-text notranslate">error</i>' + alert_data + '</span>'
     });
   }
-};
+};*/
 
 
 /* ##################################################################################### */

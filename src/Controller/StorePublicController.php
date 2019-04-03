@@ -10,7 +10,7 @@ class StorePublicController extends MainStoreController
     /* ##################################################################################### */
     public function renderPublicTemplateAction()
     {
-      return $this->render('store_public.html.twig', array(
+      return $this->render('store_public.twig', array(
         'translation' => $this->getTranslation(),
       ));
     }
