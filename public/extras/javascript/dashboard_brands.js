@@ -43,25 +43,6 @@ function releaseCrop() {
 }
 
 /* ##################################################################################### */
-// Отображения обрезки изображения
-// и вставка значение в input hidden
-/* ##################################################################################### */
-function showCoords(c) {
-  $('#image_x1').val(c.x);
-  $('#image_y1').val(c.y);
-  $('#image_x2').val(c.x2);
-  $('#image_y2').val(c.y2);
-
-  $('#image_w').val(c.w);
-  $('#image_h').val(c.h);
-  if (c.w > 0 && c.h > 0) {
-    $('#crop').show();
-  } else {
-    $('#crop').hide();
-  }
-}
-
-/* ##################################################################################### */
 //
 /* ##################################################################################### */
 function showPreview(c) {
@@ -76,14 +57,14 @@ function showPreview(c) {
   var image_real_width = Math.ceil(c.w * image_scale);
   var image_real_height = Math.ceil(c.h * image_scale);
 
-	var rx = 200 / image_real_width;
-	var ry = 200 / image_real_height;
+	var rx = 200 / origin_image_width;
+	var ry = 200 / origin_image_height;
 
 	$('#brand_image_preview').css({
-		width: Math.round(rx * origin_image_width) + 'px',
-		height: Math.round(ry * origin_image_height) + 'px',
-		marginLeft: '-' + Math.round(rx * image_real_x1) + 'px',
-		marginTop: '-' + Math.round(ry * image_real_y1) + 'px'
+		width: Math.round(rx * c.w) + 'px',
+		height: Math.round(ry * c.h) + 'px',
+		marginLeft: '-' + Math.round(rx * c.x) + 'px',
+		marginTop: '-' + Math.round(ry * c.y) + 'px'
 	});
 
   $('#image_x1').val(c.x);
@@ -117,7 +98,7 @@ function getImageOriginSize(img_src) {
 // и устанавливает отношение сторон "квадрат"
 /* ##################################################################################### */
 function previewImage(input) {
-  $('#origin_image_field').html('<img class="responsive-img" id="origin_image" src="">');
+  $('#origin_image_field').html('<img id="origin_image" src="">');
   if (input.files && input.files[0]) {
     var file_reader = new FileReader();
     file_reader.onload = function(e) {
