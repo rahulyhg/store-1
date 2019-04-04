@@ -133,12 +133,11 @@
           </div>
 
 
-          <div class="card-content">
-
-
-
-            <div class=""></div>
-          </div>
+          <!--<div class="card-content">
+            <div class="center" id="block_brand_image_preview" style="max-width:200px; max-height:200px;">
+               <img class="responsive-img" id="brand_image_preview" src="" />
+            </div>
+          </div>-->
 
           <div class="card-action">
             <a class="clickable" id="button_add_brand">{{ translation.dashboard.brands.button_add_brand }}</a>
@@ -158,8 +157,9 @@
     </div>
     <div class="modal-footer">
       <a class="clickable waves-effect waves-green btn-flat left" id="button_save_crop"><i class="material-icons">done_all</i></a>
-      <a class="clickable waves-effect waves-orange btn-flat" id="button_crop_disable"><i class="material-icons">close</i></a>
-      <a class="clickable modal-close waves-effect waves-red btn-flat">{{ translation.dashboard.brands.button_close }}</a>
+      <a class="clickable waves-effect waves-blue btn-flat" id="button_select_all_crop"><i class="material-icons">crop</i></a>
+      <a class="clickable waves-effect waves-orange btn-flat" id="button_crop_disable"><i class="material-icons">cancel_presentation</i></a>
+      <a class="clickable modal-close waves-effect waves-red btn-flat"><i class="material-icons">close</i></a>
     </div>
   </div>
 {% endblock %}
@@ -183,6 +183,7 @@
   });
 
   $('#button_save_crop').on('click', function() {
+  	// сделать условие, если выделение есть, то сохранять обрезку, если нет, то выбрасывать алерт
     $('#brand_image_tokenname').val(generateToken(32));
 		saveCrop();
   });
